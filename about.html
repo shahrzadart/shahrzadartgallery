@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About_Shahrzad_Momenzadeh</title>
+     <link href='https://cdn.boxicons.com/3.0.3/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <link href='https://cdn.boxicons.com/3.0.3/fonts/brands/boxicons-brands.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="container">
+
+        <!-- NAVBAR + DROPDOWN -->
+<div class="navbar">
+  <a href="index.html">Home <i class='bx bx-home-alt'></i></a>
+  <a href="about.html">About <i class='bx bx-info-circle'></i></a>
+
+  <div class="miniature">
+    <a href="#" class="menu-toggle" aria-haspopup="true" aria-expanded="false">
+      Artworks <i class='bx bx-collection'></i>
+    </a>
+    <div class="miniature-box" role="menu" aria-hidden="true">
+      <a class="has-sub">Miniature</a>
+      <div class="submenu">
+        <a href="Iranian_miniature.html">Iranian miniature</a>
+        <a href="figur_miniature.html">Figure miniature</a>
+      </div>
+      <a href="Portrait.html">Portrait</a>
+      <a href="Expressionism.html">Expressionism</a>
+      <a href="motive.html">Motive</a>
+      <a href="Impressionism.html">Impressionism</a>
+    </div>
+  </div>
+</div>
+
+<style>
+/* ---- NAVBAR ---- */
+.navbar {
+  background-color: #00698f;
+  padding: 5px 10px;
+  border-radius: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.navbar a {
+  color: #fff;
+  background: rgba(255,255,255,0.06);
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.18s, transform 0.12s;
+}
+.navbar a:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.12);
+}
+
+/* ---- DROPDOWN ---- */
+.miniature {
+  position: relative;
+  display: inline-block;
+}
+
+.miniature-box {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: linear-gradient(180deg, #ffffff, #f3fbff);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(12,30,60,0.18);
+  padding: 6px;
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 180ms ease, transform 180ms ease, visibility 180ms;
+  z-index: 999;
+}
+
+.miniature-box.open,
+.miniature:hover > .miniature-box {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.miniature-box a {
+  display: block;
+  padding: 8px 12px;
+  color: #01203a;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 120ms, color 120ms;
+}
+
+.miniature-box a:hover {
+  background: linear-gradient(90deg,#e6f6ff,#dfeeff);
+  color: #001525;
+}
+
+/* Alt menü (Miniature sağdan açılır) */
+.has-sub {
+  position: relative;
+  cursor: pointer;
+}
+.has-sub::after {
+  content: "▶";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  color: #01203a;
+}
+
+.submenu {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background: linear-gradient(180deg, #ffffff, #f3fbff);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(12,30,60,0.18);
+  padding: 6px;
+  min-width: 180px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(10px);
+  transition: all 180ms ease;
+  z-index: 1000;
+}
+
+.has-sub:hover + .submenu,
+.submenu:hover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+</style>
+
+<script>
+(function(){
+  const toggles = document.querySelectorAll('.menu-toggle');
+  let isManualOpen = false;
+
+  function closeAll(){
+    document.querySelectorAll('.miniature-box').forEach(b=>{
+      b.classList.remove('open');
+      b.setAttribute('aria-hidden','true');
+    });
+    toggles.forEach(t => t.setAttribute('aria-expanded','false'));
+    isManualOpen = false;
+  }
+
+  toggles.forEach(toggle => {
+    const container = toggle.closest('.miniature');
+    const box = container.querySelector('.miniature-box');
+    let leaveTimer;
+
+    function openBox(){
+      closeAll();
+      box.classList.add('open');
+      toggle.setAttribute('aria-expanded','true');
+      box.setAttribute('aria-hidden','false');
+    }
+    function closeBox(){
+      if (isManualOpen) return;
+      box.classList.remove('open');
+      toggle.setAttribute('aria-expanded','false');
+      box.setAttribute('aria-hidden','true');
+    }
+
+    toggle.addEventListener('click', function(e){
+      e.preventDefault();
+      if (box.classList.contains('open') && isManualOpen) {
+        closeAll();
+      } else {
+        openBox();
+        isManualOpen = true;
+      }
+    });
+
+    container.addEventListener('mouseenter', function(){
+      if (!isManualOpen) {
+        clearTimeout(leaveTimer);
+        openBox();
+      }
+    });
+    container.addEventListener('mouseleave', function(){
+      if (!isManualOpen) {
+        leaveTimer = setTimeout(closeBox, 500);
+      }
+    });
+  });
+
+  document.addEventListener('click', function(e){
+    if (!e.target.closest('.miniature')) closeAll();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeAll();
+  });
+})();
+</script>
+
+        <div class="content">
+
+            <img src="Shahrzad Picture 03.jpg" alt="SHAHRZAD MOMENZADEH">
+
+        <h1>
+            👩‍🎨 About the Artist
+        </h1>
+
+            <p style="font-family: Cursive; font-size: 1.1rem; color: rgb(0, 65, 131);">
+                    Shahrzad Momenzadeh is an Iranian painter whose art combines the elegance of traditional miniature with the expressive power of modern techniques.
+                    Her work captures the delicate balance between discipline and freedom — between the detailed precision of classical art and the spontaneous emotion of contemporary expression.
+
+                    Inspired by Persian mythology, poetry, and human emotion, Shahrzad’s paintings explore themes of identity, femininity, and the invisible connections between nature and spirit.
+                    Each piece reflects her belief that art is not only seen but also felt — a bridge between imagination and reality.
+
+                    Her works have been exhibited in Turkey and are available internationally through Saatchi Art and other art platforms.
+
+                    “Every brushstroke is a fragment of memory, a whisper from another world.”
+
+                    For exhibitions, collaborations, or commissions, please get in touch.
+            </p>
+        </div>
+
+        <div class="hr01">
+            <hr>
+        </div>
+
+        <h1 style="font-family: verdana; color: hsl(180, 100%, 22%);">
+            EXHIBITIONS:
+        </h1>
+
+        <p style="font-family: Cursive; font-size: 1.1rem; color: rgb(0, 36, 71);">
+          • 2015 – Participation in the Painting Biennale  <br>
+          • 2008 to 2013 – Several group and solo exhibitions at Niyavaran art Gallery, Tehran   <br>
+          • 2011 – Group Painting Exhibition, Tehran, Iran  <br>
+          • 2010 – Group Painting Exhibition, Tehran, Iran  <br>
+          • 2010 – Solo Painting Exhibition, Tehran, Iran <br>
+          • 2008 – Solo Painting Exhibition, Tehran, Iran <br>
+          • 2007 – Solo Painting Exhibition, Tehran, Iran   <br> 
+          • 2006 – Solo Painting Exhibition, Tehran, Iran   <br>
+        </p>
+
+        <!-- ✨ FOOTER SECTION ✨ -->
+        <footer class="footer">
+          <p><strong>Program Manager & Coordination:</strong> Behrouz Mohebimoghaddam</p>
+          <p><strong>Website Design:</strong> Artin Mohebimoghaddam</p>
+          <p class="special">💫 Special thanks to my son, <strong>Artin Mohebi Moghaddam</strong>, for designing and bringing this website to life with creativity and skill.</p>
+        </footer>
+
+    </div>
+</body>
+</html>
+
+<style>
+    .navbar a{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.2rem;
+    text-decoration: none;
+    padding-left: 45px;
+    color:rgb(27, 0, 80);
+}
+
+.navbar{
+    background-color: #00698f;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.content h1{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(0, 51, 102);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.content p{
+    font-family: Cursive;
+    font-size: 1.1rem;
+    color: rgb(0, 65, 131);
+}
+
+body{
+    background-color: #828e9b54;
+    margin: 20px;
+}
+
+.content img{
+    border-radius: 100%;
+    width: 250px;
+    height: auto;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+/* ---- Footer ---- */
+.footer {
+  margin-top: 50px;
+  background: linear-gradient(90deg, #005f80, #007b9e);
+  color: #fff;
+  text-align: center;
+  padding: 25px 10px;
+  border-radius: 12px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.footer p {
+  margin: 8px 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.footer .special {
+  margin-top: 15px;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: #eafcff;
+}
+</style>

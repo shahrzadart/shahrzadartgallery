@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shahrzad_Painting</title>
+
+<!-- Boxicons -->
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<style>
+body {
+  background-color: #2255857c;
+  margin: 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.banner img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+/* 🔹 NAVBAR */
+.navbar {
+  background-color: #00698f;
+  padding: 5px 10px;
+  border-radius: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.navbar a {
+  color: #fff;
+  background: rgba(255,255,255,0.06);
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.18s, transform 0.12s;
+}
+.navbar a:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.12);
+}
+
+/* 🔹 DROPDOWN */
+.miniature {
+  position: relative;
+  display: inline-block;
+}
+
+.miniature-box {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: linear-gradient(180deg, #ffffff, #f3fbff);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(12,30,60,0.18);
+  padding: 6px;
+  min-width: 200px;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 180ms ease, transform 180ms ease, visibility 180ms;
+}
+
+.miniature-box.open,
+.miniature:hover > .miniature-box {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.miniature-box a {
+  display: block;
+  padding: 10px 14px;
+  color: #01203a;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 120ms, color 120ms;
+}
+.miniature-box a:hover {
+  background: linear-gradient(90deg,#e6f6ff,#dfeeff);
+  color: #001525;
+}
+
+/* Alt menü (Miniature sağda açılır) */
+.has-sub {
+  position: relative;
+  cursor: pointer;
+}
+.has-sub::after {
+  content: "▶";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  color: #01203a;
+}
+
+.submenu {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background: linear-gradient(180deg, #ffffff, #f3fbff);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(12,30,60,0.18);
+  padding: 6px;
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(10px);
+  transition: all 180ms ease;
+  z-index: 1000;
+}
+
+.has-sub:hover + .submenu,
+.submenu:hover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/* 🔹 İÇERİK */
+.content h1 {
+  color: rgb(0, 51, 102);
+}
+.content p {
+  color: rgb(51, 51, 51);
+  font-size: 1.1rem;
+}
+
+/* 🔹 FOOTER */
+footer {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 25px 15px;
+  border-radius: 8px;
+  margin-top: 40px;
+  font-size: 0.95rem;
+}
+footer a {
+  color: #68b8ff;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+footer a:hover {
+  color: #a9d6ff;
+}
+footer p {
+  margin: 8px 0;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="banner">
+    <img src="banner02.jpg" alt="">
+  </div>
+
+  <!-- 🔹 NAVBAR -->
+  <div class="navbar">
+    <a href="index.html">Home <i class='bx bx-home-alt'></i></a>
+    <a href="about.html">About <i class='bx bx-user'></i></a>
+
+    <!-- Dropdown -->
+    <div class="miniature">
+      <a href="#" class="menu-toggle" aria-haspopup="true" aria-expanded="false">
+        Artworks <i class='bx bx-collection'></i>
+      </a>
+
+      <div class="miniature-box" role="menu" aria-hidden="true">
+        <a class="has-sub">Miniature</a>
+        <div class="submenu">
+          <a href="Iranian_miniature.html">Iranian miniature</a>
+          <a href="mi.html">Figure miniature</a>
+        </div>
+        <a href="Portrait.html">Portrait</a>
+        <a href="Expressionism.html">Expressionism</a>
+        <a href="motive.html">Motive</a>
+        <a href="Impressionism.html">Impressionism</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔹 SAYFA İÇERİĞİ -->
+  <div class="content">
+    <h1>Welcome to the Art of Shahrzad Momenzadeh</h1>
+    <p>
+Step into a world where tradition meets emotion — where the fine lines of Persian miniature intertwine with the freedom of modern expressionism.
+Each painting tells a story of imagination, culture, and the deep poetry of life.
+
+Through color, texture, and form, Shehrazad’s work bridges the past and the present — reflecting both her Iranian roots and her personal journey as an artist.
+
+Explore the collection and discover artworks that invite reflection, emotion, and wonder.
+</p>
+  </div>
+  <section class="contact" aria-labelledby="contact-heading" style="margin-top:24px;">
+    <h2 id="contact-heading">Contact Us</h2>
+    <p>Email: <a href="mailto:shahrzadart91@gmail.com">shahrzadart91@gmail.com</a> or <a href="mailto:shahrzadmomen@gmail.com">shahrzadmomen@gmail.com</a></p>
+    <p>WhatsApp: <a href="https://wa.me/905010779755" target="_blank" rel="noopener">+90 501 077 97 55</a></p>
+    <p>You can buy our artworks on <a href="https://www.saatchiart.com/en-tr/shahrzadfineart" target="_blank" rel="noopener">saatchiart.com/en-tr/shahrzadfineart</a></p>
+  </section>
+  <!-- 🔹 FOOTER -->
+  <footer>
+    <p>📍 Samsun, Türkiye</p>
+    <p>📧 <a href="mailto:shahrzadmomen@gmail.com">shahrzadmomen@gmail.com</a></p>
+    <p>📸 <a href="https://instagram.com/shahrzad.artist" target="_blank">instagram.com/shahrzad.artist</a></p>
+    <p>🎨 <a href="https://www.saatchiart.com/en-tr/shahrzadfineart" target="_blank">saatchiart.com/en-tr/shahrzadfineart</a></p>
+  </footer>
+</div>
+
+<!-- 🔹 SCRIPT: Dropdown davranışı -->
+<script>
+(function(){
+  const toggles = document.querySelectorAll('.menu-toggle');
+  let isManualOpen = false;
+
+  function closeAll(){
+    document.querySelectorAll('.miniature-box').forEach(b=>{
+      b.classList.remove('open');
+      b.setAttribute('aria-hidden','true');
+    });
+    toggles.forEach(t => t.setAttribute('aria-expanded','false'));
+    isManualOpen = false;
+  }
+
+  toggles.forEach(toggle => {
+    const container = toggle.closest('.miniature');
+    const box = container.querySelector('.miniature-box');
+    let leaveTimer;
+
+    function openBox(){
+      closeAll();
+      box.classList.add('open');
+      toggle.setAttribute('aria-expanded','true');
+      box.setAttribute('aria-hidden','false');
+    }
+    function closeBox(){
+      if (isManualOpen) return;
+      box.classList.remove('open');
+      toggle.setAttribute('aria-expanded','false');
+      box.setAttribute('aria-hidden','true');
+    }
+
+    toggle.addEventListener('click', function(e){
+      e.preventDefault();
+      if (box.classList.contains('open') && isManualOpen) {
+        closeAll();
+      } else {
+        openBox();
+        isManualOpen = true;
+      }
+    });
+
+    container.addEventListener('mouseenter', function(){
+      if (!isManualOpen) {
+        clearTimeout(leaveTimer);
+        openBox();
+      }
+    });
+    container.addEventListener('mouseleave', function(){
+      if (!isManualOpen) {
+        leaveTimer = setTimeout(closeBox, 500);
+      }
+    });
+  });
+
+  document.addEventListener('click', function(e){
+    if (!e.target.closest('.miniature')) closeAll();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeAll();
+  });
+})();
+</script>
+</body>
+</html>
+<style>
+      .banner img{
+        width: 100%;
+        height: auto;
+        border-radius: 6px;
+    }
+
+
+.navbar a{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.2rem;
+    text-decoration: none;
+    padding-left: 45px;
+    color:rgb(27, 0, 80);
+
+}
+
+.navbar{
+    background-color: #00698f;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.content h1{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(0, 51, 102);
+}
+
+.content p{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.1rem;
+    color: rgb(51, 51, 51);
+}
+
+.miniatur img{
+    width: 150px;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.miniatur img:hover{
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+
+body{
+    background-color: #2255857c;
+    margin: 20px;
+}
+
+.Portrait img{
+    width: 150px;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 20px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.Portrait img:hover{
+transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.information h1{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(0, 51, 102);
+}
+
+.information a{
+    text-decoration: none;
+    color: rgb(0, 102, 204);
+}
+</style>

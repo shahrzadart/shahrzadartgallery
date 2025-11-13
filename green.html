@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green</title>
+
+<!-- Boxicons -->
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+<style>
+body {
+  background-color: #2255857c;
+  margin: 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.banner img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #00698f;
+  padding: 5px 10px;
+  border-radius: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.navbar a {
+  color: #fff;
+  background: rgba(255,255,255,0.06);
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.18s, transform 0.12s;
+}
+.navbar a:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.12);
+}
+
+/* Dropdown */
+.miniature {
+  position: relative;
+  display: inline-block;
+}
+
+.miniature-box {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: linear-gradient(180deg, #ffffff, #f3fbff);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(12,30,60,0.18);
+  padding: 6px;
+  min-width: 200px;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 180ms ease, transform 180ms ease, visibility 180ms;
+}
+
+.miniature-box.open,
+.miniature:hover > .miniature-box {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.miniature-box a {
+  display: block;
+  padding: 10px 14px;
+  color: #01203a;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 120ms, color 120ms;
+}
+.miniature-box a:hover {
+  background: linear-gradient(90deg,#e6f6ff,#dfeeff);
+  color: #001525;
+}
+
+/* Submenu */
+.has-sub {
+  position: relative;
+  cursor: pointer;
+}
+.has-sub::after {
+  content: "▶";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  color: #01203a;
+}
+
+.submenu {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background: linear-gradient(180deg, #ffffff, #f3fbff);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(12,30,60,0.18);
+  padding: 6px;
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(10px);
+  transition: all 180ms ease;
+  z-index: 1000;
+}
+
+.has-sub:hover + .submenu,
+.submenu:hover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/* Content */
+.content {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+/* Art Image */
+.art-image {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 8px;
+  flex: 1 1 400px;
+}
+
+/* Art Details */
+.art-details {
+  flex: 1 1 400px;
+}
+
+.art-details h1 {
+  color: rgb(0, 51, 102);
+  margin-bottom: 15px;
+}
+
+.art-details p {
+  color: rgb(51, 51, 51);
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+/* Buy Button */
+.buy-button {
+  display: inline-block;
+  background-color: #004c6d;
+  color: #fff;
+  padding: 12px 20px;
+  text-decoration: none;
+  border-radius: 6px;
+  margin-top: 15px;
+  transition: background 0.2s;
+}
+.buy-button:hover {
+  background-color: #00698f;
+}
+
+/* Footer */
+footer {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 25px 15px;
+  border-radius: 8px;
+  margin-top: 40px;
+  font-size: 0.95rem;
+}
+
+footer a {
+  color: #68b8ff;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+footer a:hover {
+  color: #a9d6ff;
+}
+
+footer p {
+  margin: 8px 0;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Banner -->
+  <div class="banner">
+    <img src="banner02.jpg" alt="Banner">
+  </div>
+
+  <!-- Navbar -->
+<div class="navbar">
+  <a href="index.html">Home <i class='bx bx-home-alt'></i></a>
+  <a href="about.html">About <i class='bx bx-info-circle'></i></a>
+
+  <div class="miniature">
+    <a href="#" class="menu-toggle" aria-haspopup="true" aria-expanded="false">
+      Artworks <i class='bx bx-collection'></i>
+    </a>
+    <div class="miniature-box" role="menu" aria-hidden="true">
+      <a class="has-sub">Miniature</a>
+      <div class="submenu">
+        <a href="Iranian_miniature.html">Iranian miniature</a>
+        <a href="figur_miniature.html">Figure miniature</a>
+      </div>
+      <a href="Portrait.html">Portrait</a>
+      <a href="Expressionism.html">Expressionism</a>
+      <a href="motive.html">Motive</a>
+      <a href="Impressionism.html">Impressionism</a>
+    </div>
+  </div>
+</div>
+
+  <!-- Content -->
+<div class="content">
+<img class="art-image" src="Green.jpg" alt="Battle Of Dawn">
+    <div class="art-details">
+        <h1>Green</h1>
+            <p>• Mix Media</p>
+            <p>• Year: 2019</p>
+            <p>• Size: 14.5 x 18.5 in</p>
+            <p>• ID: SM-2019-MIX-02</p>
+        <a class="buy-button" href="https://www.saatchiart.com/art/Painting-Green/2870733/13326125/view" target="_blank">Buy on Saatchi Art</a>
+    </div>
+
+
+  </div>
+
+
+
+  <!-- Footer -->
+<footer>
+    <p>📍 Samsun, Türkiye</p>
+    <p>📧 <a href="mailto:shahrzadmomen@gmail.com">shahrzadmomen@gmail.com</a></p>
+    <p>📸 <a href="https://instagram.com/shahrzad.artist" target="_blank">instagram.com/shahrzad.artist</a></p>
+    <p>🎨 <a href="https://www.saatchiart.com/en-tr/shahrzadfineart" target="_blank">saatchiart.com/en-tr/shahrzadfineart</a></p>
+  </footer>
+</div>
+
+<!-- Dropdown Script -->
+<script>
+(function(){
+  const toggles = document.querySelectorAll('.menu-toggle');
+  let isManualOpen = false;
+
+  function closeAll(){
+    document.querySelectorAll('.miniature-box').forEach(b=>{
+      b.classList.remove('open');
+      b.setAttribute('aria-hidden','true');
+    });
+    toggles.forEach(t => t.setAttribute('aria-expanded','false'));
+    isManualOpen = false;
+  }
+
+  toggles.forEach(toggle => {
+    const container = toggle.closest('.miniature');
+    const box = container.querySelector('.miniature-box');
+    let leaveTimer;
+
+    function openBox(){
+      closeAll();
+      box.classList.add('open');
+      toggle.setAttribute('aria-expanded','true');
+      box.setAttribute('aria-hidden','false');
+    }
+    function closeBox(){
+      if (isManualOpen) return;
+      box.classList.remove('open');
+      toggle.setAttribute('aria-expanded','false');
+      box.setAttribute('aria-hidden','true');
+    }
+
+    toggle.addEventListener('click', function(e){
+      e.preventDefault();
+      if (box.classList.contains('open') && isManualOpen) {
+        closeAll();
+      } else {
+        openBox();
+        isManualOpen = true;
+      }
+    });
+
+    container.addEventListener('mouseenter', function(){
+      if (!isManualOpen) {
+        clearTimeout(leaveTimer);
+        openBox();
+      }
+    });
+    container.addEventListener('mouseleave', function(){
+      if (!isManualOpen) {
+        leaveTimer = setTimeout(closeBox, 500);
+      }
+    });
+  });
+
+  document.addEventListener('click', function(e){
+    if (!e.target.closest('.miniature')) closeAll();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeAll();
+  });
+})();
+</script>
+
+</body>
+</html>
