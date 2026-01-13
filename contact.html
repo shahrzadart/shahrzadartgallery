@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | Shahrzad Painting</title>
+
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+<style>
+/* ===== GENEL ===== */
+body {
+  background-color: #ffffff7c;
+  margin: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  background-color: #ffdfdfc7;
+  padding: 8px 14px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-center {
+  display: flex;
+  gap: 12px;
+}
+
+.navbar a {
+  color: #000;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  background: rgba(255,255,255,0.35);
+}
+
+.hamburger {
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* ===== CONTACT ===== */
+.contact-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 120px;
+}
+
+.contact-container {
+  background: white;
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.contact-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.contact-container input,
+.contact-container textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.contact-container textarea {
+  resize: none;
+  height: 120px;
+}
+
+.contact-container button {
+  width: 100%;
+  padding: 12px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.contact-container button:hover {
+  background: #0056b3;
+}
+
+/* ===== SUCCESS MESSAGE ===== */
+.success-message {
+  display: none;
+  margin-top: 15px;
+  text-align: center;
+  background: #e6fffa;
+  color: #065f46;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  animation: fadeUp 0.6s ease forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== FOOTER ===== */
+.copyright {
+  text-align: center;
+  background: rgb(197, 39, 39);
+  color: white;
+  padding: 8px;
+  margin-top: 120px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div></div>
+
+  <div class="nav-center">
+    <a href="index.html">Home</a>
+    <a href="iranian_miniature.html">Iranian Miniature</a>
+    <a href="Contemporary_Art.html">Contemporary Art</a>
+    <a href="motive.html">Motive Art</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About</a>
+  </div>
+
+  <div class="hamburger">
+    <i class='bx bx-menu'></i>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-wrapper">
+  <div class="contact-container">
+    <h2>Contact</h2>
+
+    <form id="contactForm" action="https://formspree.io/f/meeeqvdy" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" required></textarea>
+
+      <!-- Spam protection -->
+      <input type="text" name="_gotcha" style="display:none">
+
+      <button type="submit">Send</button>
+    </form>
+
+    <div id="successMessage" class="success-message">
+      ✅ Your message has been sent successfully!
+    </div>
+  </div>
+</div>
+
+<div class="copyright">
+  © 2026 Shahrzad Momenzadeh. All rights reserved.
+</div>
+
+<script>
+const form = document.getElementById("contactForm");
+const successMessage = document.getElementById("successMessage");
+
+form.addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const formData = new FormData(form);
+
+  const response = await fetch(form.action, {
+    method: form.method,
+    body: formData,
+    headers: { "Accept": "application/json" }
+  });
+
+  if (response.ok) {
+    form.reset();
+    successMessage.style.display = "block";
+
+    setTimeout(() => {
+      successMessage.style.display = "none";
+    }, 3000);
+  }
+});
+</script>
+
+</body>
+</html>
