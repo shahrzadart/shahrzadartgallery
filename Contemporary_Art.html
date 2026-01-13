@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shahrzad_Painting</title>
+
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background: #ffffff7c;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  background-color: #ffdfdfc7;
+  padding: 8px 14px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-center {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.navbar a {
+  color: #000;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  background: rgba(255,255,255,0.35);
+}
+
+.hamburger {
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* ===== GALLERY ===== */
+.gallery {
+  display: flex;
+  flex-direction: column;   /* alt alta */
+  align-items: center;      /* ortada */
+  gap: 50px;                /* aralarındaki boşluk */
+  margin-top: 40px;
+}
+
+/* BOX resmin boyutunu alsın */
+.art-card {
+  display: inline-block;    /* 🔴 EN ÖNEMLİ SATIR */
+  background: #e7919169;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  overflow: hidden;
+  text-align: center;
+}
+
+/* RESMİN BOYUTUNU SEN BELİRLİYORSUN */
+.art-card img {
+  width: 320px;     /* 👈 BURAYI DEĞİŞTİR */
+  height: auto;
+  display: block;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.art-card img:hover {
+  transform: scale(1.05); }
+/* BAŞLIK */
+.art-card p {
+  color: hsl(0, 100%, 5%);
+  background: #ffdfdfa8;
+  margin: 0;
+  padding: 10px;
+  font-size: 1rem;
+  font-style: Bold;
+}
+
+
+
+/* ===== COPYRIGHT ===== */
+.copyright {
+  text-align: center;
+  background: rgb(197, 39, 39);
+  color: white;
+  padding: 5px;
+  margin-top: 80px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div></div>
+
+  <div class="nav-center">
+    <a href="index.html">Home</a>
+    <a href="iranian_miniature.html">Iranian Miniature</a>
+    <a href="Contemporary_Art.html">Contemporary Art</a>
+    <a href="motive.html">Motive Art</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About</a>
+  </div>
+
+  <div class="hamburger" id="hamburgerBtn">
+    <i class='bx bx-menu'></i>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery">
+
+  <!-- GÖRSELLERE DOKUNMADIM -->
+  <div class="art-card">
+    <a href="beige.html"><img src="Beige.jpg" alt="Beige"></a>
+    <p>Beige</p>
+  </div>
+
+  <div class="art-card">
+    <a href="blue.html"><img src="Blue.jpg" alt="Blue"></a>
+    <p>Blue</p>
+  </div>
+
+  <div class="art-card">
+    <a href="brown.html"><img src="Brown.jpg" alt="Brown"></a>
+    <p>Brown</p>
+  </div>
+
+  <div class="art-card">
+    <a href="green.html"><img src="Green.jpg" alt="Green"></a>
+    <p>Green</p>
+  </div>
+
+  <div class="art-card">
+    <a href="grey.html"><img src="Grey.jpg" alt="Grey"></a>
+    <p>Gray</p>
+  </div>
+
+  <div class="art-card">
+    <a href="maroon.html"><img src="Maroon.jpg" alt="Maroon"></a>
+    <p>Maroon</p>
+  </div>
+
+  <div class="art-card">
+    <a href="Olive Green.html"><img src="Olive Green.jpg" alt="Olive Green"></a>
+    <p>Olive Green</p>
+  </div>
+
+  <div class="art-card">
+    <a href="pink.html"><img src="Pink.jpg" alt="Pink"></a>
+    <p>Pink</p>
+  </div>
+
+  <div class="art-card">
+    <a href="purple.html"><img src="Purple.jpg" alt="Purple"></a>
+    <p>Purple</p>
+  </div>
+
+  <div class="art-card">
+    <a href="red.html"><img src="Red.jpg" alt="Red"></a>
+    <p>Red</p>
+  </div>
+
+  <div class="art-card">
+    <a href="yellow.html"><img src="Yellow.jpg" alt="Yellow"></a>
+    <p>Yellow</p>
+  </div>
+ <div class="art-card">
+    <a href="4sezone.html"><img src="4 Sezone.jpg" alt="Four Seasons"></a>
+    <p>Four Seasons</p>
+  </div>
+
+  <div class="art-card">
+    <a href="Autumn.html"><img src="Autumn.jpg" alt="Autumn"></a>
+    <p>Autumn</p>
+  </div>
+
+  <div class="art-card">
+    <a href="Phoenix.html"><img src="Phoenix.jpg" alt="Phoenix"></a>
+    <p>Phoenix</p>
+  </div>
+
+  <div class="art-card">
+    <a href="Spring.html"><img src="Spring.jpg" alt="Spring"></a>
+    <p>Spring</p>
+  </div>
+
+  <div class="art-card">
+    <a href="Summer.html"><img src="Summer.jpg" alt="Summer"></a>
+    <p>Summer</p>
+  </div>
+
+  <div class="art-card">
+    <a href="Uprising%20Of%20Kaveh.html"><img src="Uprising Of Kaveh.jpg" alt="Uprising Of Kaveh"></a>
+    <p>Uprising Of Kaveh</p>
+  </div>
+
+  <div class="art-card">
+    <a href="Mystical Fish.html"><img src="Mystical fish.jpg" alt="Mystical Fish"></a>
+    <p>Untitled-1</p>
+  </div>
+
+  <div class="art-card">
+    <a href="Deer.html"><img src="Deer.jpg" alt="Deer"></a>
+    <p>Deer</p>
+  </div>
+   <div class="art-card">
+        <a href="CornaBird.html"><img src="CraneBird.jpg" alt="Crane Bird"></a>
+        <p>Crane Bird</p>
+        </div>
+
+        <div class="art-card">
+        <a href="RussianGirl.html"><img src="RussianGirl Banner.jpg" alt="Russian Girl"></a>
+        <p>Russian Girl</p>
+        </div>
+
+        <div class="art-card">
+        <a href="WheatField.html"><img src="WheatField.jpg" alt="Wheat Field"></a>
+        <p>Memories in the Wheat Field</p>
+        </div>
+</div>
+</div>
+
+<div class="copyright">
+  <h4>© 2026 Shahrzad Momenzadeh. All rights reserved.</h4>
+</div>
+
+<script>
+const hamBtn = document.getElementById("hamburgerBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+hamBtn.onclick = () => {
+  mobileMenu.style.display =
+    mobileMenu.style.display === "flex" ? "none" : "flex";
+};
+
+document.querySelector(".mobile-sub span").onclick = () => {
+  const sub = document.querySelector(".mobile-sub-items");
+  sub.style.display = sub.style.display === "flex" ? "none" : "flex";
+};
+</script>
+
+</body>
+</html>
