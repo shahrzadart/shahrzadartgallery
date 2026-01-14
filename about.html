@@ -1,370 +1,353 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About_Shahrzad_Momenzadeh</title>
-    
-    <!-- FARSI FONT -->
-    <link href="https://fonts.googleapis.com/css2?family=Estedad:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- EXHIBITIONS GÜZEL FONT -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shahrzad_Painting</title>
 
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    <!-- ICONS -->
-    <link href='https://cdn.boxicons.com/3.0.3/fonts/basic/boxicons.min.css' rel='stylesheet'>
-    <link href='https://cdn.boxicons.com/3.0.3/fonts/brands/boxicons-brands.min.css' rel='stylesheet'>
-
-    <style>
-
-/* ---- NAVBAR ---- */
-.navbar {
-  background-color: #00698f;
-  padding: 5px 10px;
-  border-radius: 6px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px;
-}
-.navbar a {
-  color: #fff;
-  background: rgba(255,255,255,0.06);
-  padding: 8px 12px;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: background 0.18s, transform 0.12s;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 1.1rem;
-}
-.navbar a:hover {
-  transform: translateY(-2px);
-  background: rgba(255,255,255,0.12);
-}
-
-/* ---- DROPDOWN ---- */
-.miniature {
-  position: relative;
-  display: inline-block;
-}
-.miniature-box {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  background: linear-gradient(180deg, #ffffff, #f3fbff);
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(12,30,60,0.18);
-  padding: 6px;
-  min-width: 200px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-8px);
-  transition: 180ms ease;
-  z-index: 999;
-}
-.miniature-box.open,
-.miniature:hover > .miniature-box {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-.miniature-box a {
-  display: block;
-  padding: 8px 12px;
-  color: #01203a;
-  text-decoration: none;
-  border-radius: 6px;
-}
-.miniature-box a:hover {
-  background: linear-gradient(90deg,#e6f6ff,#dfeeff);
-}
-.has-sub {
-  position: relative;
-  cursor: pointer;
-}
-.has-sub::after {
-  content: "▶";
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  font-size: 0.8rem;
-}
-.submenu {
-  position: absolute;
-  left: 100%;
-  top: 0;
-  background: linear-gradient(180deg, #ffffff, #f3fbff);
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(12,30,60,0.18);
-  padding: 6px;
-  min-width: 180px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateX(10px);
-  transition: 180ms ease;
-  z-index: 1000;
-}
-.has-sub:hover + .submenu,
-.submenu:hover {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(0);
-}
-
-/* ---- LANG SWITCH (BAYRAKLAR) ---- */
-.language-switcher {
-  margin-left: auto;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-.language-switcher img {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid white;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.language-switcher img:hover {
-  transform: scale(1.15);
-  box-shadow: 0 0 6px rgba(255,255,255,0.7);
-}
-
-/* ---- CONTENT ---- */
+<style>
 body {
-  background-color: #828e9b54;
-  margin: 20px;
-}
-.content img {
-  border-radius: 100%;
-  width: 250px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-}
-.content h1 {
-  font-family: 'Segoe UI', Tahoma, Verdana;
-  color: rgb(0, 51, 102);
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
-}
-.content p {
-  font-family: Cursive;
-  font-size: 1.1rem;
-  color: rgb(0, 65, 131);
+  background-color: #ffffff7c;
+  margin: 0px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-/* ---- Exhibitions FONT (YENİ EKLENEN KISIM) ---- */
-.exhibitions-section,
-.exhibitions-section * {
-  font-family: 'Noto Sans', sans-serif !important;
+/* ===== NAVBAR ===== */
+.navbar {
+  background-color: #ffdfdfc7;
+  padding: 8px 14px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* ---- Footer ---- */
-.footer {
+.nav-center {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.navbar a {
+  color: #000;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  background: rgba(255,255,255,0.35);
+}
+
+/* HAMBURGER */
+.hamburger {
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* ===== IMAGE SECTIONS ===== */
+.image-center {
+  display: flex;
+  justify-content: center;
+  margin-top: 120px;
+}
+
+.image-center img {
+  width: 333.3333333333333px;
+  border-radius: 8px;
+}
+
+/* ALT GALERİ */
+.bottom-gallery {
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
+}
+
+.bottom-gallery img {
+  width: 220px;
+  height: 300px;
+  object-fit:contain;
+  border-radius: 10px;
+  margin: 0 20px;
   margin-top: 50px;
-  background: linear-gradient(90deg, #005f80, #007b9e);
+}
+.bottom-gallery img {
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bottom-gallery img:hover {
+  transform: scale(1.05);
+  transition: 0.3s ;
+}
+
+/* MOBILE MENU */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background: #004c6d;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 12px;
+  gap: 10px;
+}
+
+.mobile-menu a {
   color: #fff;
-  text-align: center;
-  padding: 25px 10px;
-  border-radius: 12px;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+  text-decoration: none;
+  padding: 10px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 6px;
 }
-.footer p {
-  margin: 8px 0;
-  font-size: 1rem;
-  font-family: sans-serif;
+
+.mobile-sub span {
+  color: #fff;
+  cursor: pointer;
 }
-.footer .special {
-  margin-top: 15px;
-  font-style: italic;
-  font-size: 1.05rem;
-  color: #eafcff;
+
+.mobile-sub-items {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
 }
-    </style>
+</style>
 </head>
+
 <body>
 
-<div class="container">
-
-<!-- 🔵 NAVBAR -->
+<!-- NAVBAR -->
 <div class="navbar">
-  <a href="index.html">Home <i class='bx bx-home-alt'></i></a>
-  <a href="about.html">About <i class='bx bx-info-circle'></i></a>
+  <div></div>
 
-  <div class="miniature">
-    <a href="#" class="menu-toggle">Artworks <i class='bx bx-collection'></i></a>
-
-    <div class="miniature-box">
-      <a class="has-sub">Miniature</a>
-      <div class="submenu">
-        <a href="iranian_miniature.html">Iranian miniature</a>
-
-        
-        <a href="figur_miniature.html">Figure miniature</a>
-      </div>
-      <a href="Portrait.html">Portrait</a>
-      <a href="Expressionism.html">Expressionism</a>
-        <a href="motive.html">Iranian Illumination & Mystic Motifs</a>
-
-      <a href="Impressionism.html">Impressionism</a>
-    </div>
+  <div class="nav-center">
+    <a href="index.html">Home</a>
+    <a href="iranian_miniature.html">Iranian Miniature</a>
+    <a href="Contemporary_Art.html">Contemporary Art</a>
+    <a href="motive.html">Motive Art</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About</a>
   </div>
 
-  <!-- 🔵 BAYRAKLAR (CDN) -->
-  <div class="language-switcher">
-    <img src="https://flagsapi.com/GB/flat/32.png" data-lang="en">
-    <img src="https://flagsapi.com/IR/flat/32.png" data-lang="fa">
-    <img src="https://flagsapi.com/RU/flat/32.png" data-lang="ru">
-    <img src="https://flagsapi.com/TR/flat/32.png" data-lang="tr">
-    <img src="https://flagsapi.com/CN/flat/32.png" data-lang="cn">
+  <div class="hamburger" id="hamburgerBtn">
+    <i class='bx bx-menu'></i>
   </div>
 </div>
 
 
-<!-- 🔵 ABOUT CONTENT -->
-<div class="content">
+<section class="about-artist">
 
-    <img src="Shahrzad Picture 03.jpg" alt="SHAHRZAD MOMENZADEH">
+  <h1>About the Artist</h1>
 
-    <h1 id="title-about">👩‍🎨 About the Artist</h1>
+  <p>
+    Shahrzad Momenzadeh is an Iranian visual artist based in Türkiye.
+    Her practice bridges Persian miniature traditions, ornamental motifs,
+    and contemporary artistic expressions.
+  </p>
 
-    <p id="about-text">
-        Shahrzad Momenzadeh, born in Tehran, is an Iranian painter and visual artist currently based in
-        Samsun, Turkey. She holds a Bachelor’s degree in Materials Engineering and also completed
-        formal studies in Painting, with over twenty years of professional experience. Shahrzad’s work
-        masterfully blends the intricate delicacy of traditional Persian miniature with the emotional
-        intensity and dynamic forms of modern Expressionism, exploring the balance between cultural
-        heritage and personal expression. Her paintings reveal a deep engagement with poetry,
-        spirituality, and the harmony of color, form, and imagination. She has participated in numerous
-        domestic art exhibitions and has received two international awards for her innovative approach
-        to contemporary miniature painting. Through her art, Shahrzad seeks to convey the timeless
-        beauty of inner emotions and the ongoing dialogue between tradition and individuality.
-    </p>
+  <p>
+    Her work explores narrative, motif, and form, drawing from historical
+    visual languages while engaging with modern concepts and materials.
+    The motifs in her works are inspired by Persian calligraphy and
+    Iranian illumination (tazhib).
+  </p>
+
+  <p>
+    Shahrzad's practice includes Persian miniature, contemporary painting,
+    and motif-based works, with a strong focus on visual storytelling and
+    cultural memory.
+  </p>
+
+  <img src="sh-profile.png" alt="Shahrzad Momenzadeh" />
+
+  <h2>Artist Statement</h2>
+
+  <p>
+    My artistic practice is shaped by a dynamic dialogue between Persian
+    miniature traditions and contemporary visual language. In my work,
+    the past is not treated as something fixed or distant, but as a living
+    memory—one that can be revisited, transformed, and reimagined within
+    the present.
+  </p>
+
+  <p>
+    Drawing from the visual structures, narrative qualities, and aesthetic
+    principles of Persian miniature painting, I reinterpret these elements
+    through a personal and contemporary perspective.
+  </p>
+
+  <p>
+    Influenced by Persian calligraphy and Iranian illumination (tazhib),
+    my work explores the relationship between tradition and contemporaneity
+    through composition, detail, and visual rhythm.
+  </p>
+
+  <p>
+    Rather than reproducing historical forms, I engage with them
+    conceptually, using the language of contemporary painting to reflect
+    on memory, continuity, and transformation, and to question how cultural
+    heritage can be reactivated within the present.
+  </p>
+
+  <h2>Selected Exhibitions</h2>
+
+  <h3>Solo Exhibitions</h3>
+  <ul>
+    <li>2010 – Solo Painting Exhibition, Tehran, Iran</li>
+    <li>2008 – Solo Painting Exhibition, Tehran, Iran</li>
+    <li>2007 – Solo Painting Exhibition, Tehran, Iran</li>
+    <li>2006 – Solo Painting Exhibition, Tehran, Iran</li>
+  </ul>
+
+  <h3>Group Exhibitions</h3>
+  <ul>
+    <li>2011 – Group Painting Exhibition, Tehran, Iran</li>
+    <li>2010 – Group Painting Exhibition, Tehran, Iran</li>
+  </ul>
+
+  <h2>Awards / Recognitions</h2>
+  <ul>
+    <li>2011 – International Visual Arts Competition, Tehran, Iran</li>
+    <li>2011 – Iran Visual Arts Competition, Tehran, Iran</li>
+  </ul>
+
+  <h2>Education & Training</h2>
+  <ul>
+    <li>2006–2012 – Workshops in Persian Miniature & Contemporary Painting</li>
+    <li>2001–2011 – Painting Training, Tehran, Iran</li>
+  </ul>
+
+</section>
+
+
 </div>
 
-<div class="hr01"><hr></div>
-
-
-<!-- EXHIBITIONS — BURAYA SINIFI EKLEDİM -->
-<div class="exhibitions-section">
-
-<h1 id="exhibitions-title">EXHIBITIONS:</h1>
-
-<p id="exhibitions-text" style="line-height: 1.6; ">
 <style>
-  #exhibitions-text {
-    font-family: 'Cursive', sans-serif;
-    font-size: 1.1rem;
-    color: rgb(0, 65, 131);
-  }
+  .bottom-gallery {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 80px;
+}
+
+.gallery-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.about-artist {
+  max-width: 900px;
+  margin: 120px auto;
+  padding: 40px 30px;
+  text-align: center;
+  line-height: 1.7;
+}
+
+/* BAŞLIKLAR */
+.about-artist h1 {
+  font-size: 32px;
+  margin-bottom: 30px;
+}
+
+.about-artist h2 {
+  font-size: 24px;
+  margin: 50px 0 20px;
+}
+
+.about-artist h3 {
+  font-size: 18px;
+  margin: 30px 0 10px;
+}
+
+/* PARAGRAFLAR */
+.about-artist p {
+  font-size: 15px;
+  margin-bottom: 18px;
+}
+
+/* LİSTELER */
+.about-artist ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about-artist li {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+/* PROFİL FOTOĞRAF */
+.about-artist img {
+  display: block;
+  margin: 40px auto;
+  width: 220px;
+  border-radius: 8px;
+}
+
+.gallery-item a {
+  margin-top: 12px;
+  text-decoration: none;
+  color: #000;
+  font-size: 14px;
+}
+
+.gallery-item a:hover {
+  text-decoration: underline;
+}
+
 </style>
 
-  • 2012 – Participation in the Painting Biennale, Tehran, Iran   <br>
-  • 2011 – Group Painting Exhibition, Tehran, Iran  <br>
-  • 2010 – Group Painting Exhibition, Tehran, Iran <br>
-  • 2010 – Solo Painting Exhibition, Tehran, Iran  <br>
-  • 2008 – Solo Painting Exhibition, Tehran, Iran  <br>
-  • 2007 – Solo Painting Exhibition, Tehran, Iran  <br>
-  • 2006 – Solo Painting Exhibition, Tehran, Iran  <br>
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
 
-</p>
-
+  <div class="mobile-sub">
+    <span>Miniature ▼</span>
+    <div class="mobile-sub-items">
+      <a href="iranian_miniature.html">Iranian Miniature</a>
+      <a href="figur_miniature.html">Figure Miniature</a>
+    </div>
+  </div>
 </div>
 
-<!-- 🔵 FOOTER -->
-<footer class="footer">
-  <p id="footer1"><strong>Program Manager & Coordination:</strong> Behrouz Mohebimoghaddam</p>
-  <p id="footer2"><strong>Website Design:</strong> Artin Mohebimoghaddam</p>
-  <p id="footer3" class="special">💫 Special thanks to my son, <strong>Artin Mohebi Moghaddam</strong>, for designing this website.</p>
-</footer>
-
+<div class="copyright">
+<h4>© 2026 Shahrzad Momenzadeh. All rights reserved.
+  <br>
+  <br>
+  <div class="d" style="font-size: medium;">
+    Website Design: Behrouz Mohebi Moghaddam | Website Developed: Artin Mohebi Moghaddam
+  </div>
+</h4>
 </div>
 
-<!-- 🔵 JS: Multi-language System -->
+
+<style>
+  .copyright {
+    text-align: center;
+    background: rgb(197, 39, 39);
+    color: white;
+    padding: 2px;
+    margin-top: 30%;
+} 
+</style>
+
 <script>
-const translations = {
-  en: {
-    title_about: "👩‍🎨 About the Artist",
-    about_text: "Shahrzad Momenzadeh, born in Tehran, is an Iranian painter and visual artist currently based in Samsun, Turkey. She holds a Bachelor’s degree in Materials Engineering and also completed formal studies in Painting, with over twenty years of professional experience. Shahrzad’s work masterfully blends the intricate delicacy of traditional Persian miniature with the emotional intensity and dynamic forms of modern Expressionism, exploring the balance between cultural heritage and personal expression. Her paintings reveal a deep engagement with poetry, spirituality, and the harmony of color, form, and imagination. She has participated in numerous domestic art exhibitions and has received two international awards for her innovative approach to contemporary miniature painting. Through her art, Shahrzad seeks to convey the timeless beauty of inner emotions and the ongoing dialogue between tradition and individuality.",
-    exhibitions_title: "EXHIBITIONS:",
-    exhibitions_text: document.getElementById("exhibitions-text").innerHTML,
-    footer1: "Program Manager & Coordination: Behrouz Mohebimoghaddam",
-    footer2: "Website Design: Artin Mohebimoghaddam",
-    footer3: "💫 Special thanks to my son, Artin Mohebi Moghaddam, for designing this website."
-  },
+const hamBtn = document.getElementById("hamburgerBtn");
+const mobileMenu = document.getElementById("mobileMenu");
 
-  fa: {
-    title_about: "👩‍🎨 درباره هنرمند",
-    about_text: "شهرزاد مؤمن‌زاده، متولد تهران، نقاش و هنرمند تجسمی ایرانی است که هم‌اکنون در سامسون ترکیه زندگی می‌کند. او دارای مدرک کارشناسی مهندسی مواد است و همچنین تحصیلات رسمی خود را در رشته نقاشی به پایان رسانده است. شهرزاد با بیش از بیست سال تجربه حرفه‌ای، ظرافت دقیق نگارگری سنتی ایرانی را با شدت احساسی و فرم‌های پویا و پرتنش اکسپرسیونیسم مدرن ترکیب می‌کند و توازنی هنرمندانه میان میراث فرهنگی و بیان فردی می‌آفریند. آثار او نشان‌دهنده پیوندی عمیق با شعر، معنویت و هماهنگی رنگ، فرم و تخیل است. او در نمایشگاه‌های متعدد داخلی شرکت کرده و برای رویکرد نوآورانه‌اش به نگارگری معاصر، دو جایزه بین‌المللی دریافت کرده است. شهرزاد از طریق هنر خود می‌کوشد زیبایی جاودان احساسات درونی و گفت‌وگوی پایدار میان سنت و فردیت را منتقل کند.",
-    exhibitions_title: "نمایشگاه‌ها:",
-    exhibitions_text: document.getElementById("exhibitions-text").innerHTML,
-    footer1: "مدیریت برنامه و هماهنگی: بهروز محبی مقدم",
-    footer2: "طراحی وب‌سایت: آرتین محبی مقدم",
-    footer3: "💫 با تشکر ویژه از پسرم آرتین محبی مقدم برای طراحی این سایت."
-  },
-
-  tr: {
-    title_about: "👩‍🎨 Sanatçı Hakkında",
-    about_text: "Tahran doğumlu Shahrzad Momenzadeh, şu anda Samsun, Türkiye’de yaşayan İranlı bir ressam ve görsel sanatçıdır. Malzeme Mühendisliği lisans derecesine sahiptir ve Resim alanında akademik eğitim almıştır. Yirmi yılı aşkın deneyime sahip olan Shahrzad, geleneksel İran minyatürünün ince işçiliğini modern Ekspresyonizmin duygusal yoğunluğu ve dinamik formlarıyla ustalıkla birleştirir. Eserleri şiir, maneviyat ve renk, form ile hayal gücünün uyumuna derin bir bağlılık yansıtır. Yurt içinde birçok sergiye katılmış ve çağdaş minyatüre yenilikçi yaklaşımıyla iki uluslararası ödül kazanmıştır. Sanatı aracılığıyla Shahrzad, içsel duyguların zamansız güzelliğini ve gelenek ile bireysellik arasındaki bitmeyen diyaloğu aktarmayı amaçlar.",
-    exhibitions_title: "SERGİLER:",
-    exhibitions_text: document.getElementById("exhibitions-text").innerHTML,
-    footer1: "Program Yönetimi ve Koordinasyon: Behrouz Mohebimoghaddam",
-    footer2: "Web Sitesi Tasarımı: Artin Mohebimoghaddam",
-    footer3: "💫 Bu siteyi tasarladığı için oğlum Artin’e özel teşekkürler."
-  },
-
-  ru: {
-    title_about: "👩‍🎨 Об артистке",
-    about_text: "Шахрзад Момензаде, родившаяся в Тегеране, — иранская художница и визуальный артист, проживающая в Самсуне, Турция. Она имеет степень бакалавра материаловедения, а также академическое образование по живописи. Имея более двадцати лет профессионального опыта, она мастерски сочетает утончённость традиционной персидской миниатюры с эмоциональной интенсивностью и динамическими формами современного экспрессионизма, исследуя баланс между культурным наследием и личным самовыражением. Её работы отражают глубокую связь с поэзией, духовностью и гармонией цвета, формы и воображения. Она участвовала во множестве выставок и получила две международные награды за инновационный подход к современной миниатюре. Через своё искусство она стремится передать вечную красоту внутреннего мира и диалог между традицией и индивидуальностью.",
-    exhibitions_title: "ВЫСТАВКИ:",
-    exhibitions_text: document.getElementById("exhibitions-text").innerHTML,
-    footer1: "Менеджер программы: Бехруз Мохебимогаддам",
-    footer2: "Дизайн сайта: Артин Мохебимогаддам",
-    footer3: "💫 Особая благодарность моему сыну Артину за создание этого сайта."
-  },
-
-  cn: {
-    title_about: "👩‍🎨 关于艺术家",
-    about_text: "Shahrzad Momenzadeh 出生于德黑兰，是一位伊朗画家与视觉艺术家，目前居住在土耳其萨姆松。她拥有材料工程学学士学位，并接受过正式的绘画艺术教育，拥有二十多年的专业经验。她的作品将传统波斯细密画的精致细腻与现代表现主义的情感张力和动态结构巧妙融合，探索文化传承与个人表达之间的平衡。她的艺术深深植根于诗歌、灵性以及色彩、形式与想象力的和谐之中。她参加过多次国内展览，并凭借其对当代细密画的创新贡献获得两项国际奖项。通过艺术，Shahrzad 传达出内在情感的永恒之美，以及传统与个性之间持续不断的对话。",
-    exhibitions_title: "展览:",
-    exhibitions_text: document.getElementById("exhibitions-text").innerHTML,
-    footer1: "项目管理与协调: Behrouz Mohebimoghaddam",
-    footer2: "网站设计: Artin Mohebimoghaddam",
-    footer3: "💫 特别感谢我的儿子 Artin 为本网站的设计。"
-  }
+hamBtn.onclick = () => {
+  mobileMenu.style.display =
+    mobileMenu.style.display === "flex" ? "none" : "flex";
 };
 
-
-document.querySelectorAll(".language-switcher img").forEach(flag => {
-  flag.addEventListener("click", () => {
-    const lang = flag.getAttribute("data-lang");
-    const t = translations[lang];
-
-    document.getElementById("title-about").innerHTML = t.title_about;
-    document.getElementById("about-text").innerHTML = t.about_text;
-    document.getElementById("exhibitions-title").innerHTML = t.exhibitions_title;
-    document.getElementById("exhibitions-text").innerHTML = t.exhibitions_text;
-    document.getElementById("footer1").innerHTML = t.footer1;
-    document.getElementById("footer2").innerHTML = t.footer2;
-    document.getElementById("footer3").innerHTML = t.footer3;
-  });
-});
+document.querySelector(".mobile-sub span").onclick = () => {
+  const sub = document.querySelector(".mobile-sub-items");
+  sub.style.display = sub.style.display === "flex" ? "none" : "flex";
+};
 </script>
 
 </body>
 </html>
-
-<style>
-  /* ---- FARSI LANGUAGE FONT ---- */
-html[lang="fa"] body,
-html[lang="fa"] p,
-html[lang="fa"] h1,
-html[lang="fa"] h2,
-html[lang="fa"] h3,
-html[lang="fa"] a,
-html[lang="fa"] div {
-    font-family: 'Estedad', sans-serif !important;
-    direction: rtl;
-    text-align: right;
-}
-</style>
