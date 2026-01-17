@@ -48,13 +48,15 @@ body {
 }
 
 /* ===== GALLERY ===== */
+
 .gallery {
-  display: flex;
-  flex-direction: column;   /* alt alta */
-  align-items: center;      /* ortada */
-  gap: 50px;                /* aralarındaki boşluk */
+  display:grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 70px;
   margin-top: 40px;
+  justify-items: center;
 }
+
 
 /* BOX resmin boyutunu alsın */
 .art-card {
