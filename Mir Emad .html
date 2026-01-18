@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shahrzad_Painting:Slaying the White Demon</title>
+<title>Shahrzad_Painting:Mir Emad - Iranian Calligrapher</title>
 
 <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
@@ -131,7 +131,7 @@ body {
 </head>
 
 <body>
-
+<h1 style="text-align: center; font-family: playfair; font-size: 3.5rem;">Shahrzad Art Studio</h1>
 <!-- NAVBAR -->
 <style>
 
@@ -253,36 +253,153 @@ body {
   </div>
 </div>
 <!-- MOBILE MENU -->
+
+
+<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">Home</a>
-    <a href="iranian_miniature.html">Iranian Miniature</a>
-    <a href="Contemporary_Art.html">Contemporary Art</a>
-    <a href="motive.html">Motive Art</a>
-    <a href="contact.html">Contact</a>
-    <a href="about.html">About</a>
+  <a href="index.html">Home</a>
+  <a href="iranian_miniature.html">Iranian Miniature</a>
+  <a href="Contemporary_Art.html">Contemporary Art</a>
+  <a href="motive.html">Motive Art</a>
+  <a href="contact.html">Contact</a>
+  <a href="about.html">About</a>
 </div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay"></div>
+
+<style>
+  /* ===== HAMBURGER ===== */
+.hamburger {
+  font-size: 1.8rem;
+  cursor: pointer;
+  display: none;
+  margin-left: auto; 
+}
+
+/* ===== MOBILE MENU ===== */
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 260px;
+  height: 100vh;
+  background: #838383b7;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: right 0.35s ease;
+  z-index: 1002;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 1001;   /* ⬅️ زیر منو */
+}
+
+
+.mobile-menu.active {
+  right: 0;
+}
+
+.mobile-menu a {
+  color: #000c2c;
+  text-decoration: none;
+  padding: 12px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 6px;
+}
+
+/* ===== OVERLAY ===== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 1000;
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ===== MOBILE BREAKPOINT ===== */
+@media (max-width: 768px) {
+  .nav-center {
+    display: none;      /* منوی دسکتاپ مخفی */
+  }
+
+  .hamburger {
+    display: block;     /* hamburger فقط موبایل */
+  }
+
+  .gallery {
+    grid-template-columns: 1fr; /* گالری تک ستون */
+    gap: 40px;
+  }
+}
+
+</style>
+<script>
+const hamBtn = document.getElementById("hamburgerBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+const overlay = document.getElementById("overlay");
+const icon = hamBtn.querySelector("i");
+
+function toggleMenu() {
+  mobileMenu.classList.toggle("active");
+  overlay.classList.toggle("active");
+  icon.classList.toggle("bx-menu");
+  icon.classList.toggle("bx-x");
+}
+
+hamBtn.onclick = toggleMenu;
+overlay.onclick = toggleMenu;
+
+document.querySelectorAll(".mobile-menu a").forEach(link => {
+  link.addEventListener("click", () => {
+    mobileMenu.classList.remove("active");
+    overlay.classList.remove("active");
+    icon.classList.add("bx-menu");
+    icon.classList.remove("bx-x");
+  });
+});
+</script>
+
+
+
 
 <!-- GALLERY -->
 <div class="gallery">
   <div class="art-card">
-    <img src="demon-frame-low-1.jpg" alt="Slaying the White Demon">
+    <img src="miremad-framed-final-low.jpg" alt="Mir Emad - Iranian Calligrapher">
 
     <div class="art-details">
-      <h3>Slaying The White Demon</h3>
+      <h3>Mir Emad - Iranian Calligrapher</h3>
 
-      <p><strong>Medium:</strong> Gouache and Watercolor</p>
-      <p><strong>Size:</strong> 18.1 × 20.5 in (46 × 52 cm)</p>
-      <p><strong>Year:</strong> 2011</p>
-      <p><strong>ID:</strong> SM-2011-WC&GC-03</p>
+      <p><strong>Medium:</strong> Gouache and Watercolor</p>        
+      <p><strong>Size:</strong> 20.9 x 28.7 in(53 x 73 cm)</p>
+      <p><strong>Year:</strong> 2015</p>
+      <p><strong>ID:</strong> SM-2015-WC&GC-03</p>
     </div>
   </div>
 </div>
-<div class="imgstylenow">
-        <img src="demon-1.jpg" alt="">
-  <img src="demon-11.jpg" alt="">
-</div>
+  <div class="imgstylenow">
+  <img src="miremad-2.jpg" alt="Mir Emad - Iranian Calligrapher">
+  <img src="Mir Emad-2.webp" alt="Mir Emad - Iranian Calligrapher">
+  </div>
 
-  <style>
+<style>
   div.imgstylenow {
     display: flex;
     justify-content: center;

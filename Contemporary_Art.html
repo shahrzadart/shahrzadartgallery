@@ -8,12 +8,18 @@
 <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
 <style>
-body {
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background: #ffffff7c;
 }
 
+/* ===== NAVBAR ===== */
 /* ===== NAVBAR ===== */
 .navbar {
   background-color: #ffdfdfc7;
@@ -42,25 +48,91 @@ body {
   background: rgba(255,255,255,0.35);
 }
 
+/* hamburger */
 .hamburger {
-  font-size: 1.8rem;
+  font-size: 2rem;
   cursor: pointer;
+  display: none;
+  margin-left: auto;
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 260px;
+  height: 100vh;
+  background: #838383b7;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: right 0.35s ease;
+  z-index: 999;
+}
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 70%;
+  height: 100vh;
+  background: white;
+  padding: 60px 20px;
+  transition: 0.3s ease;
+  z-index: 1002;   /* ⬅️ بالاتر از overlay */
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 1001;   /* ⬅️ زیر منو */
+}
+.mobile-menu.active {
+  right: 0;
+}
+
+.mobile-menu a {
+  color: #000c2c;
+  text-decoration: none;
+  padding: 12px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 6px;
+}
+
+.mobile-menu.active {
+  right: 0;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 1000;
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: all;
 }
 
 /* ===== GALLERY ===== */
-
 .gallery {
-  display:grid;
-  grid-template-columns: repeat(3, 1fr); 
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 70px;
-  margin-top: 40px;
+  margin: 60px auto;
+  max-width: 1200px;
   justify-items: center;
 }
 
-
-/* BOX resmin boyutunu alsın */
 .art-card {
-  display: inline-block;    /* 🔴 EN ÖNEMLİ SATIR */
   background: #e7919169;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
@@ -68,34 +140,53 @@ body {
   text-align: center;
 }
 
-/* RESMİN BOYUTUNU SEN BELİRLİYORSUN */
 .art-card img {
-  width: 320px;     /* 👈 BURAYI DEĞİŞTİR */
+  width: 100%;
+  max-width: 320px;
   height: auto;
   display: block;
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.35s ease;
 }
 
 .art-card img:hover {
-  transform: scale(1.05); }
-/* BAŞLIK */
+  transform: scale(1.05);
+}
+
 .art-card p {
-  color: hsl(0, 100%, 5%);
   background: #ffdfdfa8;
   margin: 0;
   padding: 10px;
   font-size: 1rem;
-  font-style: Bold;
 }
 
+/* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
+@media (max-width: 768px) {
+  .nav-center {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
 
 /* ===== COPYRIGHT ===== */
 .copyright {
   text-align: center;
   background: rgb(197, 39, 39);
   color: white;
-  padding: 5px;
+  padding: 12px;
   margin-top: 80px;
 }
 </style>
@@ -105,8 +196,6 @@ body {
 
 <!-- NAVBAR -->
 <div class="navbar">
-  <div></div>
-
   <div class="nav-center">
     <a href="index.html">Home</a>
     <a href="iranian_miniature.html">Iranian Miniature</a>
@@ -121,6 +210,17 @@ body {
   </div>
 </div>
 
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="iranian_miniature.html">Iranian Miniature</a>
+  <a href="Contemporary_Art.html">Contemporary Art</a>
+  <a href="motive.html">Motive Art</a>
+  <a href="contact.html">Contact</a>
+  <a href="about.html">About</a>
+</div>
+
+<div class="overlay" id="overlay"></div>
 <!-- GALLERY -->
 <div class="gallery">
 
@@ -242,42 +342,27 @@ body {
         </div>
          
 </div>
-</div>
 
 <div class="copyright">
-<h4>© 2026 Shahrzad Momenzadeh. All rights reserved.
-  <br>
-  <br>
-  <div class="d" style="font-size: medium;">
-    Website Design: Behrouz Mohebi Moghaddam | Website Developed: Artin Mohebi Moghaddam
-  </div>
-</h4>
+  © 2026 Shahrzad Momenzadeh. All rights reserved.<br><br>
+  Website Design: Behrouz Mohebi Moghaddam | Website Developed: Artin Mohebi Moghaddam
 </div>
-
-
-<style>
-  .copyright {
-    text-align: center;
-    background: rgb(197, 39, 39);
-    color: white;
-    padding: 2px;
-    margin-top: 30%;
-} 
-</style>
 
 <script>
 const hamBtn = document.getElementById("hamburgerBtn");
 const mobileMenu = document.getElementById("mobileMenu");
+const overlay = document.getElementById("overlay");
+const icon = hamBtn.querySelector("i");
 
-hamBtn.onclick = () => {
-  mobileMenu.style.display =
-    mobileMenu.style.display === "flex" ? "none" : "flex";
-};
+function toggleMenu() {
+  mobileMenu.classList.toggle("active");
+  overlay.classList.toggle("active");
+  icon.classList.toggle("bx-menu");
+  icon.classList.toggle("bx-x");
+}
 
-document.querySelector(".mobile-sub span").onclick = () => {
-  const sub = document.querySelector(".mobile-sub-items");
-  sub.style.display = sub.style.display === "flex" ? "none" : "flex";
-};
+hamBtn.onclick = toggleMenu;
+overlay.onclick = toggleMenu;
 </script>
 
 </body>
