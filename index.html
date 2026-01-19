@@ -71,22 +71,22 @@ body {
   width: 220px;
   height: 300px;
   object-fit: contain;
+  background-color: #f5f5f5; /* یا سفید */
   border-radius: 10px;
-  margin-top: 50px;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+
 
 .bottom-gallery img:hover {
-  transform: scale(1.05);
+  transform: none;
 }
 
 
-
-.gallery-item a {
-  margin-top: 12px;
-  text-decoration: none;
-  color: #000;
-  font-size: 14px;
+.gallery-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;   /* فاصله مساوی بین عکس و متن */
 }
 /* ===== HAMBURGER / X ===== */
 .hamburger {
@@ -162,8 +162,9 @@ body {
   text-align: center;
   background: rgb(197, 39, 39);
   color: white;
-  padding: 6px;
-  margin-top: 30%;
+  padding: 6px 10px;
+  margin-top: 40px;
+  font-size: 13px;
 }
 
 /* ===== MOBILE FIX ===== */
@@ -230,17 +231,17 @@ body {
 
   <div class="gallery-item">
     <img src="demons.webp" alt="Iranian Miniature">
-    <a href="iranian_miniature.html">Iranian Miniature</a>
+    <a href="iranian_miniature.html" style="color: black; text-decoration:none;">Iranian Miniature</a>
   </div>
 
   <div class="gallery-item">
     <img src="four seasons.webp" alt="Contemporary Art">
-    <a href="Contemporary_Art.html">Contemporary Art</a>
+    <a href="Contemporary_Art.html" style="color: black; text-decoration:none;">Contemporary Art</a>
   </div>
 
   <div class="gallery-item">
     <img src="garden of Imagination.webp" alt="Motive Art">
-    <a href="motive.html">Motive Art</a>
+    <a href="motive.html" style="color: black; text-decoration:none;">Motive Art</a>
   </div>
 
 </div>
@@ -249,13 +250,8 @@ body {
 
 <!-- COPYRIGHT -->
 <div class="copyright">
-  <h4>
-    © 2026 Shahrzad Momenzadeh. All rights reserved.
-    <br><br>
-    <span style="font-size: medium;">
-      Website Design: Behrouz Mohebi Moghaddam | Website Developed: Artin Mohebi Moghaddam
-    </span>
-  </h4>
+  © 2026 Shahrzad Momenzadeh. All rights reserved. | 
+  Website Design: Behrouz Mohebi Moghaddam – Website Developed: Artin Mohebi Moghaddam
 </div>
 
 <script>
