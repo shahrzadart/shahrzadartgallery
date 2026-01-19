@@ -21,7 +21,6 @@ body {
   border-radius: 6px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .nav-center {
@@ -43,68 +42,130 @@ body {
 }
 
 .hamburger {
-  font-size: 1.8rem;
+  font-size: 2rem;
   cursor: pointer;
+  display: none;
+}
+
+/* ===== MOBILE MENU ===== */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 260px;
+  height: 100vh;
+  background: #838383b7;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: right 0.35s ease;
+  z-index: 1002;
+}
+
+.mobile-menu.active {
+  right: 0;
+}
+
+.mobile-menu a {
+  color: #000c2c;
+  text-decoration: none;
+  padding: 12px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 6px;
+}
+
+/* ===== OVERLAY ===== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 1001;
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* ===== GALLERY ===== */
 .gallery {
-  display: flex;
-  flex-direction: column;   /* alt alta */
-  align-items: center;      /* ortada */
-  gap: 50px;                /* aralarındaki boşluk */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 70px;
   margin-top: 40px;
+  justify-items: center;
 }
 
-/* BOX resmin boyutunu alsın */
+@media (max-width: 992px) {
+  .gallery {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
 .art-card {
-  display: inline-block;    /* 🔴 EN ÖNEMLİ SATIR */
-  background: #e7919169;
+  background: hsla(0, 100%, 96%, 0.412);
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   overflow: hidden;
   text-align: center;
+  width: 320px;
+  height: fit-content;
 }
 
-/* RESMİN BOYUTUNU SEN BELİRLİYORSUN */
 .art-card img {
-  width: 320px;     /* 👈 BURAYI DEĞİŞTİR */
+  width: 320px;
   height: auto;
   display: block;
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.35s;
 }
 
 .art-card img:hover {
-  transform: scale(1.05); }
-/* BAŞLIK */
+  transform: scale(1.05);
+}
+
 .art-card p {
-  color: hsl(0, 100%, 5%);
   background: #ffdfdfa8;
   margin: 0;
   padding: 10px;
-  font-size: 1rem;
-  font-style: Bold;
+  font-weight: bold;
 }
-
-
 
 /* ===== COPYRIGHT ===== */
 .copyright {
   text-align: center;
   background: rgb(197, 39, 39);
   color: white;
-  padding: 5px;
+  padding: 6px;
   margin-top: 80px;
+}
+
+/* ===== MOBILE ONLY ===== */
+@media (max-width: 768px) {
+  .nav-center {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+    margin-left: auto; /* 🔑 SAĞA ALIR */
+  }
+
+  .art-card img {
+    height: 260px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<div class="navbar">
-  <div></div>
+<h1 style="text-align:center;font-size:3.5rem;">Shahrzad Art Studio</h1>
 
+<div class="navbar">
   <div class="nav-center">
     <a href="index.html">Home</a>
     <a href="iranian_miniature.html">Iranian Miniature</a>
@@ -115,126 +176,24 @@ body {
   </div>
 
   <div class="hamburger" id="hamburgerBtn">
-    <i class='bx bx-menu'></i>
+    <i class="bx bx-menu"></i>
   </div>
 </div>
 
-<!-- GALLERY -->
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="iranian_miniature.html">Iranian Miniature</a>
+  <a href="Contemporary_Art.html">Contemporary Art</a>
+  <a href="motive.html">Motive Art</a>
+  <a href="contact.html">Contact</a>
+  <a href="about.html">About</a>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- GALLERY (AYNEN SENİN) -->
 <div class="gallery">
-  
-  <div class="art-card">
-    <a href="slaying the white demon.html"><img src="slaying with white demon.webp" alt="Slaying the White Demon"></a>
-    <p>Slaying the White Demon</p>
-  </div>
-  <div class="art-card">
-    <a href="BattleOfDawn.html"><img src="battle dawn.webp" alt="Battle Of Dawn"></a>
-    <p>Battle Of Dawn</p>
-  </div>
-  <div class="art-card">
-    <a href="GashtabKingOfIran.html"><img src="Gashtasb.webp" alt="Gashtab King Of Iran"></a>
-    <p>Gashtasb - The Legendary King of Iran </p>
-  </div>
-  <div class="art-card">
-    <a href="HeroAndWolves.html"><img src="Esfandiyar.webp" alt="Hero and Wolves"></a>
-    <p>Esfandiyar - The Hero</p>
-  </div>
-  <div class="art-card">
-    <a href="InTheDeeps.html"><img src="in the deeps.webp" alt="In The Deeps"></a>
-    <p>In The Deeps</p>
-  </div>
-  <div class="art-card">
-    <a href="InTheGarden.html"><img src="in  the garden.webp" alt="In The Garden"></a>
-    <p>In The Garden</p>
-  </div>
-  <div class="art-card">
-    <a href="LILIVE_MACUN.html"><img src="Layla And Majnun.webp" alt="LILI VE MACUN"></a>
-    <p>Layla and Majnun</p>
-  </div>
-  <div class="art-card">
-    <a href="Shehhh.html"><img src="the sheikh.webp" alt="Shehhh"></a>
-    <p>The Sheikh and The Maiden</p>
-  </div>
-  <div class="art-card">
-    <a href="Sunrise-2017_1.html"><img src="sunrise.webp" alt="Sunrise 2017 (1)"></a>
-    <p>Sunrise</p>
-  </div>
-  <div class="art-card">
-    <a href="FairyBeing.html"><img src="fairy Being.webp" alt="Sunrise 2017 (2)"></a>
-    <p>Fairy Being</p>
-  </div>
-  <div class="art-card">
-    <a href="Shirin-farhad.html"><img src="Shirin&Farhad.webp" alt="Shirin&Farhad"></a>
-    <p>Shirin & Farhad</p>
-  </div>
-   <div class="art-card">
-    <a href="Mir Emad - Iranian Calligrapher.html"><img src="Mir Emad-2.webp" alt="Mir Emad - Iranian Calligrapher"></a>
-    <p>Mir Emad - Iranian Calligrapher</p>
-  </div>
-   <div class="art-card">
-    <a href="Untitled - Miniature 3.html"><img src="Untitled-miniature-3.webp" alt="Untitled - Miniature 3"></a>
-    <p>Untitled - Miniature 3</p>
-  </div>
-  <div class="art-card">
-    <a href="Untitled - Miniature 2.html"><img src="untitled2.webp" alt="Untitled - Miniature 2"></a>
-    <p>Untitled - Miniature 2</p>
-  </div>
-   <div class="art-card">
-    <a href="Untitled - Miniature 1.html"><img src="Untitled - Miniature 1.webp" alt="Untitled - Miniature 1"></a>
-    <p>Untitled - Miniature 1</p>
-  </div>
-     
-  <div class="art-card">
-    <a href="dawn.html"><img src="dawn.webp" alt="dawn"></a>
-    <p>Dawn</p>
-  </div>
-  <div class="art-card">
-    <a href="UprisingofKaveh.html"><img src="kaveh.webp" alt="Uprising Of Kaveh"></a>
-    <p>Uprising Of Kaveh</p>
-  </div>
-</div>
-
-<div class="copyright">
-<h4>© 2026 Shahrzad Momenzadeh. All rights reserved.
-  <br>
-  <br>
-  <div class="d" style="font-size: medium;">
-    Website Design: Behrouz Mohebi Moghaddam | Website Developed: Artin Mohebi Moghaddam
-  </div>
-</h4>
-</div>
-
-
-<style>
-  .copyright {
-    text-align: center;
-    background: rgb(197, 39, 39);
-    color: white;
-    padding: 2px;
-    margin-top: 30%;
-} 
-</style>
-
-<script>
-const hamBtn = document.getElementById("hamburgerBtn");
-const mobileMenu = document.getElementById("mobileMenu");
-
-hamBtn.onclick = () => {
-  mobileMenu.style.display =
-    mobileMenu.style.display === "flex" ? "none" : "flex";
-};
-
-document.querySelector(".mobile-sub span").onclick = () => {
-  const sub = document.querySelector(".mobile-sub-items");
-  sub.style.display = sub.style.display === "flex" ? "none" : "flex";
-};
-</script>
-
-<<<<<<< HEAD
-</body>
-</html>
-=======
-    <!-- GALLERY -->
-    <div class="gallery">
 
       <div class="art-card">
         <a href="slaying the white demon.html"><img src="slaying with white demon.webp"
@@ -258,7 +217,7 @@ document.querySelector(".mobile-sub span").onclick = () => {
         <p>The Sheikh and The Maiden</p>
       </div>
       <div class="art-card">
-        <a href="Sunrise-2017_1.html"><img src="sunrise.webp" alt="Sunrise 2017 (1)"></a>
+        <a href="Sunrise.html"><img src="sunrise.webp" alt="Sunrise 2017 (1)"></a>
         <p>Sunrise</p>
       </div>
       <div class="art-card">
@@ -309,38 +268,30 @@ document.querySelector(".mobile-sub span").onclick = () => {
       </div>
     </div>
 
-    <div class="copyright">
-  © 2026 Shahrzad Momenzadeh. All rights reserved. |
-  Website Design: Behrouz Mohebi Moghaddam – Website Developed: Artin Mohebi Moghaddam
+<div class="copyright">
+© 2026 Shahrzad Momenzadeh. All rights reserved.
 </div>
 
+<script>
+const hamBtn = document.getElementById("hamburgerBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+const overlay = document.getElementById("overlay");
+const icon = hamBtn.querySelector("i");
 
-    <style>
-      .copyright {
-        text-align: center;
-        background: rgb(197, 39, 39);
-        color: white;
-        padding: 2px;
-        margin-top: 30%;
-      }
-    </style>
+function toggleMenu() {
+  mobileMenu.classList.toggle("active");
+  overlay.classList.toggle("active");
+  icon.classList.toggle("bx-menu");
+  icon.classList.toggle("bx-x");
+}
 
-    <script>
-      const hamBtn = document.getElementById("hamburgerBtn");
-      const mobileMenu = document.getElementById("mobileMenu");
+hamBtn.onclick = toggleMenu;
+overlay.onclick = toggleMenu;
 
-      hamBtn.onclick = () => {
-        mobileMenu.style.display =
-          mobileMenu.style.display === "flex" ? "none" : "flex";
-      };
+document.querySelectorAll(".mobile-menu a").forEach(link => {
+  link.addEventListener("click", toggleMenu);
+});
+</script>
 
-      document.querySelector(".mobile-sub span").onclick = () => {
-        const sub = document.querySelector(".mobile-sub-items");
-        sub.style.display = sub.style.display === "flex" ? "none" : "flex";
-      };
-    </script>
-
-  </body>
-
+</body>
 </html>
->>>>>>> parent of 0508f56 (abcdferth)

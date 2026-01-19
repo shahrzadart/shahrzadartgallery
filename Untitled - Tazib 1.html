@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shahrzad_Painting:Untitled - Tazhib 1</title>
+<title>Shahrzad_Painting:Battle Of Dawn</title>
 
 <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
@@ -66,7 +66,7 @@ body {
 }
 
 .art-card img {
-  width: 360px;
+  width: 320px;
   height: auto;
   display: block;
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -131,7 +131,7 @@ body {
 </head>
 
 <body>
-
+<h1 style="text-align: center; font-family: playfair; font-size: 3.5rem;">Shahrzad Art Studio</h1>
 <!-- NAVBAR -->
 <style>
 
@@ -253,58 +253,21 @@ body {
   </div>
 </div>
 <!-- MOBILE MENU -->
+
+
+<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">Home</a>
-    <a href="iranian_miniature.html">Iranian Miniature</a>
-    <a href="Contemporary_Art.html">Contemporary Art</a>
-    <a href="motive.html">Motive Art</a>
-    <a href="contact.html">Contact</a>
-    <a href="about.html">About</a>
+  <a href="index.html">Home</a>
+  <a href="iranian_miniature.html">Iranian Miniature</a>
+  <a href="Contemporary_Art.html">Contemporary Art</a>
+  <a href="motive.html">Motive Art</a>
+  <a href="contact.html">Contact</a>
+  <a href="about.html">About</a>
 </div>
 
-<!-- GALLERY -->
-<div class="gallery">
-  <div class="art-card">
-    <img src="4.jpg" alt="Untitled - Tazhib 1">
+<!-- OVERLAY -->
+<div class="overlay" id="overlay"></div>
 
-    <div class="art-details">
-      <h3>Untitled - Tazhib 1</h3>
-      <p><strong>Medium:</strong> Gouache</p>                  
-      <p><strong>Size:</strong> 21.2 x 17.3 in(54 x 44 cm)</p>
-      <p><strong>Year:</strong> 2009</p>
-      <p><strong>ID:</strong> SM-2009-GC-04</p>
-    </div>
-  </div>
-</div>
-  <div class="imgstylenow">
-  <img src="octagon.webp" alt="">
-  </div>
-
-<style>
-  div.imgstylenow {
-    display: flex;
-    justify-content: center;
-    gap: 80px;
-    margin-top: 50px;
-    align-items: center;
-  } 
-
-  div.imgstylenow img {
-   width: 360px;
-    height: auto;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-</style>
-
-<div class="copyright">
-  © 2026 Shahrzad Momenzadeh. All rights reserved. |
-  Website Design: Behrouz Mohebi Moghaddam – Website Developed: Artin Mohebi Moghaddam
-</div>
-
-</body>
-</html>
 <style>
   /* ===== HAMBURGER ===== */
 .hamburger {
@@ -373,32 +336,18 @@ body {
 /* ===== MOBILE BREAKPOINT ===== */
 @media (max-width: 768px) {
   .nav-center {
-    display: none;     
+    display: none;      /* منوی دسکتاپ مخفی */
   }
 
   .hamburger {
-    display: block;     
+    display: block;     /* hamburger فقط موبایل */
   }
 
   .gallery {
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr; /* گالری تک ستون */
     gap: 40px;
   }
 }
-
-@media (max-width: 768px) {
-  div.imgstylenow {
-    flex-direction: column; 
-    gap: 30px;
-  }
-
-  div.imgstylenow img {
-    height: auto;
-    width: 90%;        
-    max-width: 350px;
-  }
-}
-
 
 </style>
 <script>
@@ -426,3 +375,55 @@ document.querySelectorAll(".mobile-menu a").forEach(link => {
   });
 });
 </script>
+
+
+
+
+<!-- GALLERY -->
+<div class="gallery">
+  <div class="art-card">
+    <img src="sheikh-low-1.jpg" alt="The Sheikh And The Maiden">
+
+    <div class="art-details">
+      <h3>The Sheikh And The Maiden</h3>
+
+      <p><strong>Medium:</strong> Watercolor & Gouache</p>                  
+      <p><strong>Size:</strong> 28.3 x 23.2 in(72 x 59 cm)</p>
+      <p><strong>Year:</strong> 2010</p>
+      <p><strong>ID:</strong> SM-2010-WC&GC-02</p>
+    </div>
+  </div>
+</div>
+  <div class="imgstylenow">
+  <img src="sheikh-1.jpg" alt="">
+    </div>
+
+<style>
+  div.imgstylenow {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    margin-top: 50px;
+    align-items: center;
+  } 
+
+  div.imgstylenow img {
+   width: auto;
+    height: 300px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+</style>
+
+<div class="copyright">
+  <h4>
+    © 2026 Shahrzad Momenzadeh. All rights reserved.
+      Website Design: Behrouz Mohebi Moghaddam |
+      Website Developed: Artin Mohebi Moghaddam
+    </span>
+  </h4>
+</div>
+
+</body>
+</html>

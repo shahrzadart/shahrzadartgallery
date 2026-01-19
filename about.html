@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shahrzad_Painting</title>
+<title>Shahrzad_Painting:Battle Of Dawn</title>
 
-<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
 <style>
 body {
-  background-color: #ffffff7c;
-  margin: 0px;
+  margin: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background: #ffffff7c;
 }
 
 /* ===== NAVBAR ===== */
@@ -42,63 +42,149 @@ body {
   background: rgba(255,255,255,0.35);
 }
 
-/* HAMBURGER */
 .hamburger {
   font-size: 1.8rem;
   cursor: pointer;
 }
 
-/* ===== IMAGE SECTIONS ===== */
-.image-center {
+/* ===== GALLERY ===== */
+.gallery {
   display: flex;
   justify-content: center;
-  margin-top: 120px;
+  margin-top: 60px;
 }
 
-.image-center img {
-  width: 333.3333333333333px;
-  border-radius: 8px;
+/* ===== ART CARD ===== */
+.art-card {
+  display: inline-block;
+  background: #e7919169;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  overflow: hidden;
+  text-align: center;
+  max-width: 360px;
 }
 
-/* ALT GALERİ */
-.bottom-gallery {
-  display: flex;
-  justify-content: center;
-  margin-top: 80px;
-}
-
-.bottom-gallery img {
-  width: 220px;
-  height: 300px;
-  object-fit:contain;
-  border-radius: 10px;
-  margin: 0 20px;
-  margin-top: 50px;
-}
-.bottom-gallery img {
+.art-card img {
+  width: 320px;
+  height: auto;
+  display: block;
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.bottom-gallery img:hover {
+.art-card img:hover {
   transform: scale(1.05);
-  transition: 0.3s ;
 }
 
-/* MOBILE MENU */
-.mobile-menu {
-  display: none;
-  flex-direction: column;
-  background: #004c6d;
-  padding: 15px;
-  border-radius: 8px;
+/* ===== DETAILS ===== */
+.art-details {
+  background: #ffdfdfa8;
+  padding: 14px;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.art-details h3 {
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.art-details p {
+  margin: 6px 0;
+}
+
+/* ===== COPYRIGHT ===== */
+.copyright {
+  text-align: center;
+  background: rgb(197, 39, 39);
+  color: white;
+  padding: 10px;
+  margin-top: 80px;
+  font-size: 0.90rem;
+  height: 1/200px;
+}
+
+.copyright {
+  text-align: center;
+  background: rgb(197, 39, 39);
+  color: white;
+  padding: 10px;
+  margin-top: 80px;
+  font-size: 0.85rem;
+  font-weight: 400; /* ince */
+  line-height: 1.5;
+}
+
+.copyright span {
+  font-size: 0.8rem;
+  font-weight: 300; /* daha da ince */
+}
+
+.copyright h4 {
+  font-weight: 400; /* bold yerine normal */
+  margin: 0;
+  line-height: 1.5;
+  font-style: bold;
+}
+
+</style>
+</head>
+
+<body>
+<h1 style="text-align: center; font-family: playfair; font-size: 3.5rem;">Shahrzad Art Studio</h1>
+<!-- NAVBAR -->
+<style>
+
+.gallery-item a {
   margin-top: 12px;
-  gap: 10px;
+  text-decoration: none;
+  color: #000;
+  font-size: 14px;
+}
+
+/* ===== OVERLAY ===== */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 998;
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ===== MOBILE DRAWER MENU ===== */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 260px;
+  height: 100vh;
+  background: #838383b7;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: right 0.35s ease;
+  z-index: 999;
+}
+
+.mobile-menu.active {
+  right: 0;
 }
 
 .mobile-menu a {
-  color: #fff;
+  color: #000c2c;
   text-decoration: none;
-  padding: 10px;
+  padding: 12px;
   background: rgba(255,255,255,0.1);
   border-radius: 6px;
 }
@@ -112,7 +198,38 @@ body {
   display: none;
   flex-direction: column;
   gap: 6px;
+  margin-top: 6px;
 }
+
+/* ===== COPYRIGHT ===== */
+.copyright {
+  text-align: center;
+  background: rgb(197, 39, 39);
+  color: white;
+  padding: 6px;
+  margin-top: 30%;
+}
+
+/* ===== MOBILE FIX ===== */
+@media (max-width: 768px) {
+
+  .nav-center {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .bottom-gallery {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .image-center {
+    margin-top: 60px;
+  }
+}</style>
 </style>
 </head>
 
@@ -135,220 +252,178 @@ body {
     <i class='bx bx-menu'></i>
   </div>
 </div>
+<!-- MOBILE MENU -->
 
-
-<section class="about-artist">
-
-  <h1>About the Artist</h1>
-
-  <p>
-    Shahrzad Momenzadeh is an Iranian visual artist based in Türkiye.
-    Her practice bridges Persian miniature traditions, ornamental motifs,
-    and contemporary artistic expressions.
-  </p>
-
-  <p>
-    Her work explores narrative, motif, and form, drawing from historical
-    visual languages while engaging with modern concepts and materials.
-    The motifs in her works are inspired by Persian calligraphy and
-    Iranian illumination (tazhib).
-  </p>
-
-  <p>
-    Shahrzad's practice includes Persian miniature, contemporary painting,
-    and motif-based works, with a strong focus on visual storytelling and
-    cultural memory.
-  </p>
-
-  <img src="sh-profile.png" alt="Shahrzad Momenzadeh" />
-
-  <h2>Artist Statement</h2>
-
-  <p>
-    My artistic practice is shaped by a dynamic dialogue between Persian
-    miniature traditions and contemporary visual language. In my work,
-    the past is not treated as something fixed or distant, but as a living
-    memory—one that can be revisited, transformed, and reimagined within
-    the present.
-  </p>
-
-  <p>
-    Drawing from the visual structures, narrative qualities, and aesthetic
-    principles of Persian miniature painting, I reinterpret these elements
-    through a personal and contemporary perspective.
-  </p>
-
-  <p>
-    Influenced by Persian calligraphy and Iranian illumination (tazhib),
-    my work explores the relationship between tradition and contemporaneity
-    through composition, detail, and visual rhythm.
-  </p>
-
-  <p>
-    Rather than reproducing historical forms, I engage with them
-    conceptually, using the language of contemporary painting to reflect
-    on memory, continuity, and transformation, and to question how cultural
-    heritage can be reactivated within the present.
-  </p>
-
-  <h2>Selected Exhibitions</h2>
-
-  <h3>Solo Exhibitions</h3>
-  <ul>
-    <li>2010 – Solo Painting Exhibition, Tehran, Iran</li>
-    <li>2008 – Solo Painting Exhibition, Tehran, Iran</li>
-    <li>2007 – Solo Painting Exhibition, Tehran, Iran</li>
-    <li>2006 – Solo Painting Exhibition, Tehran, Iran</li>
-  </ul>
-
-  <h3>Group Exhibitions</h3>
-  <ul>
-    <li>2011 – Group Painting Exhibition, Tehran, Iran</li>
-    <li>2010 – Group Painting Exhibition, Tehran, Iran</li>
-  </ul>
-
-  <h2>Awards / Recognitions</h2>
-  <ul>
-    <li>2011 – International Visual Arts Competition, Tehran, Iran</li>
-    <li>2011 – Iran Visual Arts Competition, Tehran, Iran</li>
-  </ul>
-
-  <h2>Education & Training</h2>
-  <ul>
-    <li>2006–2012 – Workshops in Persian Miniature & Contemporary Painting</li>
-    <li>2001–2011 – Painting Training, Tehran, Iran</li>
-  </ul>
-
-</section>
-
-
-
-</div>
-
-<style>
-  .bottom-gallery {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 80px;
-}
-
-.gallery-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.about-artist {
-  max-width: 900px;
-  margin: 120px auto;
-  padding: 40px 30px;
-  text-align: left;
-  line-height: 1.7;
-}
-
-/* BAŞLIKLAR */
-.about-artist h1 {
-  font-size: 32px;
-  margin-bottom: 30px;
-}
-
-.about-artist h2 {
-  font-size: 24px;
-  margin: 50px 0 20px;
-}
-
-.about-artist h3 {
-  font-size: 18px;
-  margin: 30px 0 10px;
-}
-
-/* PARAGRAFLAR */
-.about-artist p {
-  font-size: 15px;
-  margin-bottom: 18px;
-}
-
-/* LİSTELER */
-.about-artist ul {
-  list-style: none;
-  padding: 0;
-}
-
-.about-artist li {
-  font-size: 14px;
-  margin-bottom: 8px;
-}
-
-/* PROFİL FOTOĞRAF */
-.about-artist img {
-  display: block;
-  margin: 40px auto;
-  width: 220px;
-  border-radius: 8px;
-}
-
-.gallery-item a {
-  margin-top: 12px;
-  text-decoration: none;
-  color: #000;
-  font-size: 14px;
-}
-
-.gallery-item a:hover {
-  text-decoration: underline;
-}
-
-</style>
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="index.html">Home</a>
+  <a href="iranian_miniature.html">Iranian Miniature</a>
+  <a href="Contemporary_Art.html">Contemporary Art</a>
+  <a href="motive.html">Motive Art</a>
+  <a href="contact.html">Contact</a>
   <a href="about.html">About</a>
-
-  <div class="mobile-sub">
-    <span>Miniature ▼</span>
-    <div class="mobile-sub-items">
-      <a href="iranian_miniature.html">Iranian Miniature</a>
-      <a href="figur_miniature.html">Figure Miniature</a>
-    </div>
-  </div>
 </div>
 
-<div class="copyright">
-<h4>© 2026 Shahrzad Momenzadeh. All rights reserved.
-  <br>
-  <br>
-  <div class="d" style="font-size: medium;">
-    Website Design: Behrouz Mohebi Moghaddam | Website Developed: Artin Mohebi Moghaddam
-  </div>
-</h4>
-</div>
-
+<!-- OVERLAY -->
+<div class="overlay" id="overlay"></div>
 
 <style>
-  .copyright {
-    text-align: center;
-    background: rgb(197, 39, 39);
-    color: white;
-    padding: 2px;
-    margin-top: 30%;
-} 
-</style>
+  /* ===== HAMBURGER ===== */
+.hamburger {
+  font-size: 1.8rem;
+  cursor: pointer;
+  display: none;
+  margin-left: auto; 
+}
 
+/* ===== MOBILE MENU ===== */
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 260px;
+  height: 100vh;
+  background: #838383b7;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: right 0.35s ease;
+  z-index: 1002;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 1001;   /* ⬅️ زیر منو */
+}
+
+
+.mobile-menu.active {
+  right: 0;
+}
+
+.mobile-menu a {
+  color: #000c2c;
+  text-decoration: none;
+  padding: 12px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 6px;
+}
+
+/* ===== OVERLAY ===== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 1000;
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ===== MOBILE BREAKPOINT ===== */
+@media (max-width: 768px) {
+  .nav-center {
+    display: none;      /* منوی دسکتاپ مخفی */
+  }
+
+  .hamburger {
+    display: block;     /* hamburger فقط موبایل */
+  }
+
+  .gallery {
+    grid-template-columns: 1fr; /* گالری تک ستون */
+    gap: 40px;
+  }
+}
+
+</style>
 <script>
 const hamBtn = document.getElementById("hamburgerBtn");
 const mobileMenu = document.getElementById("mobileMenu");
+const overlay = document.getElementById("overlay");
+const icon = hamBtn.querySelector("i");
 
-hamBtn.onclick = () => {
-  mobileMenu.style.display =
-    mobileMenu.style.display === "flex" ? "none" : "flex";
-};
+function toggleMenu() {
+  mobileMenu.classList.toggle("active");
+  overlay.classList.toggle("active");
+  icon.classList.toggle("bx-menu");
+  icon.classList.toggle("bx-x");
+}
 
-document.querySelector(".mobile-sub span").onclick = () => {
-  const sub = document.querySelector(".mobile-sub-items");
-  sub.style.display = sub.style.display === "flex" ? "none" : "flex";
-};
+hamBtn.onclick = toggleMenu;
+overlay.onclick = toggleMenu;
+
+document.querySelectorAll(".mobile-menu a").forEach(link => {
+  link.addEventListener("click", () => {
+    mobileMenu.classList.remove("active");
+    overlay.classList.remove("active");
+    icon.classList.add("bx-menu");
+    icon.classList.remove("bx-x");
+  });
+});
 </script>
+
+
+
+
+<!-- GALLERY -->
+<div class="gallery">
+  <div class="art-card">
+    <img src="sheikh-low-1.jpg" alt="The Sheikh And The Maiden">
+
+    <div class="art-details">
+      <h3>The Sheikh And The Maiden</h3>
+
+      <p><strong>Medium:</strong> Watercolor & Gouache</p>                  
+      <p><strong>Size:</strong> 28.3 x 23.2 in(72 x 59 cm)</p>
+      <p><strong>Year:</strong> 2010</p>
+      <p><strong>ID:</strong> SM-2010-WC&GC-02</p>
+    </div>
+  </div>
+</div>
+  <div class="imgstylenow">
+  <img src="sheikh-1.jpg" alt="">
+    </div>
+
+<style>
+  div.imgstylenow {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    margin-top: 50px;
+    align-items: center;
+  } 
+
+  div.imgstylenow img {
+   width: auto;
+    height: 300px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+</style>
+
+<div class="copyright">
+  <h4>
+    © 2026 Shahrzad Momenzadeh. All rights reserved.
+      Website Design: Behrouz Mohebi Moghaddam |
+      Website Developed: Artin Mohebi Moghaddam
+    </span>
+  </h4>
+</div>
 
 </body>
 </html>

@@ -135,6 +135,110 @@ body {
 <body>
 
 <!-- NAVBAR -->
+<style>
+
+.gallery-item a {
+  margin-top: 12px;
+  text-decoration: none;
+  color: #000;
+  font-size: 14px;
+}
+
+/* ===== OVERLAY ===== */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 998;
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ===== MOBILE DRAWER MENU ===== */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 260px;
+  height: 100vh;
+  background: #838383b7;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: right 0.35s ease;
+  z-index: 999;
+}
+
+.mobile-menu.active {
+  right: 0;
+}
+
+.mobile-menu a {
+  color: #000c2c;
+  text-decoration: none;
+  padding: 12px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 6px;
+}
+
+.mobile-sub span {
+  color: #fff;
+  cursor: pointer;
+}
+
+.mobile-sub-items {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+/* ===== COPYRIGHT ===== */
+.copyright {
+  text-align: center;
+  background: rgb(197, 39, 39);
+  color: white;
+  padding: 6px;
+  margin-top: 30%;
+}
+
+/* ===== MOBILE FIX ===== */
+@media (max-width: 768px) {
+
+  .nav-center {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .bottom-gallery {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .image-center {
+    margin-top: 60px;
+  }
+}</style>
+</style>
+</head>
+<h1 style="text-align: center; font-family: playfair; font-size: 3.5rem;">Shahrzad Art Studio</h1>
+
+<body>
+
+<!-- NAVBAR -->
 <div class="navbar">
   <div></div>
 
