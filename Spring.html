@@ -3,426 +3,330 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shahrzad_Painting:Battle Of Dawn</title>
+<title>Layla and Majnun - Shahrzad Painting</title>
 
+<!-- Boxicons -->
 <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
 <style>
+/* ---- Genel Stil ---- */
 body {
-  margin: 0;
+  background-color: #3899847c;
+  margin: 20px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  background: #ffffff7c;
 }
 
-/* ===== NAVBAR ===== */
+.banner img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+/* ---- NAVBAR ---- */
 .navbar {
-  background-color: #ffdfdfc7;
-  padding: 8px 14px;
+  background-color: #00698f;
+  padding: 5px 10px;
   border-radius: 6px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-}
-
-.nav-center {
-  display: flex;
-  justify-content: center;
   gap: 12px;
-  flex: 1;
 }
 
 .navbar a {
-  color: #000;
+  color: #fff;
+  background: rgba(255,255,255,0.06);
   padding: 8px 12px;
   border-radius: 6px;
   text-decoration: none;
+  transition: background 0.18s, transform 0.12s;
 }
-
 .navbar a:hover {
-  background: rgba(255,255,255,0.35);
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.12);
 }
 
-.hamburger {
-  font-size: 1.8rem;
-  cursor: pointer;
-}
-
-/* ===== GALLERY ===== */
-.gallery {
-  display: flex;
-  justify-content: center;
-  margin-top: 60px;
-}
-
-/* ===== ART CARD ===== */
-.art-card {
+/* DROPDOWN */
+.miniature {
+  position: relative;
   display: inline-block;
-  background: #e7919169;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  overflow: hidden;
-  text-align: center;
-  max-width: 360px;
 }
 
-.art-card img {
-  width: 360px;
-  height: auto;
-  display: block;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.art-card img:hover {
-  transform: scale(1.05);
-}
-
-/* ===== DETAILS ===== */
-.art-details {
-  background: #ffdfdfa8;
-  padding: 14px;
-  text-align: left;
-  font-size: 0.95rem;
-}
-
-.art-details h3 {
-  margin: 0 0 8px;
-  text-align: center;
-}
-
-.art-details p {
-  margin: 6px 0;
-}
-
-/* ===== COPYRIGHT ===== */
-.copyright {
-  text-align: center;
-  background: rgb(197, 39, 39);
-  color: white;
-  padding: 10px;
-  margin-top: 80px;
-  font-size: 0.90rem;
-  height: 1/200px;
-}
-
-.copyright {
-  text-align: center;
-  background: rgb(197, 39, 39);
-  color: white;
-  padding: 10px;
-  margin-top: 80px;
-  font-size: 0.85rem;
-  font-weight: 400; /* ince */
-  line-height: 1.5;
-}
-
-.copyright span {
-  font-size: 0.8rem;
-  font-weight: 300; /* daha da ince */
-}
-
-.copyright h4 {
-  font-weight: 400; /* bold yerine normal */
-  margin: 0;
-  line-height: 1.5;
-  font-style: bold;
-}
-
-</style>
-</head>
-
-<body>
-
-<!-- NAVBAR -->
-<style>
-
-.gallery-item a {
-  margin-top: 12px;
-  text-decoration: none;
-  color: #000;
-  font-size: 14px;
-}
-
-/* ===== OVERLAY ===== */
-.overlay {
-  position: fixed;
-  top: 0;
+.miniature-box {
+  position: absolute;
+  top: calc(100% + 6px);
   left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0,0,0,0.45);
+  background: linear-gradient(180deg, #ffffff, #f3fbff);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(12,30,60,0.18);
+  padding: 6px;
+  min-width: 200px;
   opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 998;
-}
-
-.overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* ===== MOBILE DRAWER MENU ===== */
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 260px;
-  height: 100vh;
-  background: #838383b7;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transition: right 0.35s ease;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 180ms ease, transform 180ms ease, visibility 180ms;
   z-index: 999;
 }
 
-.mobile-menu.active {
-  right: 0;
+.miniature-box.open,
+.miniature:hover > .miniature-box {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
-.mobile-menu a {
-  color: #000c2c;
+.miniature-box a {
+  display: block;
+  padding: 8px 12px;
+  color: #01203a;
   text-decoration: none;
-  padding: 12px;
-  background: rgba(255,255,255,0.1);
   border-radius: 6px;
+  transition: background 120ms, color 120ms;
+}
+.miniature-box a:hover {
+  background: linear-gradient(90deg,#e6f6ff,#dfeeff);
+  color: #001525;
 }
 
-.mobile-sub span {
-  color: #fff;
+/* Alt menü */
+.has-sub {
+  position: relative;
   cursor: pointer;
 }
 
-.mobile-sub-items {
+/* MOBILE MENU DEFAULT STYLE */
+.mobile-menu {
   display: none;
   flex-direction: column;
-  gap: 6px;
-  margin-top: 6px;
+  background: #004c6d;
+  padding: 15px;
+  border-radius: 8px;
+  gap: 10px;
+  margin-top: 12px;
 }
 
-/* ===== COPYRIGHT ===== */
-.copyright {
+.mobile-menu a {
+  color: #fff;
+  text-decoration: none;
+  background: rgba(255,255,255,0.09);
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.mobile-menu.open {
+  display: flex;
+}
+
+/* GALLERY GRID */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.art-card {
+  background: #f8ffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  overflow: hidden;
   text-align: center;
-  background: rgb(197, 39, 39);
-  color: white;
-  padding: 6px;
-  margin-top: 30%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* ===== MOBILE FIX ===== */
-@media (max-width: 768px) {
+.art-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+}
 
-  .nav-center {
-    display: none;
-  }
+.art-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
 
-  .hamburger {
-    display: block;
-  }
+.art-card p {
+  background: #004c6d;
+  color: #fff;
+  margin: 0;
+  padding: 10px;
+  font-size: 0.95rem;
+}
 
-  .bottom-gallery {
-    flex-direction: column;
-    align-items: center;
-  }
+/* FOOTER */
+footer {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 25px 15px;
+  border-radius: 8px;
+  margin-top: 40px;
+  font-size: 0.95rem;
+}
 
-  .image-center {
-    margin-top: 60px;
-  }
-}</style>
+footer a {
+  color: #68b8ff;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #a9d6ff;
+}
 </style>
 </head>
-
 <body>
 
-<!-- NAVBAR -->
-<div class="navbar">
-  <div></div>
+<div class="container">
 
-  <div class="nav-center">
-    <a href="index.html">Home</a>
-    <a href="iranian_miniature.html">Iranian Miniature</a>
-    <a href="Contemporary_Art.html">Contemporary Art</a>
-    <a href="motive.html">Motive Art</a>
-    <a href="contact.html">Contact</a>
-    <a href="about.html">About</a>
+  <!-- Banner -->
+  <div class="banner">
+    <img src="banner02.jpg" alt="Banner">
   </div>
 
+  <!-- NAVBAR -->
+<div class="navbar">
+    
+  <!-- HAMBURGER (MOBILE) -->
   <div class="hamburger" id="hamburgerBtn">
     <i class='bx bx-menu'></i>
   </div>
+
+  <!-- DESKTOP MENU -->
+    <a href="index.html">Home <i class='bx bx-home-alt'></i></a>
+    <div class="miniature">
+      <a href="#" class="menu-toggle">Artworks <i class='bx bx-collection'></i></a>
+      <div class="miniature-box">
+        <a class="has-sub">Miniature</a>
+        <div class="submenu">
+          <a href="iranian_miniature.html">Iranian miniature</a>
+          <a href="figur_miniature.html">Figure miniature</a>
+        </div>
+        <a href="Portrait.html">Portrait</a>
+        <a href="Expressionism.html">Expressionism</a>
+        <a href="motive.html">Iranian Illumination & Mystic Motifs</a>
+        <a href="Impressionism.html">Impressionism</a>
+      </div>
+    </div>
+    <a href="about.html">About <i class='bx bx-user'></i></a>
+
+  <!-- LANGUAGE FLAGS -->
 </div>
+
+
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">Home</a>
-    <a href="iranian_miniature.html">Iranian Miniature</a>
-    <a href="Contemporary_Art.html">Contemporary Art</a>
-    <a href="motive.html">Motive Art</a>
-    <a href="contact.html">Contact</a>
-    <a href="about.html">About</a>
-</div>
 
-<!-- GALLERY -->
-<div class="gallery">
-  <div class="art-card">
-    <img src="spring.webp" alt="spring">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
 
-    <div class="art-details">
-      <h3>Spring</h3>
-      <p><strong>Medium:</strong> Acrylic</p>                  
-      <p><strong>Size:</strong> Size:19.7 x 19.7 in(50 x 50 cm)</p>
-      <p><strong>Year:</strong> 2018</p>
-      <p><strong>ID:</strong>  SM-2018-AC-02</p>
+  <div class="mobile-sub">
+    <span>Miniature ▼</span>
+    <div class="mobile-sub-items">
+      <a href="iranian_miniature.html">Iranian miniature</a>
+      <a href="figur_miniature.html">Figure miniature</a>
     </div>
   </div>
+
+  <a href="Portrait.html">Portrait</a>
+  <a href="Expressionism.html">Expressionism</a>
+  <a href="motive.html">Iranian Illumination & Mystic Motifs</a>
+  <a href="Impressionism.html">Impressionism</a>
+
 </div>
-  <div class="imgstylenow">
-  <img src="spring-1.jpg" alt="">
+
+  <!-- Content -->
+  <div class="content">
+    <img class="art-image" src="Spring.jpg" alt="Summer">
+    <div class="art-details">
+    <h1>Spring</h1>
+    <p>• Acrylic on Canvas</p>
+    <p>• Size: 19.7 x 19.7 x 1.5 in(50 x 50 x 3.8 cm)</p>
+    <p>• Year: 2018</p>
+    <p>• ID: SM-2018-AC-02</p>
+    
+    
+
+    
+    <p>• This acrylic painting on canvas celebrates spring’s renewal and brightness. Layered colors and fluid brushstrokes capture blooming nature, balancing energy and calm to evoke hope, growth, and the gentle rhythm of the season.</p>
+    <a class="buy-button" href="https://www.saatchiart.com/art/Painting-Spring/2870733/13281791/view" target="_blank">Buy on Saatchi Art</a>
+</div>
+
+
+
   </div>
 
-<style>
-  div.imgstylenow {
-    display: flex;
-    justify-content: center;
-    gap: 80px;
-    margin-top: 50px;
-    align-items: center;
-  } 
-
-  div.imgstylenow img {
-   width: 360px;
-    height: auto;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-</style>
-
-<div class="copyright">
-  © 2026 Shahrzad Momenzadeh. All rights reserved. |
-  Website Design: Behrouz Mohebi Moghaddam – Website Developed: Artin Mohebi Moghaddam
+  <!-- Footer -->
+<footer>
+    <p>📸 <a href="https://instagram.com/shahrzad.artist" target="_blank">instagram.com/shahrzad.artist</a></p>
+    <p>🎨 <a href="https://www.saatchiart.com/en-tr/shahrzadfineart" target="_blank">saatchiart.com/en-tr/shahrzadfineart</a></p>
+  </footer>
 </div>
+
+<!-- Dropdown Script -->
+<script>
+(function(){
+  const toggles = document.querySelectorAll('.menu-toggle');
+  let isManualOpen = false;
+
+  function closeAll(){
+    document.querySelectorAll('.miniature-box').forEach(b=>{
+      b.classList.remove('open');
+      b.setAttribute('aria-hidden','true');
+    });
+    toggles.forEach(t => t.setAttribute('aria-expanded','false'));
+    isManualOpen = false;
+  }
+
+  toggles.forEach(toggle => {
+    const container = toggle.closest('.miniature');
+    const box = container.querySelector('.miniature-box');
+    let leaveTimer;
+
+    function openBox(){
+      closeAll();
+      box.classList.add('open');
+      toggle.setAttribute('aria-expanded','true');
+      box.setAttribute('aria-hidden','false');
+    }
+    function closeBox(){
+      if (isManualOpen) return;
+      box.classList.remove('open');
+      toggle.setAttribute('aria-expanded','false');
+      box.setAttribute('aria-hidden','true');
+    }
+
+    toggle.addEventListener('click', function(e){
+      e.preventDefault();
+      if (box.classList.contains('open') && isManualOpen) {
+        closeAll();
+      } else {
+        openBox();
+        isManualOpen = true;
+      }
+    });
+
+    container.addEventListener('mouseenter', function(){
+      if (!isManualOpen) {
+        clearTimeout(leaveTimer);
+        openBox();
+      }
+    });
+    container.addEventListener('mouseleave', function(){
+      if (!isManualOpen) {
+        leaveTimer = setTimeout(closeBox, 500);
+      }
+    });
+  });
+
+  document.addEventListener('click', function(e){
+    if (!e.target.closest('.miniature')) closeAll();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeAll();
+  });
+})();
+</script>
 
 </body>
 </html>
-<style>
-  /* ===== HAMBURGER ===== */
-.hamburger {
-  font-size: 1.8rem;
-  cursor: pointer;
-  display: none;
-  margin-left: auto; 
-}
-
-/* ===== MOBILE MENU ===== */
-
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 260px;
-  height: 100vh;
-  background: #838383b7;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transition: right 0.35s ease;
-  z-index: 1002;
-}
-
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
-  z-index: 1001;   /* ⬅️ زیر منو */
-}
-
-
-.mobile-menu.active {
-  right: 0;
-}
-
-.mobile-menu a {
-  color: #000c2c;
-  text-decoration: none;
-  padding: 12px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 6px;
-}
-
-/* ===== OVERLAY ===== */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
-  z-index: 1000;
-}
-
-.overlay.active {
-  opacity: 1;
-  pointer-events: all;
-}
-
-/* ===== MOBILE BREAKPOINT ===== */
-@media (max-width: 768px) {
-  .nav-center {
-    display: none;     
-  }
-
-  .hamburger {
-    display: block;     
-  }
-
-  .gallery {
-    grid-template-columns: 1fr; 
-    gap: 40px;
-  }
-}
-
-@media (max-width: 768px) {
-  div.imgstylenow {
-    flex-direction: column; 
-    gap: 30px;
-  }
-
-  div.imgstylenow img {
-    height: auto;
-    width: 90%;        
-    max-width: 350px;
-  }
-}
-
-
-</style>
-<script>
-const hamBtn = document.getElementById("hamburgerBtn");
-const mobileMenu = document.getElementById("mobileMenu");
-const overlay = document.getElementById("overlay");
-const icon = hamBtn.querySelector("i");
-
-function toggleMenu() {
-  mobileMenu.classList.toggle("active");
-  overlay.classList.toggle("active");
-  icon.classList.toggle("bx-menu");
-  icon.classList.toggle("bx-x");
-}
-
-hamBtn.onclick = toggleMenu;
-overlay.onclick = toggleMenu;
-
-document.querySelectorAll(".mobile-menu a").forEach(link => {
-  link.addEventListener("click", () => {
-    mobileMenu.classList.remove("active");
-    overlay.classList.remove("active");
-    icon.classList.add("bx-menu");
-    icon.classList.remove("bx-x");
-  });
-});
-</script>

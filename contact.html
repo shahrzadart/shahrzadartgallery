@@ -135,110 +135,6 @@ body {
 <body>
 
 <!-- NAVBAR -->
-<style>
-
-.gallery-item a {
-  margin-top: 12px;
-  text-decoration: none;
-  color: #000;
-  font-size: 14px;
-}
-
-/* ===== OVERLAY ===== */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0,0,0,0.45);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 998;
-}
-
-.overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* ===== MOBILE DRAWER MENU ===== */
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 260px;
-  height: 100vh;
-  background: #838383b7;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transition: right 0.35s ease;
-  z-index: 999;
-}
-
-.mobile-menu.active {
-  right: 0;
-}
-
-.mobile-menu a {
-  color: #000c2c;
-  text-decoration: none;
-  padding: 12px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 6px;
-}
-
-.mobile-sub span {
-  color: #fff;
-  cursor: pointer;
-}
-
-.mobile-sub-items {
-  display: none;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 6px;
-}
-
-/* ===== COPYRIGHT ===== */
-.copyright {
-  text-align: center;
-  background: rgb(197, 39, 39);
-  color: white;
-  padding: 6px;
-  margin-top: 30%;
-}
-
-/* ===== MOBILE FIX ===== */
-@media (max-width: 768px) {
-
-  .nav-center {
-    display: none;
-  }
-
-  .hamburger {
-    display: block;
-  }
-
-  .bottom-gallery {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .image-center {
-    margin-top: 60px;
-  }
-}</style>
-</style>
-</head>
-<h1 style="text-align: center; font-family: playfair; font-size: 3.5rem;">Shahrzad Art Studio</h1>
-
-<body>
-
-<!-- NAVBAR -->
 <div class="navbar">
   <div></div>
 
@@ -251,18 +147,9 @@ body {
     <a href="about.html">About</a>
   </div>
 
-  <div class="hamburger" id="hamburgerBtn">
+  <div class="hamburger">
     <i class='bx bx-menu'></i>
   </div>
-</div>
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">Home</a>
-    <a href="iranian_miniature.html">Iranian Miniature</a>
-    <a href="Contemporary_Art.html">Contemporary Art</a>
-    <a href="motive.html">Motive Art</a>
-    <a href="contact.html">Contact</a>
-    <a href="about.html">About</a>
 </div>
 
 <!-- CONTACT -->
@@ -287,11 +174,10 @@ body {
   </div>
 </div>
 <div class="logo">
-  <a href="https://wa.me/905010779755" target="_blank">
-  <img src="Whatsapp.jpg" alt="WhatsApp"></a>
+  <a href="tel:+905010779755"><img src="Whatsapp.jpg" alt=""></a>
   <a href="https://www.facebook.com/share/1BbnaQELFL/?mibextid=wwXIfr"><img src="facebook.avif" alt=""></a>
-  <a href="https://www.linkedin.com/in/shahrzad-momenzadeh?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"><img src="LinkDIN.webp" alt=""></a>
-  <a href="https://www.instagram.com/shahrzad.artist"><img src="Instagram.png" alt=""></a>
+  <a href="https://www.linkedin.com/in/shahrzad-momenzadeh?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"><img src="LinkdIN.avif" alt=""></a>
+  <a href="https://www.instagram.com/shahrzad.artist"><img src="Instagram.avif" alt=""></a>
   <a href="https://www.saatchiart.com/en-tr/shahrzadfineart"><img src="saatch.avif" alt=""></a>
   <a href="https://www.artmajeur.com/shahrzad-momenzadeh"><img src="Artmajuor.avif" alt=""></a>
   <a href="https://pin.it/6nkLyCpTO"><img src="Pintress.avif" alt=""></a>
@@ -308,11 +194,13 @@ body {
   justify-content: center;
 }
 </style>
-
 <div class="copyright">
-  © 2026 Shahrzad Momenzadeh. All rights reserved. |
-  Website Design: Behrouz Mohebi Moghaddam – Website Developed: Artin Mohebi Moghaddam
-</div>
+<h4>© 2026 Shahrzad Momenzadeh. All rights reserved.
+  <br>
+  <br>
+  <div class="d" style="font-size: medium;">
+    Website Design: Behrouz Mohebi Moghaddam | Website Developed: Artin Mohebi Moghaddam
+  </div>
 </h4>
 </div>
 <style>  .copyright {

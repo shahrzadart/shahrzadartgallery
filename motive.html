@@ -1,383 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shahrzad_Painting</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shahrzad_Painting</title>
 
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Verdana, Geneva, Tahoma, sans-serif;
-      background: #ffffff7c;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background: #ffffff7c;
+}
 
-    /* ===== NAVBAR ===== */
-    .navbar {
-      background-color: #ffdfdfc7;
-      padding: 8px 14px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+/* ===== NAVBAR ===== */
+.navbar {
+  background-color: #ffdfdfc7;
+  padding: 8px 14px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-    .nav-center {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex: 1;
-    }
+.nav-center {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex: 1;
+}
 
-    .navbar a {
-      color: #000;
-      padding: 8px 12px;
-      border-radius: 6px;
-      text-decoration: none;
-    }
+.navbar a {
+  color: #000;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+}
 
-    .navbar a:hover {
-      background: rgba(255, 255, 255, 0.35);
-    }
+.navbar a:hover {
+  background: rgba(255,255,255,0.35);
+}
 
-    .hamburger {
-      font-size: 1.8rem;
-      cursor: pointer;
-    }
+.hamburger {
+  font-size: 1.8rem;
+  cursor: pointer;
+}
 
-    /* ===== GALLERY ===== */
-    .gallery {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 50px;
-      margin-top: 40px;
-    }
+/* ===== GALLERY ===== */
+.gallery {
+  display: flex;
+  flex-direction: column;   /* alt alta */
+  align-items: center;      /* ortada */
+  gap: 50px;                /* aralarındaki boşluk */
+  margin-top: 40px;
+}
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 70px;
-      margin-top: 40px;
-      justify-items: center;
-    }
+/* BOX resmin boyutunu alsın */
+.art-card {
+  display: inline-block;    /* 🔴 EN ÖNEMLİ SATIR */
+  background: #e7919169;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  overflow: hidden;
+  text-align: center;
+}
 
-    /* BOX resmin boyutunu alsın */
-    .art-card {
-      display: inline-block;
-      background: #e7919169;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-      overflow: auto;
-      text-align: center;
-    }
-
-    /* RESMİN BOYUTUNU SEN BELİRLİYORSUN */
-    .art-card img {
-  width: 100%;
-  max-width: 320px;
-  height: 360px;        /* دسکتاپ */
-  object-fit: cover;   /* نظم حرفه‌ای */
+/* RESMİN BOYUTUNU SEN BELİRLİYORSUN */
+.art-card img {
+  width: 320px;     /* 👈 BURAYI DEĞİŞTİR */
+  height: auto;
   display: block;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.art-card img:hover {
+  transform: scale(1.05); }
+/* BAŞLIK */
+.art-card p {
+  color: hsl(0, 100%, 5%);
+  background: #ffdfdfa8;
+  margin: 0;
+  padding: 10px;
+  font-size: 1rem;
+  font-style: Bold;
+}
 
 
-    /* BAŞLIK */
-    .art-card p {
-      color: hsl(0, 100%, 5%);
-      background: #ffdfdfa8;
-      margin: 0;
-      padding: 10px;
-      font-size: 1rem;
-      font-style: Bold;
-    }
 
-
-
-    /* ===== COPYRIGHT ===== */
-    .copyright {
-      text-align: center;
-      background: rgb(197, 39, 39);
-      color: white;
-      padding: 5px;
-      margin-top: 80px;
-    }
-  </style>
+/* ===== COPYRIGHT ===== */
+.copyright {
+  text-align: center;
+  background: rgb(197, 39, 39);
+  color: white;
+  padding: 5px;
+  margin-top: 80px;
+}
+</style>
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
-  <style>
-    .gallery-item a {
-      margin-top: 12px;
-      text-decoration: none;
-      color: #000;
-      font-size: 14px;
-    }
+<!-- NAVBAR -->
+<div class="navbar">
+  <div></div>
 
-    /* ===== OVERLAY ===== */
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.45);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      z-index: 998;
-    }
+  <div class="nav-center">
+    <a href="index.html">Home</a>
+    <a href="iranian_miniature.html">Iranian Miniature</a>
+    <a href="Contemporary_Art.html">Contemporary Art</a>
+    <a href="motive.html">Motive Art</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About</a>
+  </div>
 
-    .overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    /* ===== MOBILE DRAWER MENU ===== */
-    .mobile-menu {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 260px;
-      height: 100vh;
-      background: #838383b7;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      transition: right 0.35s ease;
-      z-index: 999;
-    }
-
-    .mobile-menu.active {
-      right: 0;
-    }
-
-    .mobile-menu a {
-      color: #000c2c;
-      text-decoration: none;
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 6px;
-    }
-
-    .mobile-sub span {
-      color: #fff;
-      cursor: pointer;
-    }
-
-    .mobile-sub-items {
-      display: none;
-      flex-direction: column;
-      gap: 6px;
-      margin-top: 6px;
-    }
-
-    /* ===== COPYRIGHT ===== */
-    .copyright {
-      text-align: center;
-      background: rgb(197, 39, 39);
-      color: white;
-      padding: 6px;
-      margin-top: 30%;
-    }
-
-    /* ===== MOBILE FIX ===== */
-    @media (max-width: 768px) {
-
-      .nav-center {
-        display: none;
-      }
-
-      .hamburger {
-        display: block;
-      }
-
-      .bottom-gallery {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .image-center {
-        margin-top: 60px;
-      }
-       .art-card img {
-    height: 260px;
-  }
-    }
-  </style>
-  </style>
-  </head>
-<h1 style="text-align: center; font-family: playfair; font-size: 3.5rem;">Shahrzad Art Studio</h1>
-
-  <body>
-
-    <!-- NAVBAR -->
-    <div class="navbar">
-      <div></div>
-
-      <div class="nav-center">
-        <a href="index.html">Home</a>
-        <a href="iranian_miniature.html">Iranian Miniature</a>
-        <a href="Contemporary_Art.html">Contemporary Art</a>
-        <a href="motive.html">Motive Art</a>
-        <a href="contact.html">Contact</a>
-        <a href="about.html">About</a>
-      </div>
-
-      <div class="hamburger" id="hamburgerBtn">
-        <i class='bx bx-menu'></i>
-      </div>
-    </div>
-    <!-- MOBILE MENU -->
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="index.html">Home</a>
-      <a href="iranian_miniature.html">Iranian Miniature</a>
-      <a href="Contemporary_Art.html">Contemporary Art</a>
-      <a href="motive.html">Motive Art</a>
-      <a href="contact.html">Contact</a>
-      <a href="about.html">About</a>
-    </div>
-    <div class="hamburger" id="hamburgerBtn">
-      <i class='bx bx-menu'></i>
-    </div>
-
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="index.html">Home</a>
-      <a href="iranian_miniature.html">Iranian Miniature</a>
-      <a href="Contemporary_Art.html">Contemporary Art</a>
-      <a href="motive.html">Motive Art</a>
-      <a href="contact.html">Contact</a>
-      <a href="about.html">About</a>
-    </div>
-
-    <div class="overlay" id="overlay"></div>
-    <style>
-      .hamburger {
-        font-size: 2rem;
-        cursor: pointer;
-        display: none;
-        z-index: 1001;
-      }
-
-      .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.45);
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-        z-index: 998;
-      }
-
-      .overlay.active {
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .mobile-menu {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 260px;
-        height: 100vh;
-        background: #838383b7;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-        transition: right 0.35s ease;
-        z-index: 999;
-      }
-
-      .mobile-menu.active {
-        right: 0;
-      }
-
-      .mobile-menu a {
-        color: #000c2c;
-        text-decoration: none;
-        padding: 12px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 6px;
-      }
-
-      .gallery {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 70px;
-      }
-
-      @media (max-width: 992px) {
-        .gallery {
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        }
-      }
-    </style>
-    <script>
-      const hamBtn = document.getElementById("hamburgerBtn");
-      const mobileMenu = document.getElementById("mobileMenu");
-      const overlay = document.getElementById("overlay");
-      const icon = hamBtn.querySelector("i");
-
-      function toggleMenu() {
-        mobileMenu.classList.toggle("active");
-        overlay.classList.toggle("active");
-        icon.classList.toggle("bx-menu");
-        icon.classList.toggle("bx-x");
-      }
-
-      hamBtn.onclick = toggleMenu;
-      overlay.onclick = toggleMenu;
-
-    </script>
+  <div class="hamburger" id="hamburgerBtn">
+    <i class='bx bx-menu'></i>
+  </div>
+</div>
 
 <!-- GALLERY -->
 <div class="gallery">
-  <div class="art-card">
-  <a href="thelight.html"><img src="the light.webp" alt="The Light"></a>
-  <p>The Light</p>
-</div>
 <div class="art-card">
-  <a href="Untitled - Tazhib 6.html"><img src="garden of Imagination.webp" alt="Untitled"></a>
+  <a href="The Garden of Imagination.html"><img src="garden of Imagination.webp" alt="The Garden of Imagination"></a>
   <p>Untitled - Tazhib 6</p>
 </div>
 <div class="art-card">
-  <a href="Untitled - Tazib 5.html"><img src="calligraphy.webp" alt="Untitled - Tazib 5
-    "></a>
+  <a href="Calligraphy&illumination.html"><img src="calligraphy.webp" alt="Calligraphy & Illumination"></a>
   <p>Untitled - Tazhib 5</p>
 </div>
 <div class="art-card">
-  <a href="Untitled - Tazib 4.html"><img src="kahl container.webp" alt="Untitled - Tazib 4"></a>
+  <a href="Kohl Container.html"><img src="kahl container.webp" alt="Crane Bird"></a>
   <p>Untitled - Tazhib 4</p>
 </div>
 <div class="art-card">
-  <a href="Untitled - Tazib 3.html"><img src="dome.webp" alt="Untitled - Tazib 3"></a>
+  <a href="TheDome.html"><img src="dome.webp" alt="Crane Bird"></a>
   <p>Untitled - Tazhib 3</p>
 </div>
 <div class="art-card">
-  <a href="Untitled - Tazib 2.html"><img src="petal.webp" alt="Untitled - Tazib 2"></a>
+  <a href="petal.html"><img src="petal.webp" alt="Crane Bird"></a>
   <p>Untitled - Tazhib 2</p>
 </div>
 <div class="art-card">
-  <a href="Untitled - Tazib 1.html"><img src="octagon.webp" alt="Untitled - Tazib 1"></a>
+  <a href="The Octagon.html"><img src="octagon.webp" alt="Crane Bird"></a>
   <p>Untitled - Tazhib 1</p>
 </div>
   </div>
 </div>
 
 <div class="copyright">
-  © 2026 Shahrzad Momenzadeh. All rights reserved. |
-  Website Design: Behrouz Mohebi Moghaddam – Website Developed: Artin Mohebi Moghaddam
+<h4>© 2026 Shahrzad Momenzadeh. All rights reserved.
+  <br>
+  <br>
+  <div class="d" style="font-size: medium;">
+    Website Design: Behrouz Mohebi Moghaddam | Website Developed: Artin Mohebi Moghaddam
+  </div>
+</h4>
 </div>
 
 

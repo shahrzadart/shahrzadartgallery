@@ -427,150 +427,60 @@ document.querySelector(".mobile-sub span").addEventListener("click", () => {
 
   </div>
 
-<style>
-
-.gallery-item a {
-  margin-top: 12px;
-  text-decoration: none;
-  color: #000;
-  font-size: 14px;
-}
-
-/* ===== OVERLAY ===== */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0,0,0,0.45);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 998;
-}
-
-.overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* ===== MOBILE DRAWER MENU ===== */
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 260px;
-  height: 100vh;
-  background: #838383b7;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transition: right 0.35s ease;
-  z-index: 999;
-}
-
-.mobile-menu.active {
-  right: 0;
-}
-
-.mobile-menu a {
-  color: #000c2c;
-  text-decoration: none;
-  padding: 12px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 6px;
-}
-
-.mobile-sub span {
-  color: #fff;
-  cursor: pointer;
-}
-
-.mobile-sub-items {
-  display: none;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 6px;
-}
-
-/* ===== COPYRIGHT ===== */
-.copyright {
-  text-align: center;
-  background: rgb(197, 39, 39);
-  color: white;
-  padding: 6px;
-  margin-top: 30%;
-}
-
-/* ===== MOBILE FIX ===== */
-@media (max-width: 768px) {
-
-  .nav-center {
-    display: none;
-  }
-
-  .hamburger {
-    display: block;
-  }
-
-  .bottom-gallery {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .image-center {
-    margin-top: 60px;
-  }
-}</style>
-</style>
-</head>
-
-<body>
-
-<!-- NAVBAR -->
-<div class="navbar">
-  <div></div>
-
-  <div class="nav-center">
+  <!-- MOBİL MENÜ -->
+  <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">Home</a>
-    <a href="iranian_miniature.html">Iranian Miniature</a>
-    <a href="Contemporary_Art.html">Contemporary Art</a>
-    <a href="motive.html">Motive Art</a>
-    <a href="contact.html">Contact</a>
     <a href="about.html">About</a>
-  </div>
 
-  <div class="hamburger" id="hamburgerBtn">
-    <i class='bx bx-menu'></i>
+    <div class="mobile-sub">
+      <span>Miniature ▼</span>
+      <div class="mobile-sub-items">
+        <a href="iranian_miniature.html">Iranian miniature</a>
+        <a href="figur_miniature.html">Figure miniature</a>
+      </div>
+    </div>
+
+    <a href="Portrait.html">Portrait</a>
+    <a href="Expressionism.html">Expressionism</a>
+    <a href="motive.html">Iranian Illumination & Mystic Motifs</a>
+    <a href="Impressionism.html">Impressionism</a>
   </div>
+  <!-- LANGUAGE FLAGS -->
 </div>
+
+
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">Home</a>
-    <a href="iranian_miniature.html">Iranian Miniature</a>
-    <a href="Contemporary_Art.html">Contemporary Art</a>
-    <a href="motive.html">Motive Art</a>
-    <a href="contact.html">Contact</a>
-    <a href="about.html">About</a>
+
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+
+  <div class="mobile-sub">
+    <span>Miniature ▼</span>
+    <div class="mobile-sub-items">
+      <a href="iranian_miniature.html">Iranian miniature</a>
+      <a href="figur_miniature.html">Figure miniature</a>
+    </div>
+  </div>
+
+  <a href="Portrait.html">Portrait</a>
+  <a href="Expressionism.html">Expressionism</a>
+  <a href="motive.html">Iranian Illumination & Mystic Motifs</a>
+  <a href="Impressionism.html">Impressionism</a>
+
 </div>
 
   <!-- Content -->
   <div class="content">
-    <img class="art-image" src="untitled3.webp" alt="Untitled 3">
+    <img class="art-image" src="Mystical fish.jpg" alt="Mystical Fish">
     <div class="art-details">
   <div class="art-details">
-  <h1>Untitled 3</h1>
+  <h1>Mystical Fish</h1>
   <p>• Watercolor</p>
   <p>• Size: 9.8 x 15.7 in</p>
   <p>• Year: 2006</p>
-  
-  <p>• ID: SM-2006-WC-01</p>
-
-   <div class="imgstylenow">
-  <img src="u3.jpg" alt="">
-  </div
+  <p>• A watercolor painting of a mythical horned fish, rendered in an expressionist style. Bold colors and flowing forms convey its magical energy and movement rather than realistic detail.</p>
+  <p>• ID: SM-2006-WC-02</p>
   <a class="buy-button" href="https://www.saatchiart.com/art/Painting-The-Mystical-Fish/2870733/13364859/view" target="_blank">Buy on Saatchi Art</a>
 </div>
 
@@ -657,124 +567,3 @@ document.querySelector(".mobile-sub span").addEventListener("click", () => {
 
 </body>
 </html>
-<style>
-  /* ===== HAMBURGER ===== */
-.hamburger {
-  font-size: 1.8rem;
-  cursor: pointer;
-  display: none;
-  margin-left: auto; 
-}
-
-/* ===== MOBILE MENU ===== */
-
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 260px;
-  height: 100vh;
-  background: #838383b7;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transition: right 0.35s ease;
-  z-index: 1002;
-}
-
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
-  z-index: 1001;   /* ⬅️ زیر منو */
-}
-
-
-.mobile-menu.active {
-  right: 0;
-}
-
-.mobile-menu a {
-  color: #000c2c;
-  text-decoration: none;
-  padding: 12px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 6px;
-}
-
-/* ===== OVERLAY ===== */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
-  z-index: 1000;
-}
-
-.overlay.active {
-  opacity: 1;
-  pointer-events: all;
-}
-
-/* ===== MOBILE BREAKPOINT ===== */
-@media (max-width: 768px) {
-  .nav-center {
-    display: none;     
-  }
-
-  .hamburger {
-    display: block;     
-  }
-
-  .gallery {
-    grid-template-columns: 1fr; 
-    gap: 40px;
-  }
-}
-
-@media (max-width: 768px) {
-  div.imgstylenow {
-    flex-direction: column; 
-    gap: 30px;
-  }
-
-  div.imgstylenow img {
-    height: auto;
-    width: 90%;        
-    max-width: 350px;
-  }
-}
-
-
-</style>
-<script>
-const hamBtn = document.getElementById("hamburgerBtn");
-const mobileMenu = document.getElementById("mobileMenu");
-const overlay = document.getElementById("overlay");
-const icon = hamBtn.querySelector("i");
-
-function toggleMenu() {
-  mobileMenu.classList.toggle("active");
-  overlay.classList.toggle("active");
-  icon.classList.toggle("bx-menu");
-  icon.classList.toggle("bx-x");
-}
-
-hamBtn.onclick = toggleMenu;
-overlay.onclick = toggleMenu;
-
-document.querySelectorAll(".mobile-menu a").forEach(link => {
-  link.addEventListener("click", () => {
-    mobileMenu.classList.remove("active");
-    overlay.classList.remove("active");
-    icon.classList.add("bx-menu");
-    icon.classList.remove("bx-x");
-  });
-});
-</script>

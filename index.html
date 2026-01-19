@@ -5,13 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shahrzad_Painting</title>
 
-<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 <style>
-/* ===== GLOBAL ===== */
 body {
   background-color: #ffffff7c;
-  margin: 0;
+  margin: 0px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -42,6 +41,14 @@ body {
 .navbar a:hover {
   background: rgba(255,255,255,0.35);
 }
+
+/* HAMBURGER */
+.hamburger {
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* ===== IMAGE SECTIONS ===== */
 .image-center {
   display: flex;
   justify-content: center;
@@ -49,98 +56,49 @@ body {
 }
 
 .image-center img {
-  width: 333px;
+  width: 333.3333333333333px;
   border-radius: 8px;
 }
 
-/* ===== GALLERY ===== */
+/* ALT GALERİ */
 .bottom-gallery {
   display: flex;
   justify-content: center;
-  gap: 30px;
   margin-top: 80px;
-}
-
-.gallery-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .bottom-gallery img {
   width: 220px;
   height: 300px;
-  object-fit: contain;
-  background-color: #f5f5f5; /* یا سفید */
+  object-fit:contain;
   border-radius: 10px;
+  margin: 0 20px;
+  margin-top: 50px;
 }
-
-
+.bottom-gallery img {
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
 .bottom-gallery img:hover {
-  transform: none;
+  transform: scale(1.05);
+  transition: 0.3s ;
 }
 
-
-.gallery-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;   /* فاصله مساوی بین عکس و متن */
-}
-/* ===== HAMBURGER / X ===== */
-.hamburger {
-  font-size: 2rem;
-  cursor: pointer;
-  display: none;
-  z-index: 1001;
-}
-
-/* ===== MAIN IMAGE ===== */
-
-/* ===== OVERLAY ===== */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0,0,0,0.45);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 998;
-}
-
-.overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* ===== MOBILE DRAWER MENU ===== */
+/* MOBILE MENU */
 .mobile-menu {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 260px;
-  height: 100vh;
-  background: #838383b7;
-  padding: 20px;
-  display: flex;
+  display: none;
   flex-direction: column;
-  gap: 14px;
-  transition: right 0.35s ease;
-  z-index: 999;
-}
-
-.mobile-menu.active {
-  right: 0;
+  background: #004c6d;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 12px;
+  gap: 10px;
 }
 
 .mobile-menu a {
-  color: #000c2c;
+  color: #fff;
   text-decoration: none;
-  padding: 12px;
+  padding: 10px;
   background: rgba(255,255,255,0.1);
   border-radius: 6px;
 }
@@ -154,42 +112,9 @@ body {
   display: none;
   flex-direction: column;
   gap: 6px;
-  margin-top: 6px;
 }
-
-/* ===== COPYRIGHT ===== */
-.copyright {
-  text-align: center;
-  background: rgb(197, 39, 39);
-  color: white;
-  padding: 6px 10px;
-  margin-top: 40px;
-  font-size: 13px;
-}
-
-/* ===== MOBILE FIX ===== */
-@media (max-width: 768px) {
-
-  .nav-center {
-    display: none;
-  }
-
-  .hamburger {
-    display: block;
-  }
-
-  .bottom-gallery {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .image-center {
-    margin-top: 60px;
-  }
-}</style>
 </style>
 </head>
-<h1 style="text-align: center; font-family: playfair; font-size: 3.5rem;">Shahrzad Art Studio</h1>
 
 <body>
 
@@ -210,67 +135,102 @@ body {
     <i class='bx bx-menu'></i>
   </div>
 </div>
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">Home</a>
-    <a href="iranian_miniature.html">Iranian Miniature</a>
-    <a href="Contemporary_Art.html">Contemporary Art</a>
-    <a href="motive.html">Motive Art</a>
-    <a href="contact.html">Contact</a>
-    <a href="about.html">About</a>
-</div>
-<!-- OVERLAY -->
-<div class="overlay" id="overlay"></div>
 
-<!-- MAIN IMAGE -->
+<!-- ÜST TEK FOTO -->
 <div class="image-center">
   <img src="Asbii.avif" alt="Miniature Painting">
 </div>
 
-<!-- GALLERY -->
+<!-- ALT İKİ FOTO -->
 <div class="bottom-gallery">
 
   <div class="gallery-item">
-    <img src="demons.webp" onclick="location.href='iranian_miniature.html';" alt="Iranian Miniature">
-    <a href="iranian_miniature.html" style="color: black; text-decoration:none;">Iranian Miniature</a>
+    <img src="demons.webp" alt="Iranian Miniature">
+    <a href="iranian_miniature.html">Iranian Miniature</a>
   </div>
 
   <div class="gallery-item">
-    <img src="four seasons.webp" onclick="location.href='Contemporary_Art.html';" alt="Contemporary Art">
-    <a href="Contemporary_Art.html" style="color: black; text-decoration:none;">Contemporary Art</a>
+    <img src="four seasons.webp" alt="Contemporary Art">
+    <a href="Contemporary_Art.html">Contemporary Art</a>
   </div>
 
   <div class="gallery-item">
-    <img src="garden of Imagination.webp" onclick="location.href='motive.html';" alt="Motive Art">
-    <a href="motive.html" style="color: black; text-decoration:none;">Motive Art</a>
+    <img src="garden of Imagination.webp" alt="Motive Art">
+    <a href="motive.html">Motive Art</a>
   </div>
 
 </div>
 
+<style>
+  .bottom-gallery {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 80px;
+}
 
+.gallery-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-<!-- COPYRIGHT -->
+.gallery-item a {
+  margin-top: 12px;
+  text-decoration: none;
+  color: #000;
+  font-size: 14px;
+}
+
+.gallery-item a:hover {
+  text-decoration: underline;
+}
+
+</style>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+
+  <div class="mobile-sub">
+    <span>Miniature ▼</span>
+    <div class="mobile-sub-items">
+      <a href="iranian_miniature.html">Iranian Miniature</a>
+      <a href="figur_miniature.html">Figure Miniature</a>
+    </div>
+  </div>
+</div>
+
 <div class="copyright">
-  © 2026 Shahrzad Momenzadeh. All rights reserved. | 
-  Website Design: Behrouz Mohebi Moghaddam – Website Developed: Artin Mohebi Moghaddam
+<h4>© 2026 Shahrzad Momenzadeh. All rights reserved.
+  <br>
+  <br>
+  <div class="d" style="font-size: medium;">
+    Website Design: Behrouz Mohebi Moghaddam | Website Developed: Artin Mohebi Moghaddam
+  </div>
+</h4>
 </div>
+
+
+<style>
+  .copyright {
+    text-align: center;
+    background: rgb(197, 39, 39);
+    color: white;
+    padding: 2px;
+    margin-top: 30%;
+} 
+</style>
 
 <script>
 const hamBtn = document.getElementById("hamburgerBtn");
 const mobileMenu = document.getElementById("mobileMenu");
-const overlay = document.getElementById("overlay");
-const icon = hamBtn.querySelector("i");
 
-function toggleMenu() {
-  mobileMenu.classList.toggle("active");
-  overlay.classList.toggle("active");
-
-  icon.classList.toggle("bx-menu");
-  icon.classList.toggle("bx-x");
-}
-
-hamBtn.onclick = toggleMenu;
-overlay.onclick = toggleMenu;
+hamBtn.onclick = () => {
+  mobileMenu.style.display =
+    mobileMenu.style.display === "flex" ? "none" : "flex";
+};
 
 document.querySelector(".mobile-sub span").onclick = () => {
   const sub = document.querySelector(".mobile-sub-items");

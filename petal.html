@@ -184,141 +184,63 @@ footer a:hover {
     <img src="banner02.jpg" alt="Banner">
   </div>
 
-<style>
-
-.gallery-item a {
-  margin-top: 12px;
-  text-decoration: none;
-  color: #000;
-  font-size: 14px;
-}
-
-/* ===== OVERLAY ===== */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0,0,0,0.45);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 998;
-}
-
-.overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* ===== MOBILE DRAWER MENU ===== */
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 260px;
-  height: 100vh;
-  background: #838383b7;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transition: right 0.35s ease;
-  z-index: 999;
-}
-
-.mobile-menu.active {
-  right: 0;
-}
-
-.mobile-menu a {
-  color: #000c2c;
-  text-decoration: none;
-  padding: 12px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 6px;
-}
-
-.mobile-sub span {
-  color: #fff;
-  cursor: pointer;
-}
-
-.mobile-sub-items {
-  display: none;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 6px;
-}
-
-/* ===== COPYRIGHT ===== */
-.copyright {
-  text-align: center;
-  background: rgb(197, 39, 39);
-  color: white;
-  padding: 6px;
-  margin-top: 30%;
-}
-
-/* ===== MOBILE FIX ===== */
-@media (max-width: 768px) {
-
-  .nav-center {
-    display: none;
-  }
-
-  .hamburger {
-    display: block;
-  }
-
-  .bottom-gallery {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .image-center {
-    margin-top: 60px;
-  }
-}</style>
-</style>
-</head>
-
-<body>
-
-<!-- NAVBAR -->
+  <!-- NAVBAR -->
 <div class="navbar">
-  <div></div>
-
-  <div class="nav-center">
-    <a href="index.html">Home</a>
-    <a href="iranian_miniature.html">Iranian Miniature</a>
-    <a href="Contemporary_Art.html">Contemporary Art</a>
-    <a href="motive.html">Motive Art</a>
-    <a href="contact.html">Contact</a>
-    <a href="about.html">About</a>
-  </div>
-
+    
+  <!-- HAMBURGER (MOBILE) -->
   <div class="hamburger" id="hamburgerBtn">
     <i class='bx bx-menu'></i>
   </div>
+
+  <!-- DESKTOP MENU -->
+    <a href="index.html">Home <i class='bx bx-home-alt'></i></a>
+    <div class="miniature">
+      <a href="#" class="menu-toggle">Artworks <i class='bx bx-collection'></i></a>
+      <div class="miniature-box">
+        <a class="has-sub">Miniature</a>
+        <div class="submenu">
+          <a href="iranian_miniature.html">Iranian miniature</a>
+          <a href="figur_miniature.html">Figure miniature</a>
+        </div>
+        <a href="Portrait.html">Portrait</a>
+        <a href="Expressionism.html">Expressionism</a>
+        <a href="motive.html">Iranian Illumination & Mystic Motifs</a>
+        <a href="Impressionism.html">Impressionism</a>
+      </div>
+    </div>
+    <a href="about.html">About <i class='bx bx-user'></i></a>
+
+  <!-- LANGUAGE FLAGS -->
 </div>
+
+
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">Home</a>
-    <a href="iranian_miniature.html">Iranian Miniature</a>
-    <a href="Contemporary_Art.html">Contemporary Art</a>
-    <a href="motive.html">Motive Art</a>
-    <a href="contact.html">Contact</a>
-    <a href="about.html">About</a>
+
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+
+  <div class="mobile-sub">
+    <span>Miniature ▼</span>
+    <div class="mobile-sub-items">
+      <a href="iranian_miniature.html">Iranian miniature</a>
+      <a href="figur_miniature.html">Figure miniature</a>
+    </div>
+  </div>
+
+  <a href="Portrait.html">Portrait</a>
+  <a href="Expressionism.html">Expressionism</a>
+  <a href="motive.html">Iranian Illumination & Mystic Motifs</a>
+  <a href="Impressionism.html">Impressionism</a>
+
 </div>
 
   <!-- Content -->
 <!-- Content -->
 <div class="content">
-  <img class="art-image" src="petal.webp" alt="Untitled - Tazhib 2">
+  <img class="art-image" src="03.jpg" alt="In The Deeps">
   <div class="art-details">
-  <h1>Untitled - Tazhib 2</h1>
+  <h1>Petal (Tazhib)</h1>
   <p>• Gouache & Watercolor</p>
   <p>• Size: 14.2 x 17.7 in(36 x 45 cm)</p>
   <p>• Year: 2009</p>
@@ -416,124 +338,3 @@ footer a:hover {
 
 </body>
 </html>
-<style>
-  /* ===== HAMBURGER ===== */
-.hamburger {
-  font-size: 1.8rem;
-  cursor: pointer;
-  display: none;
-  margin-left: auto; 
-}
-
-/* ===== MOBILE MENU ===== */
-
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 260px;
-  height: 100vh;
-  background: #838383b7;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transition: right 0.35s ease;
-  z-index: 1002;
-}
-
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
-  z-index: 1001;   /* ⬅️ زیر منو */
-}
-
-
-.mobile-menu.active {
-  right: 0;
-}
-
-.mobile-menu a {
-  color: #000c2c;
-  text-decoration: none;
-  padding: 12px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 6px;
-}
-
-/* ===== OVERLAY ===== */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
-  z-index: 1000;
-}
-
-.overlay.active {
-  opacity: 1;
-  pointer-events: all;
-}
-
-/* ===== MOBILE BREAKPOINT ===== */
-@media (max-width: 768px) {
-  .nav-center {
-    display: none;     
-  }
-
-  .hamburger {
-    display: block;     
-  }
-
-  .gallery {
-    grid-template-columns: 1fr; 
-    gap: 40px;
-  }
-}
-
-@media (max-width: 768px) {
-  div.imgstylenow {
-    flex-direction: column; 
-    gap: 30px;
-  }
-
-  div.imgstylenow img {
-    height: auto;
-    width: 90%;        
-    max-width: 350px;
-  }
-}
-
-
-</style>
-<script>
-const hamBtn = document.getElementById("hamburgerBtn");
-const mobileMenu = document.getElementById("mobileMenu");
-const overlay = document.getElementById("overlay");
-const icon = hamBtn.querySelector("i");
-
-function toggleMenu() {
-  mobileMenu.classList.toggle("active");
-  overlay.classList.toggle("active");
-  icon.classList.toggle("bx-menu");
-  icon.classList.toggle("bx-x");
-}
-
-hamBtn.onclick = toggleMenu;
-overlay.onclick = toggleMenu;
-
-document.querySelectorAll(".mobile-menu a").forEach(link => {
-  link.addEventListener("click", () => {
-    mobileMenu.classList.remove("active");
-    overlay.classList.remove("active");
-    icon.classList.add("bx-menu");
-    icon.classList.remove("bx-x");
-  });
-});
-</script>

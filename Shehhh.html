@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shahrzad_Painting:The Sheikh And The Maiden</title>
+<title>Shahrzad_Painting:Battle Of Dawn</title>
 
 <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
@@ -382,22 +382,22 @@ document.querySelectorAll(".mobile-menu a").forEach(link => {
 <!-- GALLERY -->
 <div class="gallery">
   <div class="art-card">
-    <img src="sheikh-low-1.jpg" alt="The Sheikh And The Maiden">
+    <img src="sheikh-and-maiden.jpg" alt="The Sheikh And The Maiden">
 
     <div class="art-details">
       <h3>The Sheikh And The Maiden</h3>
 
       <p><strong>Medium:</strong> Watercolor & Gouache</p>                  
-      <p><strong>Size:</strong> 25.6 x 19.7 in(65 x 50 cm)</p>
-      <p><strong>Year:</strong> 2019</p>
-      <p><strong>ID:</strong> SM-2019-WC&GC-04</p>
+      <p><strong>Size:</strong> 28.3 x 23.2 in(72 x 59 cm)</p>
+      <p><strong>Year:</strong> 2010</p>
+      <p><strong>ID:</strong> SM-2010-WC&GC-02</p>
     </div>
   </div>
 </div>
   <div class="imgstylenow">
-  <img src="sheikh-1.jpg" alt="">
-  <img src="the sheikh.webp" alt="">
-  </div>
+  <img src="sheikh1.jpg" alt="">
+  <img src="sheikh2.jpg" alt="">
+    </div>
 
 <style>
   div.imgstylenow {
@@ -418,130 +418,15 @@ document.querySelectorAll(".mobile-menu a").forEach(link => {
 </style>
 
 <div class="copyright">
-  © 2026 Shahrzad Momenzadeh. All rights reserved. |
-  Website Design: Behrouz Mohebi Moghaddam – Website Developed: Artin Mohebi Moghaddam
+  <h4>
+    © 2026 Shahrzad Momenzadeh. All rights reserved.
+    <br><br>
+    <span style="font-size: medium;">
+      Website Design: Behrouz Mohebi Moghaddam |
+      Website Developed: Artin Mohebi Moghaddam
+    </span>
+  </h4>
 </div>
 
 </body>
 </html>
-<style>
-  /* ===== HAMBURGER ===== */
-.hamburger {
-  font-size: 1.8rem;
-  cursor: pointer;
-  display: none;
-  margin-left: auto; 
-}
-
-/* ===== MOBILE MENU ===== */
-
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 260px;
-  height: 100vh;
-  background: #838383b7;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transition: right 0.35s ease;
-  z-index: 1002;
-}
-
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
-  z-index: 1001;   /* ⬅️ زیر منو */
-}
-
-
-.mobile-menu.active {
-  right: 0;
-}
-
-.mobile-menu a {
-  color: #000c2c;
-  text-decoration: none;
-  padding: 12px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 6px;
-}
-
-/* ===== OVERLAY ===== */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
-  z-index: 1000;
-}
-
-.overlay.active {
-  opacity: 1;
-  pointer-events: all;
-}
-
-/* ===== MOBILE BREAKPOINT ===== */
-@media (max-width: 768px) {
-  .nav-center {
-    display: none;     
-  }
-
-  .hamburger {
-    display: block;     
-  }
-
-  .gallery {
-    grid-template-columns: 1fr; 
-    gap: 40px;
-  }
-}
-
-@media (max-width: 768px) {
-  div.imgstylenow {
-    flex-direction: column; 
-    gap: 30px;
-  }
-
-  div.imgstylenow img {
-    height: auto;
-    width: 90%;        
-    max-width: 350px;
-  }
-}
-
-
-</style>
-<script>
-const hamBtn = document.getElementById("hamburgerBtn");
-const mobileMenu = document.getElementById("mobileMenu");
-const overlay = document.getElementById("overlay");
-const icon = hamBtn.querySelector("i");
-
-function toggleMenu() {
-  mobileMenu.classList.toggle("active");
-  overlay.classList.toggle("active");
-  icon.classList.toggle("bx-menu");
-  icon.classList.toggle("bx-x");
-}
-
-hamBtn.onclick = toggleMenu;
-overlay.onclick = toggleMenu;
-
-document.querySelectorAll(".mobile-menu a").forEach(link => {
-  link.addEventListener("click", () => {
-    mobileMenu.classList.remove("active");
-    overlay.classList.remove("active");
-    icon.classList.add("bx-menu");
-    icon.classList.remove("bx-x");
-  });
-});
-</script>
