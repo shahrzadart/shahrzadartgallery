@@ -48,33 +48,44 @@ body {
 }
 
 /* ===== GALLERY ===== */
+
 .gallery {
-  display: flex;
-  flex-direction: column;   /* alt alta */
-  align-items: center;      /* ortada */
-  gap: 50px;                /* aralarındaki boşluk */
+  column-count: 3;
+  column-gap: 16px;
   margin-top: 40px;
 }
 
-/* BOX resmin boyutunu alsın */
 .art-card {
-  display: inline-block;    /* 🔴 EN ÖNEMLİ SATIR */
-  background: #e7919169;
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 16px;
+  background: hsla(0, 100%, 96%, 0.412);
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   overflow: hidden;
   text-align: center;
-  width: 320px;
+}
+/* BOX resmin boyutunu alsın */
+.art-card img {
+  width: 100%;
+  height: 260px;        /* یا auto */
+  object-fit: contain; /* کلید اصلی */
+  background: #fff;    /* برای فضای خالی */
+  display: block;
 }
 
 /* RESMİN BOYUTUNU SEN BELİRLİYORSUN */
-.art-card img {
-  width: 320px;     /* 👈 BURAYI DEĞİŞTİR */
-  height: auto;
-  display: block;
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
 
+.art-card img {
+  aspect-ratio: 3 / 4;
+  object-fit: contain;
+  .art-card {
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  }
+}
 .art-card img:hover {
   transform: scale(1.05); }
 /* BAŞLIK */
