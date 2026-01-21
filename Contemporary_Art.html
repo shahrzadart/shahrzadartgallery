@@ -50,8 +50,9 @@ body {
 /* ===== GALLERY ===== */
 
 .gallery {
-  column-count: 3;
-  column-gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
   margin-top: 40px;
 }
 
@@ -354,22 +355,27 @@ document.querySelectorAll(".mobile-menu a").forEach(link => {
 <div class="gallery">
 
   <!-- GÖRSELLERE DOKUNMADIM -->
-  
- <div class="art-card">
+  <div class="art-card">
+    <a href="Phoenix.html"><img src="phoenix.webp" alt="Phoenix"></a>
+    <p>Phoenix</p>
+  </div>
+  <div class="art-card">
+    <a href="4sezone.html"><img src="four seasons.webp" alt="Four Seasons"></a>
+    <p>Four Seasons</p>
+  </div>
+<div class="art-card">
     <a href="Autumn.html"><img src="autumn.webp" alt="Autumn"></a>
     <p>Autumn</p>
   </div>
-
+  <div class="art-card">
+    <a href="Summer.html"><img src="summer.webp" alt="Summer"></a>
+    <p>Summer</p>
+  </div>
       <div class="art-card">
     <a href="Spring.html"><img src="spring.webp" alt="Spring"></a>
     <p>Spring</p>
   </div>
 
-  <div class="art-card">
-    <a href="Summer.html"><img src="summer.webp" alt="Summer"></a>
-    <p>Summer</p>
-  </div>
- 
   <div class="art-card">
     <a href="blue.html"><img src="Blue.webp" alt="Blue"></a>
     <p>Untitled - Portrait 11</p>
@@ -391,27 +397,25 @@ document.querySelectorAll(".mobile-menu a").forEach(link => {
     <a href="brown.html"><img src="Brown.webp" alt="Brown"></a>
     <p>Untitled - Portrait 7</p>
   </div>
-
        <div class="art-card">
     <a href="purple.html"><img src="purple.webp" alt="Purple"></a>
     <p>Untitled - Portrait 6</p>
   </div>
-  <div class="art-card">
-    <a href="Phoenix.html"><img src="phoenix.webp" alt="Phoenix"></a>
-    <p>Phoenix</p>
-  </div>
+  
    <div class="art-card">
     <a href="yellow.html"><img src="yellow.webp" alt="Yellow"></a>
     <p>Untitled - Portrait 5</p>
   </div>
-<div class="art-card">
+    <div class="art-card">
     <a href="beige.html"><img src="beige.webp" alt="Beige"></a>
     <p>Untitled - Portrait 4  </p>
   </div>
+  
   <div class="art-card">
     <a href="red.html"><img src="red.webp" alt="Red"></a>
     <p>Untitled - Portrait 3</p>
   </div>
+  
    <div class="art-card">
     <a href="pink.html"><img src="pink.webp" alt="Pink"></a>
     <p>Untitled - Portrait 2</p>
@@ -425,39 +429,30 @@ document.querySelectorAll(".mobile-menu a").forEach(link => {
         <a href="RussianGirl.html"><img src="russian girl.webp" alt="Untitled 5"></a>
         <p>Untitled 5</p>
         </div>
-        <div class="art-card">
+     <div class="art-card">
     <a href="Deer.html"><img src="deer.webp" alt="Deer"></a>
     <p>Untitled 4</p>
   </div>
-    <div class="art-card">
-    <a href="untitled1.html"><img src="un3.jpg" alt="untitled1"></a>
-    <p>Untitled 1</p>
-  </div>
-  <div class="art-card">
-    <a href="4sezone.html"><img src="four seasons.webp" alt="Four Seasons"></a>
-    <p>Four Seasons</p>
-  </div>
-    <div class="art-card">
-    <a href="untitled2.html"><img src="1.webp" alt="Flower"></a>
-    <p>Untitled 2</p>
-  </div>
-<div class="art-card">
+   <div class="art-card">
     <a href="untitled3.html"><img src="untitled3.webp" alt="untitled3"></a>
     <p>Untitled 3</p>
   </div>
-  
    <div class="art-card">
-        <a href="CornaBird.html"><img src="crane bird1.jpg" alt="Crane Bird"></a>
-        <p>Crane Bird</p>
-        </div>
-         <div class="art-card">
+    <a href="untitled2.html"><img src="1.webp" alt="Flower"></a>
+    <p>Untitled 2</p>
+  </div>
+    <div class="art-card">
+    <a href="untitled1.html"><img src="man with fish head.webp" alt="untitled1"></a>
+    <p>Untitled 1</p>
+  </div>
+    
+     
+          
+            <div class="art-card">
         <a href="rose.html"><img src="rose-2.webp" alt="rose"></a>
         <p>Rose</p>
         </div>
-       <div class="art-card">
-        <a href="forest.html"><img src="forest.webp" alt="Forest"></a>
-        <p>Forest</p>
-        </div>
+      
         <div class="art-card">
         <a href="WheatField.html"><img src="wheatfield.webp" alt="Wheat Field"></a>
         <p>Wheat Field</p>
@@ -474,7 +469,14 @@ document.querySelectorAll(".mobile-menu a").forEach(link => {
         <a href="Untitled - Scratchboard 1.html"><img src="11.webp" alt="Untitled - Scratchboard 1"></a>
         <p>Untitled - Scratchboard 1</p>
         </div>
-         
+          <div class="art-card">
+        <a href="CornaBird.html"><img src="crane bird1.jpg" alt="Crane Bird"></a>
+        <p>Crane Bird</p>
+        </div>
+         <div class="art-card">
+        <a href="forest.html"><img src="forest.webp" alt="Forest"></a>
+        <p>Forest</p>
+        </div>
 </div>
 </div>
 
