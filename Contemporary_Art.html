@@ -8,10 +8,25 @@
 <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
 <style>
+/* ===== GLOBAL ===== */
+.copyright {
+        text-align: center;
+        background: rgb(197, 39, 39);
+        color: white;
+        padding: 2px;
+        margin-top: 30%;
+      }
 body {
   margin: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background: #ffffff7c;
+}
+
+/* ===== TITLE ===== */
+h1 {
+  text-align: center;
+  font-size: 3.5rem;
+  margin: 20px 0;
 }
 
 /* ===== NAVBAR ===== */
@@ -21,14 +36,13 @@ body {
   border-radius: 6px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .nav-center {
   display: flex;
-  justify-content: center;
   gap: 12px;
   flex: 1;
+  justify-content: center;
 }
 
 .navbar a {
@@ -42,220 +56,41 @@ body {
   background: rgba(255,255,255,0.35);
 }
 
-.hamburger {
-  font-size: 1.8rem;
-  cursor: pointer;
-}
-
-/* ===== GALLERY ===== */
-
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 40px;
-}
-
-.art-card {
-  break-inside: avoid;
-  -webkit-column-break-inside: avoid;
-  display: inline-block;
-  width: 100%;
-  margin-bottom: 16px;
-  background: hsla(0, 100%, 96%, 0.412);
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  overflow: hidden;
-  text-align: center;
-}
-/* BOX resmin boyutunu alsın */
-.art-card img {
-  width: 100%;
-  height: 260px;        /* یا auto */
-  object-fit: contain; /* کلید اصلی */
-  background: #fff;    /* برای فضای خالی */
-  display: block;
-}
-
-/* RESMİN BOYUTUNU SEN BELİRLİYORSUN */
-
-.art-card img {
-  aspect-ratio: 3 / 4;
-  object-fit: contain;
-  .art-card {
-  break-inside: avoid;
-  -webkit-column-break-inside: avoid;
-  }
-}
-.art-card img:hover {
-  transform: scale(1.05); }
-/* BAŞLIK */
-.art-card p {
-  color: hsl(0, 100%, 5%);
-  background: #ffdfdfa8;
-  margin: 0;
-  padding: 10px;
-  font-size: 1rem;
-  font-style: Bold;
-}
-
-
-
-/* ===== COPYRIGHT ===== */
-.copyright {
-  text-align: center;
-  background: rgb(197, 39, 39);
-  color: white;
-  padding: 5px;
-  margin-top: 80px;
-}
-</style>
-</head>
-
-<body>
-
-  <!-- NAVBAR -->
-  <style>
-    .gallery-item a {
-      margin-top: 12px;
-      text-decoration: none;
-      color: #000;
-      font-size: 14px;
-    }
-
-    /* ===== OVERLAY ===== */
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.45);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      z-index: 998;
-    }
-
-    .overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    /* ===== MOBILE DRAWER MENU ===== */
-    .mobile-menu {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 260px;
-      height: 100vh;
-      background: #838383b7;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      transition: right 0.35s ease;
-      z-index: 999;
-    }
-
-    .mobile-menu.active {
-      right: 0;
-    }
-
-    .mobile-menu a {
-      color: #000c2c;
-      text-decoration: none;
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 6px;
-    }
-
-    .mobile-sub span {
-      color: #fff;
-      cursor: pointer;
-    }
-
-    .mobile-sub-items {
-      display: none;
-      flex-direction: column;
-      gap: 6px;
-      margin-top: 6px;
-    }
-
-    /* ===== COPYRIGHT ===== */
-.copyright {
-  text-align: center;
-  background: rgb(197, 39, 39);
-  color: white;
-  padding: 6px;
-  margin-top: 30%;
-}
-
-    /* ===== MOBILE FIX ===== */
-    @media (max-width: 768px) {
-
-      .nav-center {
-        display: none;
-      }
-
-      .hamburger {
-        display: block;
-      }
-
-      .bottom-gallery {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .image-center {
-        margin-top: 60px;
-      }
-       .art-card img {
-    height: 260px;
-  }
-    }
-  </style>
-  </style>
-  </head>
-<h1 style="text-align: center; font-family: playfair; font-size: 3.5rem;">Shahrzad Art Studio</h1>
-
-<body>
-
-<div class="navbar">
-  <div></div>
-
-  <div class="nav-center">
-    <a href="index.html">Home</a>
-    <a href="iranian_miniature.html">Iranian Miniature</a>
-    <a href="Contemporary_Art.html">Contemporary Art</a>
-    <a href="motive.html">Motive Art</a>
-    <a href="contact.html">Contact</a>
-    <a href="about.html">About</a>
-  </div>
-
-  <div class="hamburger" id="hamburgerBtn">
-    <i class="bx bx-menu"></i>
-  </div>
-</div>
-
-<div class="mobile-menu" id="mobileMenu">
-  <a href="index.html">Home</a>
-  <a href="iranian_miniature.html">Iranian Miniature</a>
-  <a href="Contemporary_Art.html">Contemporary Art</a>
-  <a href="motive.html">Motive Art</a>
-  <a href="contact.html">Contact</a>
-  <a href="about.html">About</a>
-</div>
-
-<div class="overlay" id="overlay"></div>
-
-
-<style>
 /* ===== HAMBURGER ===== */
 .hamburger {
-  font-size: 1.9rem;
+  font-size: 2rem;
   cursor: pointer;
   display: none;
+  margin-left: auto;
+}
+
+/* ===== MOBILE MENU ===== */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 260px;
+  height: 100vh;
+  background: #838383b7;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: right 0.35s ease;
+  z-index: 1002;
+}
+
+.mobile-menu.active {
+  right: 0;
+}
+
+.mobile-menu a {
+  color: #000c2c;
+  text-decoration: none;
+  padding: 12px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 6px;
+  font-size: 0.95rem;
 }
 
 /* ===== OVERLAY ===== */
@@ -265,8 +100,8 @@ body {
   background: rgba(0,0,0,0.45);
   opacity: 0;
   pointer-events: none;
-  transition: 0.3s ease;
-  z-index: 998;
+  transition: 0.3s;
+  z-index: 1001;
 }
 
 .overlay.active {
@@ -274,41 +109,56 @@ body {
   pointer-events: auto;
 }
 
-/* ===== MOBILE DRAWER MENU ===== */
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 260px;
-  height: 100vh;
-  background: #838383b7;          /* دقیقاً مثل نمونه */
-  padding: 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transition: right 0.35s ease;
-  z-index: 999;
+/* ===== GALLERY ===== */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin: 40px auto;
+  max-width: 1200px;
 }
 
-.mobile-menu.active {
-  right: 0;
+@media (max-width: 992px) {
+  .gallery {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
 }
 
-/* menu items */
-.mobile-menu a {
-  color: #000c2c;
-  text-decoration: none;
-  padding: 12px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 8px;
-  font-size: 0.95rem;
-  transition: background 0.25s ease;
+.art-card {
+  background: hsla(0, 100%, 96%, 0.412);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  overflow: hidden;
+  text-align: center;
 }
 
-.mobile-menu a:hover {
-  background: rgba(255,255,255,0.3);
+.art-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: contain;
+  background: #fff;
+  display: block;
+  transition: transform 0.3s ease;
 }
 
+.art-card img:hover {
+  transform: scale(1.05);
+}
+
+.art-card p {
+  background: #ffdfdfa8;
+  margin: 0;
+  padding: 10px;
+}
+
+/* ===== COPYRIGHT ===== */
+.copyright {
+        text-align: center;
+        background: rgb(197, 39, 39);
+        color: white;
+        padding: 2px;
+        margin-top: 30%;
+      }
 /* ===== MOBILE ONLY ===== */
 @media (max-width: 768px) {
   .nav-center {
@@ -327,31 +177,42 @@ body {
     display: none;
   }
 }
-
 </style>
-<script>
-const hamBtn = document.getElementById("hamburgerBtn");
-const mobileMenu = document.getElementById("mobileMenu");
-const overlay = document.getElementById("overlay");
-const icon = hamBtn.querySelector("i");
+</head>
 
-function toggleMenu() {
-  mobileMenu.classList.toggle("active");
-  overlay.classList.toggle("active");
-  icon.classList.toggle("bx-menu");
-  icon.classList.toggle("bx-x");
-}
+<body>
 
-hamBtn.addEventListener("click", toggleMenu);
-overlay.addEventListener("click", toggleMenu);
-
-document.querySelectorAll(".mobile-menu a").forEach(link => {
-  link.addEventListener("click", toggleMenu);
-});
-</script>
+<h1 style="text-align: center; font-family: playfair; font-size: 3.5rem;">Shahrzad Art Studio</h1>
 
 
-    <!-- GALLERY -->
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="nav-center">
+    <a href="index.html">Home</a>
+    <a href="iranian_miniature.html">Iranian Miniature</a>
+    <a href="Contemporary_Art.html">Contemporary Art</a>
+    <a href="motive.html">Motive Art</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About</a>
+  </div>
+
+  <div class="hamburger" id="hamburgerBtn">
+    <i class="bx bx-menu"></i>
+  </div>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="iranian_miniature.html">Iranian Miniature</a>
+  <a href="Contemporary_Art.html">Contemporary Art</a>
+  <a href="motive.html">Motive Art</a>
+  <a href="contact.html">Contact</a>
+  <a href="about.html">About</a>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
 <div class="gallery">
 
   <!-- GÖRSELLERE DOKUNMADIM -->
@@ -484,43 +345,36 @@ document.querySelectorAll(".mobile-menu a").forEach(link => {
   © 2026 Shahrzad Momenzadeh. All rights reserved. |
   Website Design: Behrouz Mohebi Moghaddam – Website Developed: Artin Mohebi Moghaddam
 </div>
-    <style>
-      .copyright {
+<style>
+.copyright {
         text-align: center;
         background: rgb(197, 39, 39);
         color: white;
         padding: 2px;
         margin-top: 30%;
       }
-      .hamburger {
-  display: none;
-}
+</style>
 
-@media (max-width: 768px) {
-  .nav-center {
-    display: none;
-  }
-
-  .hamburger {
-    display: block;
-  }
-}
-
-    </style>
 
 <script>
 const hamBtn = document.getElementById("hamburgerBtn");
 const mobileMenu = document.getElementById("mobileMenu");
+const overlay = document.getElementById("overlay");
+const icon = hamBtn.querySelector("i");
 
-hamBtn.onclick = () => {
-  mobileMenu.style.display =
-    mobileMenu.style.display === "flex" ? "none" : "flex";
-};
+function toggleMenu() {
+  mobileMenu.classList.toggle("active");
+  overlay.classList.toggle("active");
+  icon.classList.toggle("bx-menu");
+  icon.classList.toggle("bx-x");
+}
 
-document.querySelector(".mobile-sub span").onclick = () => {
-  const sub = document.querySelector(".mobile-sub-items");
-  sub.style.display = sub.style.display === "flex" ? "none" : "flex";
-};
+hamBtn.addEventListener("click", toggleMenu);
+overlay.addEventListener("click", toggleMenu);
+
+document.querySelectorAll(".mobile-menu a").forEach(link => {
+  link.addEventListener("click", toggleMenu);
+});
 </script>
 
 </body>

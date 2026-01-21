@@ -400,20 +400,35 @@ document.querySelectorAll(".mobile-menu a").forEach(link => {
 
 <style>
   div.imgstylenow {
-    display: flex;
-    justify-content: center;
-    gap: 80px;
-    margin-top: 50px;
-    align-items: center;
-  } 
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  margin-top: 50px;
+  align-items: center;
+  flex-wrap: wrap; /* ⬅️ kritik */
+}
+
+div.imgstylenow img {
+  width: auto;
+  height: 300px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 📱 MOBİL */
+@media (max-width: 768px) {
+  div.imgstylenow {
+    flex-direction: column; /* ⬅️ mobilde alt alta */
+    gap: 30px;
+  }
 
   div.imgstylenow img {
-   width: auto;
-    height: 300px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    height: auto;
+    width: 90%; /* mobilde taşmasın */
+    max-width: 360px;
   }
+}
 </style>
 <div class="copyright">
   © 2026 Shahrzad Momenzadeh. All rights reserved. |
