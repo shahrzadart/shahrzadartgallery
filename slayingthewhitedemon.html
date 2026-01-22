@@ -142,18 +142,45 @@ h1 {
 
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
-  .nav-center {
-    display: none;
+
+  body {
+    padding-inline: 6vw;
   }
 
-  .hamburger {
-    display: block;
+  .gallery {
+    margin-top: 40px;
   }
 
-  h1 {
-    font-size: 2.3rem;
+  .art-card {
+    width: 78vw;
+    max-width: none;
+    margin: 0 auto;
+    background: transparent;   /* ⬅️ کلید حل مشکل */
+    box-shadow: none;          /* اختیاری: حذف سایه در موبایل */
+  }
+
+  .art-card img {
+    padding: 0;                /* ⬅️ بدون قاب */
+    background: transparent;
+    box-sizing: border-box;
+  }
+
+  .art-details {
+    background: #ffdfdfa8;     /* فقط اطلاعات زمینه داشته باشد */
+  }
+
+  .imgstylenow {
+    padding-inline: 4vw;
+    gap: 32px;
+  }
+
+  .imgstylenow img {
+    width: 78vw;
+    max-width: none;
+    background: transparent;
   }
 }
+
 
 /* ===== VERY SMALL SCREENS ===== */
 @media (max-width: 320px) {
