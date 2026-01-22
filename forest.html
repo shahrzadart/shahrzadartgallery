@@ -13,6 +13,11 @@ body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background: #ffffff7c;
 }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 /* ===== NAVBAR ===== */
 .navbar {
@@ -376,13 +381,10 @@ document.querySelectorAll(".mobile-menu a").forEach(link => {
 });
 </script>
 
-
-
-
 <!-- GALLERY -->
 <div class="gallery">
   <div class="art-card">
-    <img src="forest.jpg" alt="Forest">
+    <img src="forest1.webp" alt="Forest">
 
     <div class="art-details">
       <h3>Forest</h3>
@@ -427,6 +429,11 @@ div.imgstylenow img {
     height: auto;
     width: 90%; /* mobilde taşmasın */
     max-width: 360px;
+  }
+}
+@media (max-width: 768px) {
+  body {
+    padding-inline: 16px;   /* فاصله ظریف از کناره‌ها */
   }
 }
 </style>
