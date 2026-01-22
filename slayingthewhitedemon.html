@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shahrzad_Painting : Battle Of Dawn</title>
+<title>Shahrzad Painting – Battle Of Dawn</title>
 
 <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
@@ -18,30 +18,22 @@
 
 html, body {
   margin: 0;
-  max-width: 100%;
   overflow-x: hidden;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background: #ffffff7c;
 }
 
-/* ===== MOBILE SAFE PADDING ===== */
+/* ===== MOBILE SAFE BODY PADDING ===== */
 @media (max-width: 768px) {
   body {
     padding-inline: 16px;
   }
 }
 
-/* ===== IMAGES ===== */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
 /* ===== TITLE ===== */
 h1 {
   text-align: center;
-  font-size: 3.5rem;
+  font-size: 3.2rem;
   margin: 30px 0;
 }
 
@@ -137,14 +129,12 @@ h1 {
   text-align: center;
 }
 
+/* ⬅️ مهم‌ترین بخش */
 .art-card img {
-  width: 320px;
-  margin-inline: auto;
-  transition: transform 0.35s ease;
-}
-
-.art-card img:hover {
-  transform: scale(1.05);
+  width: 320px;        /* دسکتاپ */
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 /* ===== DETAILS ===== */
@@ -171,6 +161,7 @@ h1 {
 
 .imgstylenow img {
   height: 300px;
+  width: auto;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
@@ -184,7 +175,7 @@ h1 {
   font-size: 0.85rem;
 }
 
-/* ===== MOBILE ===== */
+/* ===== MOBILE (کلید حل مشکل تو اینجاست) ===== */
 @media (max-width: 768px) {
 
   .nav-center {
@@ -195,20 +186,21 @@ h1 {
     display: block;
   }
 
+  /* ❗ عکس گالری هرگز فول‌عرض نمی‌شود */
+  .art-card img {
+    width: auto;
+    max-width: 85%;   /* ⬅️ عمداً کمتر از عرض */
+  }
+
   .imgstylenow {
     flex-direction: column;
     gap: 30px;
   }
 
   .imgstylenow img {
-    width: 90%;
+    width: auto;
+    max-width: 85%;
     height: auto;
-    max-width: 360px;
-  }
-
-  .art-card img {
-    width: 90%;
-    max-width: 320px;
   }
 }
 
@@ -219,7 +211,6 @@ h1 {
 
 <h1>Shahrzad Art Studio</h1>
 
-<!-- NAVBAR -->
 <div class="navbar">
   <div></div>
 
@@ -233,11 +224,10 @@ h1 {
   </div>
 
   <div class="hamburger" id="hamburgerBtn">
-    <i class='bx bx-menu'></i>
+    <i class="bx bx-menu"></i>
   </div>
 </div>
 
-<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="index.html">Home</a>
   <a href="iranian_miniature.html">Iranian Miniature</a>
@@ -249,10 +239,9 @@ h1 {
 
 <div class="overlay" id="overlay"></div>
 
-<!-- GALLERY -->
 <div class="gallery">
   <div class="art-card">
-    <img src="demon-frame-low-1.webp" alt="Slaying the White Demon">
+    <img src="demon-frame-low-1.webp" alt="">
     <div class="art-details">
       <h3>Slaying The White Demon</h3>
       <p><strong>Medium:</strong> Gouache & Watercolor</p>
@@ -269,8 +258,7 @@ h1 {
 </div>
 
 <div class="copyright">
-  © 2026 Shahrzad Momenzadeh. All rights reserved.<br>
-  Website Design: Behrouz Mohebi Moghaddam | Developed: Artin Mohebi Moghaddam
+  © 2026 Shahrzad Momenzadeh. All rights reserved.
 </div>
 
 <script>
