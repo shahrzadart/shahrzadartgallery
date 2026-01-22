@@ -144,7 +144,7 @@ h1 {
 @media (max-width: 768px) {
 
   body {
-    padding-inline: 6vw;   /* فضای خالی واقعی صفحه */
+    padding-inline: 6vw;
   }
 
   .gallery {
@@ -152,16 +152,21 @@ h1 {
   }
 
   .art-card {
-    width: 78vw;          /* کارت 78٪ عرض صفحه */
+    width: 78vw;
     max-width: none;
     margin: 0 auto;
-    background: #fff9f9;
+    background: transparent;   /* ⬅️ کلید حل مشکل */
+    box-shadow: none;          /* اختیاری: حذف سایه در موبایل */
   }
 
   .art-card img {
-    padding: 20px;        /* فضای سفید ظریف و کنترل‌شده */
-    background: transparent; /* حذف کادر سفید اضافی */
+    padding: 0;                /* ⬅️ بدون قاب */
+    background: transparent;
     box-sizing: border-box;
+  }
+
+  .art-details {
+    background: #ffdfdfa8;     /* فقط اطلاعات زمینه داشته باشد */
   }
 
   .imgstylenow {
@@ -172,7 +177,7 @@ h1 {
   .imgstylenow img {
     width: 78vw;
     max-width: none;
-    background: #fff;
+    background: transparent;
   }
 }
 
