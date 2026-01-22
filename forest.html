@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shahrzad_Painting:Battle Of Dawn</title>
+<title>Shahrzad_Painting:Phoenix</title>
 
 <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
@@ -12,11 +12,6 @@ body {
   margin: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background: #ffffff7c;
-}
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
 }
 
 /* ===== NAVBAR ===== */
@@ -71,11 +66,12 @@ body {
 }
 
 .art-card img {
-  max-width: 100%;
   width: 320px;
   height: auto;
   display: block;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .art-card img:hover {
   transform: scale(1.05);
 }
@@ -380,10 +376,13 @@ document.querySelectorAll(".mobile-menu a").forEach(link => {
 });
 </script>
 
+
+
+
 <!-- GALLERY -->
 <div class="gallery">
   <div class="art-card">
-    <img src="forest1.webp" alt="Forest">
+    <img src="forest1.webp" alt="The Sheikh And The Maiden">
 
     <div class="art-details">
       <h3>Forest</h3>
@@ -391,12 +390,13 @@ document.querySelectorAll(".mobile-menu a").forEach(link => {
       <p><strong>Medium:</strong> Oil Painting</p>                  
       <p><strong>Size:</strong> 22.8 x 30.3 in(58 x 77 cm)</p>
       <p><strong>Year:</strong> 2016</p>
-      <p><strong>ID:</strong> SM-2016-OL-04</p>
+      <p><strong>ID:</strong> SM-2016-OP-04</p>
     </div>
   </div>
 </div>
   <div class="imgstylenow">
   <img src="Forest.webp" alt="">
+ 
     </div>
 
 <style>
@@ -428,11 +428,6 @@ div.imgstylenow img {
     height: auto;
     width: 90%; /* mobilde taşmasın */
     max-width: 360px;
-  }
-}
-@media (max-width: 768px) {
-  body {
-    padding-inline: 16px;   /* فاصله ظریف از کناره‌ها */
   }
 }
 </style>
