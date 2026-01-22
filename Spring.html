@@ -184,6 +184,29 @@ h1 {
   }
 }
 
+@media (max-width: 768px) {
+
+  body {
+    padding-inline: 6vw;   /* فضای خالی واقعی بر اساس عرض دستگاه */
+  }
+
+  .art-card {
+    width: 78vw;          /* کارت فقط 78٪ عرض صفحه */
+    max-width: none;
+    margin: 0 auto;
+  }
+
+  .art-card img {
+    padding: 16px;
+    box-sizing: border-box;
+  }
+
+  .imgstylenow img {
+    width: 78vw;
+    max-width: none;
+  }
+}
+
 /* ===== VERY SMALL SCREENS ===== */
 @media (max-width: 320px) {
 
