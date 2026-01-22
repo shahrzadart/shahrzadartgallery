@@ -36,7 +36,7 @@ h1 {
   margin: 30px 0 20px;
 }
 
-/* ===== NAVBAR (REAL CENTER) ===== */
+/* ===== NAVBAR ===== */
 .navbar {
   background-color: #ffdfdfc7;
   padding: 8px 14px;
@@ -142,6 +142,15 @@ h1 {
 
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
+
+  body {
+    padding-inline: 32px;   /* فضای خالی واقعی صفحه */
+  }
+
+  h1 {
+    font-size: 2.3rem;
+  }
+
   .nav-center {
     display: none;
   }
@@ -150,35 +159,48 @@ h1 {
     display: block;
   }
 
-  h1 {
-    font-size: 2.3rem;
+  .gallery {
+    margin-top: 40px;
+    padding-inline: 20px;
   }
-}
-@media (max-width: 768px) {
+
   .art-card {
-    max-width: 320px;   /* کارت کمی باریک‌تر */
-    margin: 0 auto;     /* وسط‌چین با فضای خالی دو طرف */
+    max-width: 280px;      /* کارت باریک‌تر */
+    margin: 0 auto;
   }
 
   .art-card img {
-    padding: 10px;      /* فضای خالی داخل کارت دور عکس */
-    background: #fff;
+    padding: 16px;        /* فضای سفید دور عکس */
+    box-sizing: border-box;
+  }
+
+  .imgstylenow {
+    padding-inline: 24px;
+    gap: 32px;
   }
 
   .imgstylenow img {
-    max-width: 300px;   /* عکس‌های پایین هم کوچکتر */
+    max-width: 260px;     /* تصاویر پایین کوچکتر */
   }
 }
 
-
 /* ===== VERY SMALL SCREENS ===== */
 @media (max-width: 320px) {
+
   body {
-    padding-inline: 8px;
+    padding-inline: 24px;
   }
 
   h1 {
     font-size: 2rem;
+  }
+
+  .art-card {
+    max-width: 250px;
+  }
+
+  .imgstylenow img {
+    max-width: 230px;
   }
 }
 </style>
@@ -188,7 +210,6 @@ h1 {
 
 <h1>Shahrzad Art Studio</h1>
 
-<!-- NAVBAR -->
 <div class="navbar">
   <div></div>
 
@@ -206,25 +227,24 @@ h1 {
   </div>
 </div>
 
-<!-- GALLERY -->
 <div class="gallery">
   <div class="art-card">
-    <img src="spring.webp" alt="The Sheikh And The Maiden">
+    <img src="spring.webp" alt="Spring">
 
-<div class="art-details">
-  <h3>Spring</h3>
-  <p><strong>Medium:</strong> Acrylic on Canvas</p>
-  <p><strong>Size:</strong> 19.7 × 19.7 in (50 × 50 cm)</p>
-  <p><strong>Year:</strong> 2018</p>
-  <p><strong>ID:</strong> SM-2018-AC-02</p>
-</div>
-
+    <div class="art-details">
+      <h3>Spring</h3>
+      <p><strong>Medium:</strong> Acrylic on Canvas</p>
+      <p><strong>Size:</strong> 19.7 × 19.7 in (50 × 50 cm)</p>
+      <p><strong>Year:</strong> 2018</p>
+      <p><strong>ID:</strong> SM-2018-AC-02</p>
+    </div>
   </div>
 </div>
-  <div class="imgstylenow">
+
+<div class="imgstylenow">
   <img src="spring-1.webp" alt="">
   <img src="spring-11.webp" alt="">
-    </div>
+</div>
 
 <div class="copyright">
   © 2026 Shahrzad Momenzadeh. All rights reserved.<br>
