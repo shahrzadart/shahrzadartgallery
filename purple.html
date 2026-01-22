@@ -142,16 +142,18 @@ h1 {
 
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
+  .nav-center {
+    display: none;
+  }
 
-  .art-card img,
-  .imgstylenow img {
-    width: 100%;
-    height: auto;        /* ⬅️ ارتفاع واقعی اثر */
-    aspect-ratio: auto; /* ⬅️ حذف نسبت اجباری */
-    object-fit: unset;  /* ⬅️ حذف رفتار کششی */
+  .hamburger {
+    display: block;
+  }
+
+  h1 {
+    font-size: 2.3rem;
   }
 }
-
 
 /* ===== VERY SMALL SCREENS ===== */
 @media (max-width: 320px) {
@@ -161,15 +163,6 @@ h1 {
 
   h1 {
     font-size: 2rem;
-  }
-}
-@media (max-width: 768px) {
-  .art-card img,
-  .imgstylenow img {
-    aspect-ratio: auto !important;
-    height: auto !important;
-    object-fit: none !important;
-    width: 100% !important;
   }
 }
 </style>
@@ -200,10 +193,10 @@ h1 {
 <!-- GALLERY -->
 <div class="gallery">
   <div class="art-card">
-   <img src="purple-frame.webp" alt="The Sheikh And The Maiden">
+    <img src="purple-frame.webp" alt="The Sheikh And The Maiden">
 
     <div class="art-details">
-      <h3>Untitled- Portrait 6</h3>
+     <h3>Untitled- Portrait 6</h3>
 
       <p><strong>Medium:</strong> Mixed Media</p>                  
       <p><strong>Size:</strong> 21.2 x 15.3 in(54 x 39 cm)</p>
@@ -213,8 +206,7 @@ h1 {
   </div>
 </div>
   <div class="imgstylenow">
-  <img src="Purple.webp" alt="">
-    </div>
+  <img src="purple1.webp" alt="">
     </div>
 
 <div class="copyright">
