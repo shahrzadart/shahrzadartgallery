@@ -144,63 +144,38 @@ h1 {
 @media (max-width: 768px) {
 
   body {
-    padding-inline: 32px;   /* فضای خالی واقعی صفحه */
-  }
-
-  h1 {
-    font-size: 2.3rem;
-  }
-
-  .nav-center {
-    display: none;
-  }
-
-  .hamburger {
-    display: block;
+    padding-inline: 6vw;   /* فضای خالی واقعی صفحه */
   }
 
   .gallery {
     margin-top: 40px;
-    padding-inline: 20px;
   }
 
   .art-card {
-    max-width: 280px;      /* کارت باریک‌تر */
-    margin: 0 auto;
-  }
-
-    .imgstylenow {
-    padding-inline: 24px;
-    gap: 32px;
-  }
-
-  .imgstylenow img {
-    max-width: 260px;     /* تصاویر پایین کوچکتر */
-  }
-}
-
-@media (max-width: 768px) {
-
-  body {
-    padding-inline: 6vw;   /* فضای خالی واقعی بر اساس عرض دستگاه */
-  }
-
-  .art-card {
-    width: 78vw;          /* کارت فقط 78٪ عرض صفحه */
+    width: 78vw;          /* کارت 78٪ عرض صفحه */
     max-width: none;
     margin: 0 auto;
+    background: #fff9f9;
   }
 
   .art-card img {
-    padding: 16px;
+    padding: 20px;        /* فضای سفید ظریف و کنترل‌شده */
+    background: transparent; /* حذف کادر سفید اضافی */
     box-sizing: border-box;
+  }
+
+  .imgstylenow {
+    padding-inline: 4vw;
+    gap: 32px;
   }
 
   .imgstylenow img {
     width: 78vw;
     max-width: none;
+    background: #fff;
   }
 }
+
 
 /* ===== VERY SMALL SCREENS ===== */
 @media (max-width: 320px) {
