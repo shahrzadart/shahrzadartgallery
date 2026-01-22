@@ -23,12 +23,8 @@ html, body {
   background: #ffffff7c;
 }
 
-/* ===== MOBILE SAFE BODY PADDING ===== */
-@media (max-width: 768px) {
-  body {
-    padding-inline: 16px;
-  }
-}
+/* ❌ مهم: قانون عمومی img حذف شده */
+/* img { max-width:100% } ← عمداً نداریم */
 
 /* ===== TITLE ===== */
 h1 {
@@ -120,18 +116,19 @@ h1 {
   margin-top: 60px;
 }
 
-/* ===== ART CARD ===== */
+/* ===== ART CARD (کلید حل مشکل) ===== */
 .art-card {
+  width: fit-content;       /* ⬅️ کارت به اندازه محتوا */
+  margin-inline: auto;      /* وسط */
   background: #fff9f9;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  max-width: 360px;
   text-align: center;
 }
 
-/* ⬅️ مهم‌ترین بخش */
+/* ===== IMAGE (پیکسلی، مستقل از صفحه) ===== */
 .art-card img {
-  width: 320px;        /* دسکتاپ */
+  width: 260px;             /* ⬅️ ثابت */
   height: auto;
   display: block;
   margin: 0 auto;
@@ -154,14 +151,14 @@ h1 {
 .imgstylenow {
   display: flex;
   justify-content: center;
-  gap: 80px;
+  gap: 60px;
   margin: 60px 0;
   flex-wrap: wrap;
 }
 
 .imgstylenow img {
-  height: 300px;
-  width: auto;
+  width: 260px;             /* ⬅️ ثابت */
+  height: auto;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
@@ -175,7 +172,7 @@ h1 {
   font-size: 0.85rem;
 }
 
-/* ===== MOBILE (کلید حل مشکل تو اینجاست) ===== */
+/* ===== MOBILE ===== */
 @media (max-width: 768px) {
 
   .nav-center {
@@ -186,21 +183,10 @@ h1 {
     display: block;
   }
 
-  /* ❗ عکس گالری هرگز فول‌عرض نمی‌شود */
-  .art-card img {
-    width: auto;
-    max-width: 85%;   /* ⬅️ عمداً کمتر از عرض */
-  }
-
-  .imgstylenow {
-    flex-direction: column;
-    gap: 30px;
-  }
-
+  /* حتی موبایل هم کوچک‌تر */
+  .art-card img,
   .imgstylenow img {
-    width: auto;
-    max-width: 85%;
-    height: auto;
+    width: 240px;
   }
 }
 
