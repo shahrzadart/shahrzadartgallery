@@ -3,54 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shahrzad_Painting: Battle Of Dawn</title>
+<title>Shahrzad_Painting</title>
 
 <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
 <style>
-/* ===== RESET ===== */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* ===== BODY ===== */
+/* ===== GLOBAL ===== */
+.copyright {
+        text-align: center;
+        background: rgb(197, 39, 39);
+        color: white;
+        padding: 2px;
+        margin-top: 30%;
+      }
 body {
   margin: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background: #ffffff7c;
-  padding-inline: 16px;
 }
 
 /* ===== TITLE ===== */
 h1 {
   text-align: center;
-  font-size: 3rem;
-  margin: 30px 0 20px;
+  font-size: 3.5rem;
+  margin: 20px 0;
 }
 
-/* ===== NAVBAR (REAL CENTER) ===== */
+/* ===== NAVBAR ===== */
 .navbar {
   background-color: #ffdfdfc7;
   padding: 8px 14px;
   border-radius: 6px;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
   align-items: center;
 }
 
 .nav-center {
   display: flex;
   gap: 12px;
+  flex: 1;
   justify-content: center;
-  grid-column: 2;
 }
 
 .navbar a {
@@ -64,12 +56,64 @@ h1 {
   background: rgba(255,255,255,0.35);
 }
 
+/* ===== HAMBURGER ===== */
 .hamburger {
-  grid-column: 3;
-  justify-self: end;
-  font-size: 1.8rem;
+  font-size: 2rem;
   cursor: pointer;
   display: none;
+  margin-left: auto;
+}
+
+/* ===== MOBILE MENU ===== */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 260px;
+  height: 100vh;
+  background: #838383b7;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: right 0.35s ease;
+  z-index: 1002;
+}
+
+.mobile-menu.active {
+  right: 0;
+}
+
+.mobile-menu a {
+  color: #000c2c;
+  text-decoration: none;
+  padding: 12px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+/* ===== OVERLAY ===== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 1001;
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+@media (max-width: 992px) {
+  .gallery {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
 }
 
 /* ===== GALLERY ===== */
@@ -140,56 +184,30 @@ h1 {
   line-height: 1.6;
 }
 
-/* ===== MOBILE ===== */
+/* ===== COPYRIGHT ===== */
+.copyright {
+        text-align: center;
+        background: rgb(197, 39, 39);
+        color: white;
+        padding: 2px;
+        margin-top: 30%;
+      }
+/* ===== MOBILE ONLY ===== */
 @media (max-width: 768px) {
-
-  body {
-    padding-inline: 6vw;
+  .nav-center {
+    display: none;
   }
 
-  .gallery {
-    margin-top: 40px;
-  }
-
-  .art-card {
-    width: 78vw;
-    max-width: none;
-    margin: 0 auto;
-    background: transparent;   /* ⬅️ کلید حل مشکل */
-    box-shadow: none;          /* اختیاری: حذف سایه در موبایل */
-  }
-
-  .art-card img {
-    padding: 0;                /* ⬅️ بدون قاب */
-    background: transparent;
-    box-sizing: border-box;
-  }
-
-  .art-details {
-    background: #ffdfdfa8;     /* فقط اطلاعات زمینه داشته باشد */
-  }
-
-  .imgstylenow {
-    padding-inline: 4vw;
-    gap: 32px;
-  }
-
-  .imgstylenow img {
-    width: 78vw;
-    max-width: none;
-    background: transparent;
+  .hamburger {
+    display: block;
   }
 }
 
-
-/* ===== VERY SMALL SCREENS ===== */
-@media (max-width: 320px) {
-  body {
-    padding-inline: 8px;
-  }
-
-  h1 {
-    font-size: 2rem;
+/* ===== DESKTOP ===== */
+@media (min-width: 769px) {
+  .mobile-menu,
+  .overlay {
+    display: none;
   }
 }
 </style>
@@ -197,12 +215,11 @@ h1 {
 
 <body>
 
-<h1>Shahrzad Art Studio</h1>
+<h1 style="text-align: center; font-family: playfair; font-size: 3.5rem;">Shahrzad Art Studio</h1>
+
 
 <!-- NAVBAR -->
 <div class="navbar">
-  <div></div>
-
   <div class="nav-center">
     <a href="index.html">Home</a>
     <a href="iranian_miniature.html">Iranian Miniature</a>
@@ -212,18 +229,30 @@ h1 {
     <a href="about.html">About</a>
   </div>
 
-  <div class="hamburger">
-    <i class='bx bx-menu'></i>
+  <div class="hamburger" id="hamburgerBtn">
+    <i class="bx bx-menu"></i>
   </div>
 </div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="iranian_miniature.html">Iranian Miniature</a>
+  <a href="Contemporary_Art.html">Contemporary Art</a>
+  <a href="motive.html">Motive Art</a>
+  <a href="contact.html">Contact</a>
+  <a href="about.html">About</a>
+</div>
+
+<div class="overlay" id="overlay"></div>
 
 <!-- GALLERY -->
 <div class="gallery">
   <div class="art-card">
-    <img src="purple-frame.webp" alt="The Sheikh And The Maiden">
+   <img src="purple-frame.webp" alt="The Sheikh And The Maiden">
 
     <div class="art-details">
-     <h3>Untitled- Portrait 6</h3>
+      <h3>Untitled- Portrait 6</h3>
 
       <p><strong>Medium:</strong> Mixed Media</p>                  
       <p><strong>Size:</strong> 21.2 x 15.3 in(54 x 39 cm)</p>
@@ -233,13 +262,44 @@ h1 {
   </div>
 </div>
   <div class="imgstylenow">
-  <img src="purple1.webp" alt="">
+  <img src="Purple.webp" alt="">
     </div>
 
 <div class="copyright">
-  © 2026 Shahrzad Momenzadeh. All rights reserved.<br>
-  Website Design: Behrouz Mohebi Moghaddam | Website Developed: Artin Mohebi Moghaddam
+  © 2026 Shahrzad Momenzadeh. All rights reserved. |
+  Website Design: Behrouz Mohebi Moghaddam – Website Developed: Artin Mohebi Moghaddam
 </div>
+<style>
+.copyright {
+        text-align: center;
+        background: rgb(197, 39, 39);
+        color: white;
+        padding: 2px;
+        margin-top: 30%;
+      }
+</style>
+
+
+<script>
+const hamBtn = document.getElementById("hamburgerBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+const overlay = document.getElementById("overlay");
+const icon = hamBtn.querySelector("i");
+
+function toggleMenu() {
+  mobileMenu.classList.toggle("active");
+  overlay.classList.toggle("active");
+  icon.classList.toggle("bx-menu");
+  icon.classList.toggle("bx-x");
+}
+
+hamBtn.addEventListener("click", toggleMenu);
+overlay.addEventListener("click", toggleMenu);
+
+document.querySelectorAll(".mobile-menu a").forEach(link => {
+  link.addEventListener("click", toggleMenu);
+});
+</script>
 
 </body>
 </html>
