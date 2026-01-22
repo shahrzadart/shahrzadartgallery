@@ -143,41 +143,12 @@ h1 {
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
 
-  body {
-    padding-inline: 6vw;
-  }
-
-  .gallery {
-    margin-top: 40px;
-  }
-
-  .art-card {
-    width: 78vw;
-    max-width: none;
-    margin: 0 auto;
-    background: transparent;   /* ⬅️ کلید حل مشکل */
-    box-shadow: none;          /* اختیاری: حذف سایه در موبایل */
-  }
-
-  .art-card img {
-    padding: 0;                /* ⬅️ بدون قاب */
-    background: transparent;
-    box-sizing: border-box;
-  }
-
-  .art-details {
-    background: #ffdfdfa8;     /* فقط اطلاعات زمینه داشته باشد */
-  }
-
-  .imgstylenow {
-    padding-inline: 4vw;
-    gap: 32px;
-  }
-
+  .art-card img,
   .imgstylenow img {
-    width: 78vw;
-    max-width: none;
-    background: transparent;
+    width: 100%;
+    height: auto;        /* ⬅️ ارتفاع واقعی اثر */
+    aspect-ratio: auto; /* ⬅️ حذف نسبت اجباری */
+    object-fit: unset;  /* ⬅️ حذف رفتار کششی */
   }
 }
 
