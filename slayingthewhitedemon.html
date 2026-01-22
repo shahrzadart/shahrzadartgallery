@@ -3,20 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shahrzad_Painting:Battle Of Dawn</title>
-<link rel="stylesheet" href="styleimg.sss">
+<title>Shahrzad_Painting : Battle Of Dawn</title>
 
 <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
 <style>
-body {
+
+/* ===== RESET ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
   margin: 0;
+  max-width: 100%;
+  overflow-x: hidden;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background: #ffffff7c;
 }
-body {
-  margin: 0;
-  padding-inline: 3vw;   /* ⬅️ کلید کار */
+
+/* ===== MOBILE SAFE PADDING ===== */
+@media (max-width: 768px) {
+  body {
+    padding-inline: 16px;
+  }
+}
+
+/* ===== IMAGES ===== */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===== TITLE ===== */
+h1 {
+  text-align: center;
+  font-size: 3.5rem;
+  margin: 30px 0;
 }
 
 /* ===== NAVBAR ===== */
@@ -31,9 +57,7 @@ body {
 
 .nav-center {
   display: flex;
-  justify-content: center;
   gap: 12px;
-  flex: 1;
 }
 
 .navbar a {
@@ -50,6 +74,51 @@ body {
 .hamburger {
   font-size: 1.8rem;
   cursor: pointer;
+  display: none;
+}
+
+/* ===== MOBILE MENU ===== */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 260px;
+  height: 100vh;
+  background: #838383b7;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: right 0.35s ease;
+  z-index: 1002;
+}
+
+.mobile-menu.active {
+  right: 0;
+}
+
+.mobile-menu a {
+  color: #000c2c;
+  text-decoration: none;
+  padding: 12px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 6px;
+}
+
+/* ===== OVERLAY ===== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 1001;
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: all;
 }
 
 /* ===== GALLERY ===== */
@@ -57,27 +126,21 @@ body {
   display: flex;
   justify-content: center;
   margin-top: 60px;
-  padding-inline: 3vw;
 }
 
 /* ===== ART CARD ===== */
 .art-card {
-  display: inline-block;
   background: #fff9f9;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  overflow: hidden;
-  text-align: center;
   max-width: 360px;
+  text-align: center;
 }
-.art-card {
-  overflow: visible;   /* ⬅️ اجازه بده تصویر کامل دیده بشه */
-}
+
 .art-card img {
   width: 320px;
-  height: auto;
-  display: block;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-inline: auto;
+  transition: transform 0.35s ease;
 }
 
 .art-card img:hover {
@@ -93,120 +156,23 @@ body {
 }
 
 .art-details h3 {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   text-align: center;
 }
 
-.art-details p {
-  margin: 6px 0;
-}
-
-/* ===== COPYRIGHT ===== */
-.copyright {
-  text-align: center;
-  background: rgb(197, 39, 39);
-  color: white;
-  padding: 10px;
-  margin-top: 80px;
-  font-size: 0.90rem;
-  height: 1/200px;
-}
-
-.copyright {
-  text-align: center;
-  background: rgb(197, 39, 39);
-  color: white;
-  padding: 10px;
-  margin-top: 80px;
-  font-size: 0.85rem;
-  font-weight: 400; /* ince */
-  line-height: 1.5;
-}
-
-.copyright span {
-  font-size: 0.8rem;
-  font-weight: 300; /* daha da ince */
-}
-
-.copyright h4 {
-  font-weight: 400; /* bold yerine normal */
-  margin: 0;
-  line-height: 1.5;
-  font-style: bold;
-}
-
-</style>
-</head>
-
-<body>
-<h1 style="text-align: center; font-family: playfair; font-size: 3.5rem;">Shahrzad Art Studio</h1>
-<!-- NAVBAR -->
-<style>
-
-.gallery-item a {
-  margin-top: 12px;
-  text-decoration: none;
-  color: #000;
-  font-size: 14px;
-}
-
-/* ===== OVERLAY ===== */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0,0,0,0.45);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 998;
-}
-
-.overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* ===== MOBILE DRAWER MENU ===== */
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 260px;
-  height: 100vh;
-  background: #838383b7;
-  padding: 20px;
+/* ===== EXTRA IMAGES ===== */
+.imgstylenow {
   display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transition: right 0.35s ease;
-  z-index: 999;
+  justify-content: center;
+  gap: 80px;
+  margin: 60px 0;
+  flex-wrap: wrap;
 }
 
-.mobile-menu.active {
-  right: 0;
-}
-
-.mobile-menu a {
-  color: #000c2c;
-  text-decoration: none;
-  padding: 12px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 6px;
-}
-
-.mobile-sub span {
-  color: #fff;
-  cursor: pointer;
-}
-
-.mobile-sub-items {
-  display: none;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 6px;
+.imgstylenow img {
+  height: 300px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
 /* ===== COPYRIGHT ===== */
@@ -214,11 +180,11 @@ body {
   text-align: center;
   background: rgb(197, 39, 39);
   color: white;
-  padding: 6px;
-  margin-top: 30%;
+  padding: 12px;
+  font-size: 0.85rem;
 }
 
-/* ===== MOBILE FIX ===== */
+/* ===== MOBILE ===== */
 @media (max-width: 768px) {
 
   .nav-center {
@@ -229,19 +195,29 @@ body {
     display: block;
   }
 
-  .bottom-gallery {
+  .imgstylenow {
     flex-direction: column;
-    align-items: center;
+    gap: 30px;
   }
 
-  .image-center {
-    margin-top: 60px;
+  .imgstylenow img {
+    width: 90%;
+    height: auto;
+    max-width: 360px;
   }
-}</style>
+
+  .art-card img {
+    width: 90%;
+    max-width: 320px;
+  }
+}
+
 </style>
 </head>
 
 <body>
+
+<h1>Shahrzad Art Studio</h1>
 
 <!-- NAVBAR -->
 <div class="navbar">
@@ -260,8 +236,6 @@ body {
     <i class='bx bx-menu'></i>
   </div>
 </div>
-<!-- MOBILE MENU -->
-
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
@@ -273,91 +247,32 @@ body {
   <a href="about.html">About</a>
 </div>
 
-<!-- OVERLAY -->
 <div class="overlay" id="overlay"></div>
 
-<style>
-  /* ===== HAMBURGER ===== */
-.hamburger {
-  font-size: 1.8rem;
-  cursor: pointer;
-  display: none;
-  margin-left: auto; 
-}
+<!-- GALLERY -->
+<div class="gallery">
+  <div class="art-card">
+    <img src="demon-frame-low-1.webp" alt="Slaying the White Demon">
+    <div class="art-details">
+      <h3>Slaying The White Demon</h3>
+      <p><strong>Medium:</strong> Gouache & Watercolor</p>
+      <p><strong>Size:</strong> 27.5 × 25.2 in (70 × 64 cm)</p>
+      <p><strong>Year:</strong> 2011</p>
+      <p><strong>ID:</strong> SM-2011-WC&GC-03</p>
+    </div>
+  </div>
+</div>
 
-/* ===== MOBILE MENU ===== */
+<div class="imgstylenow">
+  <img src="demon-1.webp" alt="">
+  <img src="demon-11.webp" alt="">
+</div>
 
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 260px;
-  height: 100vh;
-  background: #838383b7;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transition: right 0.35s ease;
-  z-index: 1002;
-}
+<div class="copyright">
+  © 2026 Shahrzad Momenzadeh. All rights reserved.<br>
+  Website Design: Behrouz Mohebi Moghaddam | Developed: Artin Mohebi Moghaddam
+</div>
 
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
-  z-index: 1001;   /* ⬅️ زیر منو */
-}
-
-
-.mobile-menu.active {
-  right: 0;
-}
-
-.mobile-menu a {
-  color: #000c2c;
-  text-decoration: none;
-  padding: 12px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 6px;
-}
-
-/* ===== OVERLAY ===== */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
-  z-index: 1000;
-}
-
-.overlay.active {
-  opacity: 1;
-  pointer-events: all;
-}
-
-/* ===== MOBILE BREAKPOINT ===== */
-@media (max-width: 768px) {
-  .nav-center {
-    display: none;      /* منوی دسکتاپ مخفی */
-  }
-
-  .hamburger {
-    display: block;     /* hamburger فقط موبایل */
-  }
-
-  .gallery {
-    grid-template-columns: 1fr; /* گالری تک ستون */
-    gap: 40px;
-  }
-}
-
-</style>
 <script>
 const hamBtn = document.getElementById("hamburgerBtn");
 const mobileMenu = document.getElementById("mobileMenu");
@@ -373,82 +288,7 @@ function toggleMenu() {
 
 hamBtn.onclick = toggleMenu;
 overlay.onclick = toggleMenu;
-
-document.querySelectorAll(".mobile-menu a").forEach(link => {
-  link.addEventListener("click", () => {
-    mobileMenu.classList.remove("active");
-    overlay.classList.remove("active");
-    icon.classList.add("bx-menu");
-    icon.classList.remove("bx-x");
-  });
-});
 </script>
-
-
-
-
-<!-- GALLERY -->
-<div class="gallery">
-  <div class="art-card">
-    <img src="demon-frame-low-1.webp" alt="Slaying the White Demon">
-
-    <div class="art-details">
-      <h3>Slaying The White Demon</h3>
-
-      <p><strong>Medium:</strong> Gouache & Watercolor</p>
-      <p><strong>Size:</strong> 27.5 × 25.2 in (70 × 64 cm)</p>
-      <p><strong>Year:</strong> 2011</p>
-      <p><strong>ID:</strong> SM-2011-WC&GC-03</p>
-    </div>
-  </div>
-</div>
-  <div class="imgstylenow">
-  <img src="demon-1.webp" alt="">
-  <img src="demon-11.webp" alt="">
-  </div>
-
-<style>
-  div.imgstylenow {
-  display: flex;
-  justify-content: center;
-  gap: 80px;
-  margin-top: 50px;
-  align-items: center;
-  flex-wrap: wrap; /* ⬅️ kritik */
-}
-
-div.imgstylenow img {
-  width: auto;
-  height: 300px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* 📱 MOBİL */
-@media (max-width: 768px) {
-  div.imgstylenow {
-    flex-direction: column; /* ⬅️ mobilde alt alta */
-    gap: 30px;
-  }
-
-  div.imgstylenow img {
-    height: auto;
-    width: 90%; /* mobilde taşmasın */
-    max-width: 360px;
-  }
-}
-
-</style>
-
-<div class="copyright">
-  <h4>
-    © 2026 Shahrzad Momenzadeh. All rights reserved.
-      Website Design: Behrouz Mohebi Moghaddam |
-      Website Developed: Artin Mohebi Moghaddam
-    </span>
-  </h4>
-</div>
 
 </body>
 </html>
