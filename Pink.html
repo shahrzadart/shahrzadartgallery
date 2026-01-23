@@ -204,14 +204,24 @@ h1 {
 }
 
 /* ===== DESKTOP ===== */
-@media (max-width: 768px) {
-  .imgstylenow img {
+@@media (max-width: 768px) {
+
+  .art-card {
+    max-width: calc(100% - 80px);
+    margin: 0 auto;
+  }
+
+  .art-card img {
     width: 100%;
-    max-width: calc(100% - 32px);
+  }
+
+  .imgstylenow img {
+    max-width: calc(100% - 80px);
     margin: 0 auto;
     display: block;
   }
 }
+
 </style>
 </head>
 
