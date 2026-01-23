@@ -204,10 +204,12 @@ h1 {
 }
 
 /* ===== DESKTOP ===== */
-@media (min-width: 769px) {
-  .mobile-menu,
-  .overlay {
-    display: none;
+@media (max-width: 768px) {
+  .imgstylenow img {
+    width: 100%;
+    max-width: calc(100% - 32px);
+    margin: 0 auto;
+    display: block;
   }
 }
 </style>
