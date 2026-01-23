@@ -204,11 +204,15 @@ h1 {
 }
 
 /* ===== DESKTOP ===== */
-@media (min-width: 769px) {
-  .mobile-menu,
-  .overlay {
-    display: none;
+
+@media (max-width: 768px) {
+  .imgstylenow img {
+    width: 100%;
+    max-width: calc(100% - 32px);
+    margin: 0 auto;
+    display: block;
   }
+}
 }
 </style>
 </head>
@@ -249,10 +253,10 @@ h1 {
 <!-- GALLERY -->
 <div class="gallery">
   <div class="art-card">
-    <img src="4.webp" alt="untitled">
+    <img src="hasht4.webp" alt="untitled">
 
     <div class="art-details">
-      <h3>untitled - tazhib 1</h3>
+      <h3>Untitled - Tazhib 1</h3>
 
       <p><strong>Medium:</strong> Gouache</p>                  
       <p><strong>Size:</strong> 21.2 x 17.3 in(54 x 44 cm)</p>
