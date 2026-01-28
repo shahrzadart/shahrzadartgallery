@@ -6,6 +6,7 @@
 <title>Shahrzad_Painting</title>
 
 <link rel="shortcut icon" href="Logo-removebg-preview.png" type="image/x-icon">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
 
 <style>
 /* ===== GLOBAL ===== */
@@ -154,31 +155,17 @@ h1 {
   text-align: center;
 }
 @media (max-width: 768px) {
-
   .art-details h3 {
-    font-size: 1rem;      /* کوچک‌تر ولی خوانا */
-    line-height: 1.4;
-    text-align: center;
-  }
-
-  .art-details p {
-    font-size: 0.85rem;  /* توضیحات ظریف‌تر */
-    line-height: 1.4;
-    margin: 4px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
-.art-details {
-  width: 100%;
-}
-
 @media (max-width: 768px) {
-  .art-details h3,
   .art-details p {
-    white-space: nowrap;
-    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
-
 /* ===== EXTRA IMAGES ===== */
 .imgstylenow {
   display: flex;
@@ -200,12 +187,26 @@ h1 {
 
 /* ===== COPYRIGHT ===== */
 .copyright {
-        text-align: center;
-        background: rgb(197, 39, 39);
-        color: white;
-        padding: 2px;
-        margin-top: 30%;
-      }
+  text-align: center;
+  background: rgb(197, 39, 39);
+  color: white;
+  padding: 14px;
+  margin-top: 80px;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+/* ===== COPYRIGHT ===== */
+.copyright {
+  text-align: center;
+  background: rgb(197, 39, 39);
+  color: white;
+  padding: 14px;
+  margin-top: 80px;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
 /* ===== MOBILE ONLY ===== */
 @media (max-width: 768px) {
   .nav-center {
@@ -214,11 +215,15 @@ h1 {
 
   .hamburger {
     display: block;
+    color: #000;
+    border: none;
+    background: none;
+    cursor: pointer;
   }
-}
 
-/* ===== DESKTOP ===== */
-@media (max-width: 768px) {
+  .navbar {
+    justify-content: space-between;
+  }
 
   .art-card {
     max-width: calc(100% - 80px);

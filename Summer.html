@@ -118,9 +118,12 @@ h1 {
 
 /* ===== GALLERY ===== */
 .gallery {
-  display: flex;
-  justify-content: center;
-  margin-top: 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 30px;
+  margin: 60px auto;
+  padding: 0 20px;
+  max-width: 1200px;
 }
 
 /* ===== ART CARD ===== */
@@ -154,31 +157,17 @@ h1 {
   text-align: center;
 }
 @media (max-width: 768px) {
-
   .art-details h3 {
-    font-size: 1rem;      /* کوچک‌تر ولی خوانا */
-    line-height: 1.4;
-    text-align: center;
-  }
-
-  .art-details p {
-    font-size: 0.85rem;  /* توضیحات ظریف‌تر */
-    line-height: 1.4;
-    margin: 4px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
-.art-details {
-  width: 100%;
-}
-
 @media (max-width: 768px) {
-  .art-details h3,
   .art-details p {
-    white-space: nowrap;
-    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
-
 /* ===== EXTRA IMAGES ===== */
 .imgstylenow {
   display: flex;
@@ -209,14 +198,6 @@ h1 {
   line-height: 1.6;
 }
 
-/* ===== COPYRIGHT ===== */
-.copyright {
-        text-align: center;
-        background: rgb(197, 39, 39);
-        color: white;
-        padding: 2px;
-        margin-top: 30%;
-      }
 /* ===== MOBILE ONLY ===== */
 @media (max-width: 768px) {
   .nav-center {
@@ -225,11 +206,15 @@ h1 {
 
   .hamburger {
     display: block;
+    color: #000;
+    border: none;
+    background: none;
+    cursor: pointer;
   }
-}
 
-/* ===== DESKTOP ===== */
-@media (max-width: 768px) {
+  .navbar {
+    justify-content: space-between;
+  }
 
   .art-card {
     max-width: calc(100% - 80px);
@@ -306,15 +291,6 @@ h1 {
   © 2026 Shahrzad Momenzadeh. All rights reserved. |
   Website Design: Behrouz Mohebi Moghaddam – Website Developed: Artin Mohebi Moghaddam
 </div>
-<style>
-.copyright {
-        text-align: center;
-        background: rgb(197, 39, 39);
-        color: white;
-        padding: 2px;
-        margin-top: 30%;
-      }
-</style>
 
 
 <script>

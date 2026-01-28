@@ -36,6 +36,13 @@ h1 {
   border-radius: 6px;
   display: flex;
   align-items: center;
+  z-index: 1003; /* Ensure navbar is above other elements */
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    display: none; /* Hide navbar on mobile */
+  }
 }
 
 .nav-center {
@@ -154,31 +161,19 @@ h1 {
   text-align: center;
 }
 @media (max-width: 768px) {
-
   .art-details h3 {
-    font-size: 1rem;      /* کوچک‌تر ولی خوانا */
-    line-height: 1.4;
-    text-align: center;
-  }
-
-  .art-details p {
-    font-size: 0.85rem;  /* توضیحات ظریف‌تر */
-    line-height: 1.4;
-    margin: 4px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
-.art-details {
-  width: 100%;
-}
-
 @media (max-width: 768px) {
-  .art-details h3,
   .art-details p {
     white-space: nowrap;
-    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
-
 /* ===== EXTRA IMAGES ===== */
 .imgstylenow {
   display: flex;

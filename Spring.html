@@ -6,6 +6,7 @@
 <title>Shahrzad_Painting</title>
 
 <link rel="shortcut icon" href="Logo-removebg-preview.png" type="image/x-icon">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 <style>
 /* ===== GLOBAL ===== */
@@ -153,31 +154,6 @@ h1 {
   margin: 0 0 8px;
   text-align: center;
 }
-@media (max-width: 768px) {
-
-  .art-details h3 {
-    font-size: 1rem;      /* کوچک‌تر ولی خوانا */
-    line-height: 1.4;
-    text-align: center;
-  }
-
-  .art-details p {
-    font-size: 0.85rem;  /* توضیحات ظریف‌تر */
-    line-height: 1.4;
-    margin: 4px 0;
-  }
-}
-.art-details {
-  width: 100%;
-}
-
-@media (max-width: 768px) {
-  .art-details h3,
-  .art-details p {
-    white-space: nowrap;
-    width: 100%;
-  }
-}
 
 /* ===== EXTRA IMAGES ===== */
 .imgstylenow {
@@ -217,6 +193,91 @@ h1 {
         padding: 2px;
         margin-top: 30%;
       }
+@media (max-width: 992px) {
+  .gallery {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+/* ===== GALLERY ===== */
+.gallery {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+/* ===== ART CARD ===== */
+.art-card {
+  width: 100%;
+  max-width: 360px;
+  background: #fff9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  overflow: hidden;
+  text-align: center;
+}
+
+.art-card img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: contain;
+  background: #fff;
+}
+
+/* ===== DETAILS ===== */
+.art-details {
+  background: #ffdfdfa8;
+  padding: 14px;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.art-details h3 {
+  margin: 0 0 8px;
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .art-details h3 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+@media (max-width: 768px) {
+  .art-details p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+/* ===== EXTRA IMAGES ===== */
+.imgstylenow {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+
+.imgstylenow img {
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 3 / 4;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* ===== COPYRIGHT ===== */
+.copyright {
+  text-align: center;
+  background: rgb(197, 39, 39);
+  color: white;
+  padding: 14px;
+  margin-top: 80px;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
 /* ===== MOBILE ONLY ===== */
 @media (max-width: 768px) {
   .nav-center {
@@ -225,11 +286,15 @@ h1 {
 
   .hamburger {
     display: block;
+    color: #000;
+    border: none;
+    background: none;
+    cursor: pointer;
   }
-}
 
-/* ===== DESKTOP ===== */
-@media (max-width: 768px) {
+  .navbar {
+    justify-content: space-between;
+  }
 
   .art-card {
     max-width: calc(100% - 80px);
@@ -246,7 +311,6 @@ h1 {
     display: block;
   }
 }
-
 </style>
 </head>
 
@@ -306,15 +370,6 @@ h1 {
   © 2026 Shahrzad Momenzadeh. All rights reserved. |
   Website Design: Behrouz Mohebi Moghaddam – Website Developed: Artin Mohebi Moghaddam
 </div>
-<style>
-.copyright {
-        text-align: center;
-        background: rgb(197, 39, 39);
-        color: white;
-        padding: 2px;
-        margin-top: 30%;
-      }
-</style>
 
 
 <script>
