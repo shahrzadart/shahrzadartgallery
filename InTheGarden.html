@@ -32,6 +32,7 @@
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
+  <button class="close-menu" id="closeMenu">✕</button>
   <a href="index.html">Home</a>
   <a href="iranian_miniature.html">Iranian Miniature</a>
   <a href="Contemporary_Art.html">Contemporary Art</a>
@@ -69,24 +70,32 @@
 </div>
 
 <script>
-const hamBtn = document.getElementById("hamburgerBtn");
-const mobileMenu = document.getElementById("mobileMenu");
-const overlay = document.getElementById("overlay");
-const icon = hamBtn.querySelector("i");
+  const hamBtn = document.getElementById("hamburgerBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+  const overlay = document.getElementById("overlay");
+  const closeMenu = document.getElementById("closeMenu");
 
-function toggleMenu() {
-  mobileMenu.classList.toggle("active");
-  overlay.classList.toggle("active");
-  icon.classList.toggle("bx-menu");
-  icon.classList.toggle("bx-x");
-}
+  function openMenu() {
+    mobileMenu.classList.add("active");
+    overlay.classList.add("active");
+  }
 
-hamBtn.addEventListener("click", toggleMenu);
-overlay.addEventListener("click", toggleMenu);
+  function closeMenuFn() {
+    mobileMenu.classList.remove("active");
+    overlay.classList.remove("active");
+  }
 
-document.querySelectorAll(".mobile-menu a").forEach(link => {
-  link.addEventListener("click", toggleMenu);
+  hamBtn.addEventListener("click", openMenu);
+  closeMenu.addEventListener("click", closeMenuFn);
+  overlay.addEventListener("click", closeMenuFn);
+
+  document.querySelectorAll(".mobile-menu a").forEach(link => {
+    link.addEventListener("click", closeMenuFn);
+  });
+  document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeMenuFn();
 });
+
 </script>
 
 </body>

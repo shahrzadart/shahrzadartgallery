@@ -52,26 +52,45 @@
   background: none;
   border: none;
 }
-
-/* ===== MOBILE MENU ===== */
 .mobile-menu {
   position: fixed;
   top: 0;
-  right: -100%;
+  right: 0;
   width: 260px;
   height: 100vh;
   background: #fff;
   padding: 70px 25px;
+
   display: flex;
   flex-direction: column;
   gap: 18px;
-  transition: 0.35s ease;
+
+  transform: translateX(110%); /* 🔴 TAM DIŞARI */
+  transition: transform 0.35s ease;
   z-index: 1002;
+}
+.mobile-menu.active ~ .navbar .hamburger {
+  display: none;
 }
 
 .mobile-menu.active {
-  right: 0;
+  transform: translateX(0); /* ✅ TAM OTURUR */
 }
+.close-menu {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000;
+}
+
+.close-menu:hover {
+  opacity: 0.6;
+}
+
 
 .mobile-menu a {
   color: #000;

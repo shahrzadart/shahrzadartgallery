@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shahrzad_Painting: About</title>
-
+<link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 <link rel="shortcut icon" href="Logo-removebg-preview.png" type="image/x-icon">
 <link rel="stylesheet" href="styles.css">
 <style>
@@ -102,6 +102,7 @@ ul li {
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
+  <button class="close-menu" id="closeMenu">✕</button>
   <a href="index.html">Home</a>
   <a href="iranian_miniature.html">Iranian Miniature</a>
   <a href="contemporary_art.html">Contemporary Art</a>
@@ -164,30 +165,30 @@ ul li {
 
 <!-- SCRIPT -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
   const hamBtn = document.getElementById("hamburgerBtn");
   const mobileMenu = document.getElementById("mobileMenu");
   const overlay = document.getElementById("overlay");
-  const icon = hamBtn.querySelector("i");
+  const closeMenu = document.getElementById("closeMenu");
 
-  function toggleMenu() {
-    mobileMenu.classList.toggle("active");
-    overlay.classList.toggle("active");
-    icon.classList.toggle("bx-menu");
-    icon.classList.toggle("bx-x");
+  function openMenu() {
+    mobileMenu.classList.add("active");
+    overlay.classList.add("active");
   }
 
-  hamBtn.onclick = toggleMenu;
-  overlay.onclick = toggleMenu;
+  function closeMenuFn() {
+    mobileMenu.classList.remove("active");
+    overlay.classList.remove("active");
+  }
+
+  hamBtn.addEventListener("click", openMenu);
+  closeMenu.addEventListener("click", closeMenuFn);
+  overlay.addEventListener("click", closeMenuFn);
 
   document.querySelectorAll(".mobile-menu a").forEach(link => {
-    link.addEventListener("click", () => {
-      mobileMenu.classList.remove("active");
-      overlay.classList.remove("active");
-      icon.classList.add("bx-menu");
-      icon.classList.remove("bx-x");
-    });
+    link.addEventListener("click", closeMenuFn);
   });
+  document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeMenuFn();
 });
 </script>
 
