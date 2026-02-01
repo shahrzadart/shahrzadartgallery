@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,6 @@
 
   <meta name="author" content="Shahrzad Momenzadeh">
 
-  <!-- OPTIONAL (keywords دیگر مهم نیست، ولی می‌تونی نگه داری) -->
   <meta name="keywords" content="Iranian miniature, contemporary art, Shahrzad Art Studio">
 
   <link rel="shortcut icon" href="Logo-removebg-preview.png" type="image/x-icon">
@@ -24,7 +24,6 @@ body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background: #ffffff7c;
 }
-/* ===== NAVBAR ===== */
 .navbar {
   position: sticky;
   top: 0;
@@ -53,7 +52,6 @@ body {
   font-family: Arial;
 }
 
-/* underline hover */
 .navbar a::after {
   content: "";
   position: absolute;
@@ -69,7 +67,6 @@ body {
   width: 100%;
 }
 
-/* ===== HAMBURGER ===== */
 .hamburger {
   position: absolute;
   right: 18px;
@@ -80,14 +77,12 @@ body {
   border: none;
 }
 
-/* ===== GALLERY ===== */
 .gallery {
   display: flex;
   justify-content: center;
   margin-top: 60px;
 }
 
-/* ===== ART CARD ===== */
 .art-card {
   display: inline-block;
   background: #fff9f9;
@@ -109,7 +104,6 @@ body {
   transform: scale(1.05);
 }
 
-/* ===== DETAILS ===== */
 .art-details {
   background: #ffdfdfa8;
   padding: 14px;
@@ -126,7 +120,6 @@ body {
   margin: 6px 0;
 }
 
-/* ===== COPYRIGHT ===== */
 .copyright {
   text-align: center;
   background: rgb(197, 39, 39);
@@ -144,17 +137,17 @@ body {
   padding: 10px;
   margin-top: 80px;
   font-size: 0.85rem;
-  font-weight: 400; /* ince */
+  font-weight: 400; 
   line-height: 1.5;
 }
 
 .copyright span {
   font-size: 0.8rem;
-  font-weight: 300; /* daha da ince */
+  font-weight: 300; 
 }
 
 .copyright h4 {
-  font-weight: 400; /* bold yerine normal */
+  font-weight: 400; 
   margin: 0;
   line-height: 1.5;
   font-style: bold;
@@ -167,8 +160,6 @@ body {
 <h1 style="text-align: center; font-family: playfair; font-size: 3.5rem;">
   Shahrzad Art Studio
 </h1>
-
-<!-- NAVBAR -->
 <style>
 
 .gallery-item a {
@@ -177,8 +168,6 @@ body {
   color: #000;
   font-size: 14px;
 }
-
-/* ===== OVERLAY ===== */
 .overlay {
   position: fixed;
   top: 0;
@@ -191,13 +180,10 @@ body {
   transition: opacity 0.3s ease;
   z-index: 998;
 }
-
 .overlay.active {
   opacity: 1;
   pointer-events: auto;
 }
-
-/* ===== MOBILE DRAWER MENU ===== */
 .mobile-menu {
   position: fixed;
   top: 0;
@@ -236,8 +222,6 @@ body {
   gap: 6px;
   margin-top: 6px;
 }
-
-/* ===== COPYRIGHT ===== */
 .copyright {
   text-align: center;
   background: rgb(197, 39, 39);
@@ -245,8 +229,6 @@ body {
   padding: 6px;
   margin-top: 30%;
 }
-
-/* ===== MOBILE FIX ===== */
 @media (max-width: 768px) {
 
   .nav-center {
@@ -265,19 +247,14 @@ body {
   .image-center {
     margin-top: 60px;
   }
-  @media (max-width: 768px) {
   .image-center img {
     max-width: calc(100% - 80px);
     width: auto;
   }
 }
-}</style>
 </style>
 </head>
-
 <body>
-
-<!-- NAVBAR -->
 <div class="navbar">
   <div></div>
 
@@ -295,10 +272,6 @@ body {
     <i class='bx bx-menu'></i>
   </div>
 </div>
-<!-- MOBILE MENU -->
-
-
-<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <button class="close-menu" id="closeMenu">✕</button>
   <a href="index.html">Home</a>
@@ -308,12 +281,9 @@ body {
   <a href="contact.html">Contact</a>
   <a href="about.html">About</a>
 </div>
-
-<!-- OVERLAY -->
 <div class="overlay" id="overlay"></div>
 
 <style>
-  /* ===== HAMBURGER ===== */
 .hamburger {
   font-size: 1.8rem;
   cursor: pointer;
@@ -335,7 +305,7 @@ body {
   flex-direction: column;
   gap: 18px;
 
-  transform: translateX(110%); /* 🔴 TAM DIŞARI */
+  transform: translateX(110%);
   transition: transform 0.35s ease;
   z-index: 1002;
 }
@@ -344,7 +314,7 @@ body {
 }
 
 .mobile-menu.active {
-  transform: translateX(0); /* ✅ TAM OTURUR */
+  transform: translateX(0);
 }
 .close-menu {
   position: absolute;
@@ -371,8 +341,6 @@ body {
   font-family: sans-serif;
   background: rgba(0,0,0,0.04);
 }
-
-/* ===== OVERLAY ===== */
 .overlay {
   position: fixed;
   inset: 0;
@@ -389,18 +357,17 @@ body {
   opacity: 1;
   pointer-events: auto;
 }
-/* ===== MOBILE BREAKPOINT ===== */
 @media (max-width: 768px) {
   .nav-center {
-    display: none;      /* منوی دسکتاپ مخفی */
+    display: none;
   }
 
   .hamburger {
-    display: block;     /* hamburger فقط موبایل */
+    display: block;
   }
 
   .gallery {
-    grid-template-columns: 1fr; /* گالری تک ستون */
+    grid-template-columns: 1fr;
     gap: 40px;
   }
 }
@@ -433,8 +400,6 @@ body {
   if (e.key === "Escape") closeMenuFn();
 });
 </script>
-
-<!-- ÜST TEK FOTO -->
 <div class="image-center">
   <img src="Asbii.avif" alt="A painting titled Battle Of Dawn by Shahrzad">
 </div>
@@ -453,7 +418,6 @@ The works reinterpret Persian visual heritage through storytelling, symbolism, a
     margin-left: 5px;
   }
 </style>
-<!-- ALT GALERİ -->
 <div class="bottom-gallery">
   <div class="gallery-item">
     <img src="demons.webp" onclick="location.href='iranian_miniature.html';" alt="A miniature painting Iranian miniature>
@@ -469,7 +433,6 @@ The works reinterpret Persian visual heritage through storytelling, symbolism, a
   </div>
 </div>
 <style>
-  /* ===== IMAGE SECTIONS ===== */
 .image-center {
   display: flex;
   justify-content: center;
@@ -480,8 +443,6 @@ The works reinterpret Persian visual heritage through storytelling, symbolism, a
   width: 333px;
   border-radius: 8px;
 }
-
-/* ALT GALERİ */
 .bottom-gallery {
   display: flex;
   justify-content: center;
@@ -561,6 +522,12 @@ The works reinterpret Persian visual heritage through storytelling, symbolism, a
     </span>
   </h4>
 </div>
-
 </body>
 </html>
+-->
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<div class="cunsturaction">
+  <h2 style="text-align: center; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; margin-top: 200px; color:hsl(0, 0%, 9%)">
+    <i class='bx bx-wrench'></i>This page is under construction. Please check back later.
+  </h2>
+</div>
