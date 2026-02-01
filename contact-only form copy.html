@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | Shahrzad Painting</title>
+<link rel="shortcut icon" href="Logo-removebg-preview.png" type="image/x-icon">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
+<link rel="stylesheet" href="styles.css">
+</style>
+</head>
+<h1 style="text-align: center; font-family: playfair; font-size: 3.5rem;">Shahrzad Art Studio</h1>
+
+<body>
+
+<div class="navbar">
+  <div></div>
+
+  <div class="nav-center">
+    <a href="index.html">Home</a>
+    <a href="Available_Works.html">Available Works</a>
+    <a href="iranian_miniature.html">Contemporary Persian Miniature</a>
+    <a href="Contemporary_Art.html">Contemporary Painting</a>
+    <a href="motive.html">Contemporary Persian Motifs</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About</a>
+  </div>
+
+  <div class="hamburger" id="hamburgerBtn">
+    <i class='bx bx-menu'></i>
+  </div>
+</div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-menu" id="closeMenu">✕</button>
+  <a href="index.html">Home</a>
+  <a href="Available_Works.html">Available Works</a>
+  <a href="iranian_miniature.html">Contemporary Persian Miniature</a>
+  <a href="Contemporary_Art.html">Contemporary Painting</a>
+  <a href="motive.html">Contemporary Persian Motifs</a>
+  <a href="contact.html">Contact</a>
+  <a href="about.html">About</a>    
+</div>
+<div class="overlay" id="overlay"></div>
+
+<div class="text">
+  <p>
+    For professional inquiries, exhibitions, and collaborations.
+  </p>
+</div>
+<style>
+  .text {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 1.1rem;
+    margin-top: 50px;
+  }
+</style>
+
+<!-- CONTACT -->
+<div class="contact-wrapper">
+  <div class="contact-container">
+    <h2>Contact</h2>
+
+    <form id="contactForm" action="https://formspree.io/f/mlgnwpel" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" required></textarea>
+
+      <!-- Spam protection -->
+      <input type="text" name="_gotcha" style="display:none">
+
+      <button type="submit">Send</button>
+    </form>
+
+    <div id="successMessage" class="success-message">
+      ✅ Your message has been sent successfully!
+    </div>
+  </div>
+</div>
+<div class="copyright">
+  © 2026 Shahrzad Momenzadeh. All rights reserved. |
+  Website Design: Behrouz Mohebi Moghaddam – Website Developed: Artin Mohebi Moghaddam
+</div>
+<style>
+ </style>
+<script>
+  const hamBtn = document.getElementById("hamburgerBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+  const overlay = document.getElementById("overlay");
+  const closeMenu = document.getElementById("closeMenu");
+
+  function openMenu() {
+    mobileMenu.classList.add("active");
+    overlay.classList.add("active");
+  }
+
+  function closeMenuFn() {
+    mobileMenu.classList.remove("active");
+    overlay.classList.remove("active");
+  }
+
+  hamBtn.addEventListener("click", openMenu);
+  closeMenu.addEventListener("click", closeMenuFn);
+  overlay.addEventListener("click", closeMenuFn);
+
+  document.querySelectorAll(".mobile-menu a").forEach(link => {
+    link.addEventListener("click", closeMenuFn);
+  });
+  document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeMenuFn();
+});
+
+</script>
+<script>
+const form = document.getElementById("contactForm");
+const successMessage = document.getElementById("successMessage");
+
+form.addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const formData = new FormData(form);
+
+  const response = await fetch(form.action, {
+    method: form.method,
+    body: formData,
+    headers: { "Accept": "application/json" }
+  });
+
+  if (response.ok) {
+    form.reset();
+    successMessage.style.display = "block";
+
+    setTimeout(() => {
+      successMessage.style.display = "none";
+    }, 3000);
+  }
+});
+</script>
+
+</body>
+</html>
+<style>
+  .contact-wrapper{
+  display:flex;
+  justify-content:center;
+  padding:60px 20px;
+}
+
+.contact-container{
+  background:#ffffff;
+  width:100%;
+  max-width:520px;
+  padding:45px;
+  border-radius:14px;
+  box-shadow:0 15px 40px rgba(0,0,0,.12);
+}
+
+.contact-container h2{
+  text-align:center;
+  font-family:Playfair Display, serif;
+  font-size:2.2rem;
+  margin-bottom:10px;
+}
+
+.contact-text{
+  text-align:center;
+  color:#555;
+  margin-bottom:30px;
+  font-size:1rem;
+}
+
+.contact-container form{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.contact-container input,
+.contact-container textarea{
+  padding:14px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:.95rem;
+  font-family:inherit;
+  transition:.3s;
+}
+
+.contact-container input:focus,
+.contact-container textarea:focus{
+  border-color:black;
+  outline:none;
+}
+
+.contact-container textarea{
+  resize:none;
+  height:130px;
+}
+
+.contact-container button{
+  margin-top:10px;
+  padding:14px;
+  border-radius:10px;
+  border:none;
+  background:black;
+  color:white;
+  font-size:1rem;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.contact-container button:hover{
+  background:#333;
+}
+
+.success-message{
+  display:none;
+  margin-top:18px;
+  text-align:center;
+  color:#1a7f37;
+  font-size:.95rem;
+}
+</style>

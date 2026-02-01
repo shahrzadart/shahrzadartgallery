@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shahrzad_Painting</title>
+<link rel="shortcut icon" href="Logo-removebg-preview.png" type="image/x-icon">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<h1 style="text-align: center; font-family: playfair; font-size: 3.5rem;">Shahrzad Art Studio</h1>
+
+
+<div class="navbar">
+  <div></div>
+
+  <div class="nav-center">
+    <a href="index.html">Home</a>
+    <a href="Available_Works.html">Available Works</a>
+    <a href="iranian_miniature.html">Contemporary Persian Miniature</a>
+    <a href="Contemporary_Art.html">Contemporary Painting</a>
+    <a href="motive.html">Contemporary Persian Motifs</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About</a>
+  </div>
+
+  <div class="hamburger" id="hamburgerBtn">
+    <i class='bx bx-menu'></i>
+  </div>
+</div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-menu" id="closeMenu">✕</button>
+  <a href="index.html">Home</a>
+  <a href="Available_Works.html">Available Works</a>
+  <a href="iranian_miniature.html">Contemporary Persian Miniature</a>
+  <a href="Contemporary_Art.html">Contemporary Painting</a>
+  <a href="motive.html">Contemporary Persian Motifs</a>
+  <a href="contact.html">Contact</a>
+  <a href="about.html">About</a>    
+</div>
+<div class="overlay" id="overlay"></div>
+
+
+<!-- GALLERY -->
+<div class="gallery">
+  <div class="art-card">
+    <img src="222.webp" alt="Oil painting titled Rose by Shahrzad">
+
+    <div class="art-details">
+      <h3>Rose</h3>
+
+      <p><strong>Medium:</strong> Oil Painting</p>                  
+      <p><strong>Size:</strong> 27.5 x 23.6 in(70 x 60 cm)</p>
+      <p><strong>Year:</strong> 2018</p>
+      <p><strong>ID:</strong> SM-2018-OP-09</p>
+    </div>
+  </div>
+</div>
+  <div class="imgstylenow">
+  <img src="rose-2.webp" alt="Oil painting titled Rose by Shahrzad">
+    </div>
+
+<div class="copyright">
+  © 2026 Shahrzad Momenzadeh. All rights reserved. |
+  Website Design: Behrouz Mohebi Moghaddam – Website Developed: Artin Mohebi Moghaddam
+</div>
+<style>
+.copyright {
+        text-align: center;
+        background: rgb(197, 39, 39);
+        color: white;
+        padding: 2px;
+        margin-top: 30%;
+      }
+</style>
+
+
+<script>
+  const hamBtn = document.getElementById("hamburgerBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+  const overlay = document.getElementById("overlay");
+  const closeMenu = document.getElementById("closeMenu");
+
+  function openMenu() {
+    mobileMenu.classList.add("active");
+    overlay.classList.add("active");
+  }
+
+  function closeMenuFn() {
+    mobileMenu.classList.remove("active");
+    overlay.classList.remove("active");
+  }
+
+  hamBtn.addEventListener("click", openMenu);
+  closeMenu.addEventListener("click", closeMenuFn);
+  overlay.addEventListener("click", closeMenuFn);
+
+  document.querySelectorAll(".mobile-menu a").forEach(link => {
+    link.addEventListener("click", closeMenuFn);
+  });
+  document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeMenuFn();
+});
+
+</script>
+
+</body>
+</html>
