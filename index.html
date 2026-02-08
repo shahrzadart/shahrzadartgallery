@@ -242,10 +242,13 @@ body {
     flex-direction: column;
     align-items: center;
   }
-  /* فقط دسکتاپ */
+
+} /* ← این آکولاد خیلی مهم است */
+
+/* فقط دسکتاپ */
 @media (min-width: 1024px) {
   .bottom-gallery {
-    gap: 220px; /* هر عددی دوست داری */
+    gap: 220px;
   }
 }
 
@@ -256,7 +259,7 @@ body {
     max-width: calc(100% - 80px);
     width: auto;
   }
-}
+
 </style>
 </head>
 <body>
@@ -375,6 +378,16 @@ body {
   .gallery {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+}
+@media (max-width: 768px) {
+  .gallery-item img {
+    margin-bottom: 2px;
+  }
+
+  .gallery-item a {
+    margin-top: 2px;
+    font-size: 13px;
   }
 }
 
