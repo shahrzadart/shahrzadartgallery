@@ -77,18 +77,57 @@
 </style>
 
 <style>
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 20px;
+  row-gap: 40px;
+  padding: 20px;
+}
+
+.art-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.art-card img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.art-card p {
+  margin-top: 6px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
   .gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding: 20px;
+    grid-template-columns: 1fr;
+    row-gap: 30px;
+    padding: 16px;
   }
 
-  @media (max-width: 768px) {
-    .gallery {
-  grid-template-columns: 1fr;
-    }
+  .art-card img {
+    aspect-ratio: 3 / 4;
   }
+
+  .art-card p {
+    margin-top: 6px;
+    font-size: 0.95rem;
+  }
+}
+.art-card p {
+  font-size: 1.05rem;
+}
+
+@media (max-width: 768px) {
+  .art-card p {
+    font-size: 0.95rem;
+  }
+}
 </style>
 <div class="gallery">
   <div class="art-card">
@@ -144,6 +183,7 @@
   © 2026 Shahrzad Momenzadeh. All rights reserved. |
   Website Design: Behrouz Mohebi Moghaddam – Website Developed: Artin Mohebi Moghaddam
 </div>
+
 <script>
   const hamBtn = document.getElementById("hamburgerBtn");
   const mobileMenu = document.getElementById("mobileMenu");
