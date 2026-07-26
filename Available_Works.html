@@ -28,6 +28,7 @@
     <i class='bx bx-menu'></i>
   </div>
 </div>
+
 <div class="mobile-menu" id="mobileMenu">
   <button class="close-menu" id="closeMenu">✕</button>
   <a href="index.html">Home</a>
@@ -39,205 +40,431 @@
   <a href="about.html">About</a>    
 </div>
 <div class="overlay" id="overlay"></div>
+
 <div class="text">
   <h2>Available Works</h2>
-  <p>
-  This page presents a selection of available artworks.
-  For acquisition inquiries regarding these or additional works, please contact us.
-</p>
-<p class="left-text">
-  The original versions of these artworks are available.
-  The pieces can also be recreated in bespoke sizes upon request.
-  </p>
-<p class="left-text">
-  All artworks are delivered with an official Certificate of Authenticity signed by the artist.  
-</p>
-
-<p class="left-text">
-  Fine Art Prints of selected artworks are available for purchase through:</p>
-
-<a href="https://www.saatchiart.com/shahrzadfineart" target="_blank" style="text-decoration: none; color: blue;">Saatchi Art</a>
-   
-   <p class="left_text">
-    Visit the gallery to explore the collection and order directly online.
-   Visit the gallery to explore the collection and order directly online.
-   </p>
-
+  <p>This page presents a selection of available artworks. For acquisition inquiries regarding these or additional works, please contact us.</p>
+  <p class="left-text">The original versions of these artworks are available. The pieces can also be recreated in bespoke sizes upon request.</p>
+  <p class="left-text">All artworks are delivered with an official Certificate of Authenticity signed by the artist.</p>
+  <p class="left-text">Fine Art Prints of selected artworks are available for purchase through:</p>
+  <a href="https://www.saatchiart.com/shahrzadfineart" target="_blank" style="text-decoration: none; color: blue;">Saatchi Art</a>
+  <p class="left_text">Visit the gallery to explore the collection and order directly online.</p>
 </div>
-<style>
-  .text {
-      text-align: center;
-  font-family: Arial, sans-serif;
-  font-size: 1.1rem;
-  max-width: 1100px;
-  margin: 25px auto !important;
-  padding: 0 40px;
-}
 
-.text p {
-  text-align: left;
-  line-height: 1.7;
-}
- 
-  .art-card img {
-    border-radius: 10px;
+<style>
+  .text { text-align: center; font-family: Arial, sans-serif; font-size: 1.1rem; max-width: 1100px; margin: 25px auto !important; padding: 0 40px; }
+  .text p { text-align: left; line-height: 1.7; }
+  .art-card img { border-radius: 10px; }
+  .copyright { text-align: center; background: rgb(197, 39, 39); color: white; padding: 2px; margin-top: 30%; }
+  
+  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 20px; row-gap: 40px; padding: 20px; }
+  .art-card { display: flex; flex-direction: column; }
+  .art-card img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 10px; }
+  .art-card p { margin-top: 6px; text-align: center; font-size: 1.05rem; }
+
+  @media (max-width: 768px) {
+    .gallery { grid-template-columns: 1fr; row-gap: 30px; padding: 16px; }
+    .art-card img { aspect-ratio: 3 / 4; }
+    .art-card p { font-size: 0.95rem; }
+  }
+  .sold { color: red; font-weight: bold; }
+
+  /* Modal ve Buton Stilleri */
+  .art-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px); z-index: 3000; justify-content: center; align-items: center; padding: 20px; animation: overlayFadeIn 0.3s ease forwards; }
+  .art-modal-content { background: #fff; padding: 30px; border-radius: 16px; max-width: 550px; width: 100%; position: relative; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.1); font-family: Arial, sans-serif; max-height: 90vh; overflow-y: auto; animation: modalScaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+  
+  @keyframes overlayFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
-  .copyright {
+  @keyframes modalScaleUp {
+    0% { opacity: 0; transform: scale(0.7) translateY(20px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .art-modal-close { position: absolute; top: 15px; right: 20px; background: #f1f1f1; border: none; width: 35px; height: 35px; border-radius: 50%; font-size: 1.4rem; cursor: pointer; color: #333; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+  .art-modal-close:hover { background: #ff4d4d; color: white; transform: rotate(90deg) scale(1.1); }
+  
+  .art-modal-details { text-align: left; }
+  .art-modal-details h3 { margin: 0 0 10px 0; text-align: center; font-size: 1.4rem; }
+  .art-modal-details p { margin: 6px 0; font-size: 0.95rem; }
+
+  .remove-art-btn { background: #ff4d4d; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: bold; display: inline-flex; align-items: center; gap: 5px; margin-right: 10px; }
+  .remove-art-btn:hover { background: #cc0000; }
+
+  .delete-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 4000; justify-content: center; align-items: center; }
+  .delete-modal-content { background: #fff; padding: 30px; border-radius: 16px; max-width: 380px; width: 90%; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+  .delete-icon { font-size: 3rem; margin-bottom: 10px; }
+  .delete-actions { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+  .btn-yes { background: #ff4d4d; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+  .btn-no { background: #e0e0e0; color: #333; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+  .modal-actions-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  .inquire-btn {
+    display: inline-block;
+    width: 180px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #ff416c, #ff4b2b, #ff7e5f);
+    background-size: 200% 200%;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: bold;
     text-align: center;
-    background: rgb(197, 39, 39);
-    color: white;
-    padding: 2px;
-    margin-top: 30%;
+    text-decoration: none;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(255, 65, 108, 0.7), 0 0 30px rgba(255, 75, 43, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.4);
+    animation: gradientBG 4s ease infinite, intenseGlow 2s ease-in-out infinite alternate, subtlePulse 1.5s ease-in-out infinite;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-          
-          
+
+  .inquire-btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 25px rgba(255, 65, 108, 1), 0 0 50px rgba(255, 75, 43, 0.9), 0 0 75px rgba(255, 126, 95, 0.8);
+  }
+
+  .modal-close-btn {
+    display: inline-block;
+    width: 120px;
+    padding: 12px 20px;
+    background: #e0e0e0;
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .modal-close-btn:hover {
+    background: #d0d0d0;
+    transform: scale(1.03);
+  }
+
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes intenseGlow {
+    0% { box-shadow: 0 0 10px rgba(255, 65, 108, 0.6), 0 0 20px rgba(255, 75, 43, 0.4), inset 0 0 8px rgba(255, 255, 255, 0.3); }
+    100% { box-shadow: 0 0 25px rgba(255, 65, 108, 1), 0 0 45px rgba(255, 75, 43, 0.9), 0 0 65px rgba(255, 126, 95, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.7); }
+  }
+
+  @keyframes subtlePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.015); }
+    100% { transform: scale(1); }
+  }
 </style>
 
-<style>
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 20px;
-  row-gap: 40px;
-  padding: 20px;
-}
-
-.art-card {
-  display: flex;
-  flex-direction: column;
-}
-
-.art-card img {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.art-card p {
-  margin-top: 6px;
-  text-align: center;
-  font-size: 1rem;
-}
-
-@media (max-width: 768px) {
-  .gallery {
-    grid-template-columns: 1fr;
-    row-gap: 30px;
-    padding: 16px;
-  }
-
-  .art-card img {
-    aspect-ratio: 3 / 4;
-  }
-
-  .art-card p {
-    margin-top: 6px;
-    font-size: 0.95rem;
-  }
-}
-.art-card p {
-  font-size: 1.05rem;
-}
-
-@media (max-width: 768px) {
-  .art-card p {
-    font-size: 0.95rem;
-  }
-}
-.sold {
-  color: red;
-  font-weight: bold;
-}
-</style>
 <div class="gallery">
-      <div class="art-card">
+  <!-- 1. Untitled - Miniature 3 -->
+  <div class="art-card">
+    <a href="#" class="static-art-link" data-title="Untitled - Miniature 3" data-image="Untitled-miniature-3.webp" data-medium="Gouache & Watercolor + Gold Leaf" data-size="15.7 x 12.2 in (40 x 31 cm)" data-year="2026" data-price="800">
+      <img src="Untitled-miniature-3.webp" alt="Painting titled Untitled - Miniature 3 by Shahrzad">
+    </a>
+    <p>Price: $800 USD</p>
+  </div>
+
+  <!-- 2. Untitled 8 -->
+  <div class="art-card">
     <a href="untitle_8buy.html"><img src="untitle 8.jpeg" alt="Painting titled Untitled 8 by Shahrzad"></a>
     <p>Price: $150 USD</p>
   </div>
 
+
+  <!-- 2. Untitled - Miniature 2 -->
   <div class="art-card">
-    <a href="Untitled-Miniature3buy.html"><img src="Untitled-miniature-3.webp" alt="Painting titled Untitled - Miniature 3 by Shahrzad"></a>
-    <p>Price: $500 USD</p>
+    <a href="#" class="static-art-link" data-title="Untitled - Miniature 2" data-image="untitled2.webp" data-medium="Watercolor & Gouache" data-size="15.7 x 12.2 in (40 x 31 cm)" data-year="2025" data-price="800">
+      <img src="untitled2.webp" alt="Painting titled Untitled - Miniature 2 by Shahrzad">
+    </a>
+    <p>Price: $800 USD</p>
   </div>
+
+  <!-- 3. Untitled - Portrait 10 -->
   <div class="art-card">
-    <a href="Untitled-Miniature2buy.html"><img src="untitled2.webp" alt="Painting titled Untitled - Miniature 2 by Shahrzad"></a>
-    <p>Price: $500 USD</p>
-  </div>
-    <div class="art-card">
-    <a href="green_buy.html"><img src="green-1.webp" alt="Painting titled Untitled - Portrait 10 by Shahrzad"></a>
+    <a href="#" class="static-art-link" data-title="Untitled - Portrait 10" data-image="green-1.webp" data-medium="Mixed Media" data-size="21.2 x 15.3 in (54 x 39 cm)" data-year="2019" data-price="300">
+      <img src="green-1.webp" alt="Painting titled Untitled - Portrait 10 by Shahrzad">
+    </a>
     <p>Price: $300 USD</p>
   </div>
+
+  <!-- 4. Summer -->
   <div class="art-card">
-    <a href="Summer_buy.html"><img src="summer.webp" alt="Painting titled Summer by Shahrzad"></a>
+    <a href="#" class="static-art-link" data-title="Summer" data-image="summer.webp" data-medium="Acrylic on Canvas" data-size="19.7 x 19.7 in (50 x 50 cm)" data-year="2018" data-price="1,100">
+      <img src="summer.webp" alt="Painting titled Summer by Shahrzad">
+    </a>
     <p>Price: $1,100 USD</p>
   </div>
-     <div class="art-card">
-    <a href="4sezone_buy.html"><img src="four-seasons.webp" alt="Painting titled Four Seasons by Shahrzad"></a>
+
+  <!-- 5. Four Seasons -->
+  <div class="art-card">
+    <a href="#" class="static-art-link" data-title="Four Seasons" data-image="four-seasons.webp" data-medium="Mixed Media" data-size="19.7 x 19.7 in (50 x 50 cm)" data-year="2023" data-price="1,500">
+      <img src="four-seasons.webp" alt="Painting titled Four Seasons by Shahrzad">
+    </a>
     <p>Price: $1,500 USD</p>
   </div>
-<div class="art-card">
-    <a href="autumn_buy.html"><img src="autumn.webp" alt="Painting titled Autumn by Shahrzad"></a>
-       <p>Price: $1,100 USD - <span class="sold">Sold</span></p>
+
+  <!-- 6. Autumn (Örnek Sold / Satıldı Durumu) -->
+  <div class="art-card">
+    <a href="#" class="static-art-link" data-title="Autumn" data-image="autumn.webp" data-medium="Mixed Media" data-size="21.2 x 15.3 in (54 x 39 cm)" data-year="2018" data-price="1,100">
+      <img src="autumn.webp" alt="Painting titled Autumn by Shahrzad">
+    </a>
+    <p>Price: $1,100 USD - <span class="sold">Sold</span></p>
   </div>
-     <div class="art-card">
-  <a href="Untitled-Tazhib5buy.html"><img src="calligraphy.webp" alt="Painting titled Untitled - Tazhib 5 by Shahrzad"></a>
-  <p>Price: $700 USD</p>
+
+  <!-- 7. Untitled - Tazhib 5 -->
+  <div class="art-card">
+    <a href="#" class="static-art-link" data-title="Untitled - Tazhib 5" data-image="calligraphy.webp" data-medium="Watercolor & Gouache + Ink" data-size="21.2 x 25.2 in (54 x 64 cm)" data-year="2012" data-price="1,200">
+      <img src="calligraphy.webp" alt="Painting titled Untitled - Tazhib 5 by Shahrzad">
+    </a>
+    <p>Price: $1,200 USD</p>
+  </div>
+
+  <!-- 8. Untitled 6 -->
+  <div class="art-card">
+    <a href="#" class="static-art-link" data-title="Untitled 6" data-image="un-sc-4.webp" data-medium="Acrylic" data-size="20.9 x 15.3 in (53 x 39 cm)" data-year="2008" data-price="300">
+      <img src="un-sc-4.webp" alt="Painting titled Untitled 6 by Shahrzad">
+    </a>
+    <p>Price: $300 USD</p>
+  </div>
+
+  <!-- 9. Untitled 5 -->
+  <div class="art-card">
+    <a href="#" class="static-art-link" data-title="Untitled 5" data-image="russian-girl.webp" data-medium="Oil Painting" data-size="42.9 x 23.6 in (109 x 60 cm)" data-year="2020" data-price="1,400">
+      <img src="russian-girl.webp" alt="Painting titled Untitled 5 by Shahrzad">
+    </a>
+    <p>Price: $1,400 USD</p>
+  </div>
+
+  <!-- 10. Untitled 4 -->
+  <div class="art-card">
+    <a href="#" class="static-art-link" data-title="Untitled 4" data-image="deer.webp" data-medium="Watercolor" data-size="20.5 x 12.6 in (52 x 32 cm)" data-year="2006" data-price="500">
+      <img src="deer.webp" alt="Painting titled Untitled 4 by Shahrzad">
+    </a>
+    <p>Price: $500 USD</p>
+  </div>
+
+  <!-- 11. Untitled 3 -->
+  <div class="art-card">
+    <a href="#" class="static-art-link" data-title="Untitled 3" data-image="untitled3.webp" data-medium="Watercolor" data-size="17 x 11 in (43 x 28 cm)" data-year="2006" data-price="500">
+      <img src="untitled3.webp" alt="Painting titled Untitled 3 by Shahrzad">
+    </a>
+    <p>Price: $500 USD</p>
+  </div>
+
+  <!-- 12. Untitled - Scratchboard 2 -->
+  <div class="art-card">
+    <a href="#" class="static-art-link" data-title="Untitled - Scratchboard 2" data-image="horse-dragon(2).webp" data-medium="Scratchboard" data-size="18.9 x 15 in (48 x 38 cm)" data-year="2007" data-price="500">
+      <img src="horse-dragon(2).webp" alt="Painting titled Untitled - Scratchboard 2 by Shahrzad">
+    </a>
+    <p>Price: $500 USD</p>
+  </div>
 </div>
-<div class="art-card">
-        <a href="Untitled-6buy.html"><img src="un-sc-4.webp" alt="Painting titled Untitled 6 by Shahrzad"></a>
-        <p>Price: $300 USD</p>
-        </div>
-         <div class="art-card">
-        <a href="untitled5buy.html"><img src="russian-girl.webp" alt="Painting titled Untitled 5 by Shahrzad"></a>
-        <p>Price: $700 USD</p>
-        </div>
-     <div class="art-card">
-    <a href="untitled4buy.html"><img src="deer.webp" alt="Painting titled Untitled 4 by Shahrzad"></a>
-    <p>Price: $150 USD</p>
-  </div>
-   <div class="art-card">
-    <a href="untitled3buy.html"><img src="untitled3.webp" alt="Painting titled Untitled 3 by Shahrzad"></a>
-    <p>Price: $150 USD</p>
-  </div>
-   <div class="art-card">
-        <a href="Untitled-Scratchboard2buy.html"><img src="horse-dragon(2).webp" alt="Painting titled Untitled - Scratchboard 2 by Shahrzad"></a>
-        <p>Price: $150 USD</p>
-        </div>
-</div>
+
 <div class="copyright">
   © 2026 Shahrzad Momenzadeh. All rights reserved. |
   Website Design: Behrouz Mohebi Moghaddam – Website Developed: Artin Mohebi Moghaddam
 </div>
 
+<!-- Dinamik Eser Detay Modalı -->
+<div id="artModal" class="art-modal-overlay">
+  <div class="art-modal-content">
+    <button id="closeArtModal" class="art-modal-close">&times;</button>
+    
+    <div class="art-modal-body">
+      <div id="modalImagesContainer" style="display: flex; gap: 10px; justify-content: center; align-items: center; margin-bottom: 15px;">
+        <img id="modalArtImage" src="" alt="Artwork Main" style="max-width: 48%; max-height: 280px; object-fit: contain; border-radius: 6px; background: #f9f9f9;">
+        <img id="modalArtImage2" src="" alt="Artwork Secondary" style="max-width: 48%; max-height: 280px; object-fit: contain; border-radius: 6px; background: #f9f9f9; display: none;">
+      </div>
+      
+      <div class="art-modal-details">
+        <h3 id="modalArtTitle"></h3>
+        <p><strong>Medium:</strong> <span id="modalArtMedium"></span></p>
+        <p><strong>Size:</strong> <span id="modalArtSize"></span></p>
+        <p><strong>Year:</strong> <span id="modalArtYear"></span></p>
+        <p><strong>Price:</strong> <span id="modalArtPrice"></span></p>
+
+        <div class="modal-actions-container">
+          <a href="contact.html" class="inquire-btn">Inquire</a>
+          <button type="button" id="modalCloseBtnAction" class="modal-close-btn">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Fancy Delete Confirmation Modal -->
+<div id="deleteModal" class="delete-modal-overlay">
+  <div class="delete-modal-content">
+    <div class="delete-icon">⚠️</div>
+    <h3>Remove Artwork</h3>
+    <p>Are you sure you want to permanently delete this artwork?</p>
+    <div class="delete-actions">
+      <button id="confirmDeleteBtn" class="btn-yes">Yes, Remove</button>
+      <button id="cancelDeleteBtn" class="btn-no">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <script>
+  window.addEventListener("DOMContentLoaded", () => {
+    let artworks = JSON.parse(localStorage.getItem("shahrzadArtworks")) || [];
+    const gallery = document.querySelector(".gallery");
+    const modal = document.getElementById("artModal");
+    const closeModal = document.getElementById("closeArtModal");
+    const modalCloseBtnAction = document.getElementById("modalCloseBtnAction");
+    const deleteModal = document.getElementById("deleteModal");
+    const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+    const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+    
+    const modalImg1 = document.getElementById("modalArtImage");
+    const modalImg2 = document.getElementById("modalArtImage2");
+
+    let itemIndexToDelete = null;
+    const isHostUser = true;
+
+    if(closeModal) {
+      closeModal.addEventListener("click", () => { modal.style.display = "none"; });
+    }
+    if(modalCloseBtnAction) {
+      modalCloseBtnAction.addEventListener("click", () => { modal.style.display = "none"; });
+    }
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) modal.style.display = "none";
+      if (e.target === deleteModal) deleteModal.style.display = "none";
+    });
+
+    function resetModal() {
+      modalImg1.src = "";
+      modalImg2.src = "";
+      modalImg2.style.display = "none";
+    }
+
+    function openArtModal(title, image, image2, medium, size, year, price) {
+      resetModal();
+      modalImg1.src = image;
+
+      if (image2) {
+        modalImg2.src = image2;
+        modalImg2.style.display = "block";
+      }
+
+      document.getElementById("modalArtTitle").textContent = title || '';
+      document.getElementById("modalArtMedium").textContent = medium || '-';
+      document.getElementById("modalArtSize").textContent = size || '-';
+      document.getElementById("modalArtYear").textContent = year || '-';
+      document.getElementById("modalArtPrice").textContent = price ? price + ' USD' : '-';
+      
+      modal.style.display = "flex";
+    }
+
+    function renderGallery() {
+      if (!gallery) return;
+
+      artworks.forEach((art, index) => {
+        if (art.showAvailable) {
+          const card = document.createElement("div");
+          card.className = "art-card";
+          const removeButtonHTML = isHostUser ? `<button class="remove-art-btn" data-delete-index="${index}"><i class='bx bx-trash'></i> Remove</button>` : '';
+
+          card.innerHTML = `
+            <a href="#" class="dynamic-art-link" data-index="${index}">
+              <img src="${art.image}" alt="${art.title}">
+            </a>
+            <div class="art-details">
+              <h3>${art.title}</h3>
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
+                ${removeButtonHTML}
+                <p style="margin:0;"><strong>Price:</strong> ${art.price ? art.price + ' USD' : '-'}</p>
+              </div>
+            </div>
+          `;
+          gallery.appendChild(card);
+        }
+      });
+
+      document.querySelectorAll(".dynamic-art-link").forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const index = link.getAttribute("data-index");
+          const art = artworks[index];
+          if (art) {
+            openArtModal(art.title, art.image, art.image2, art.medium, art.size, art.year, art.price);
+          }
+        });
+      });
+
+      document.querySelectorAll(".static-art-link").forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          openArtModal(
+            link.getAttribute("data-title"),
+            link.getAttribute("data-image"),
+            link.getAttribute("data-image2"),
+            link.getAttribute("data-medium"),
+            link.getAttribute("data-size"),
+            link.getAttribute("data-year"),
+            link.getAttribute("data-price")
+          );
+        });
+      });
+
+      document.querySelectorAll(".remove-art-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation(); 
+          itemIndexToDelete = btn.getAttribute("data-delete-index");
+          deleteModal.style.display = "flex"; 
+        });
+      });
+    }
+
+    renderGallery();
+
+    if(confirmDeleteBtn) {
+      confirmDeleteBtn.addEventListener("click", () => {
+        if (itemIndexToDelete !== null) {
+          artworks.splice(itemIndexToDelete, 1);
+          localStorage.setItem("shahrzadArtworks", JSON.stringify(artworks));
+          deleteModal.style.display = "none";
+          gallery.innerHTML = "";
+          renderGallery();
+        }
+      });
+    }
+
+    if(cancelDeleteBtn) {
+      cancelDeleteBtn.addEventListener("click", () => {
+        deleteModal.style.display = "none";
+        itemIndexToDelete = null;
+      });
+    }
+  });
+  
   const hamBtn = document.getElementById("hamburgerBtn");
   const mobileMenu = document.getElementById("mobileMenu");
   const overlay = document.getElementById("overlay");
   const closeMenu = document.getElementById("closeMenu");
 
-  function openMenu() {
-    mobileMenu.classList.add("active");
-    overlay.classList.add("active");
-  }
+  function openMenu() { mobileMenu.classList.add("active"); overlay.classList.add("active"); }
+  function closeMenuFn() { mobileMenu.classList.remove("active"); overlay.classList.remove("active"); }
 
-  function closeMenuFn() {
-    mobileMenu.classList.remove("active");
-    overlay.classList.remove("active");
-  }
-
-  hamBtn.addEventListener("click", openMenu);
-  closeMenu.addEventListener("click", closeMenuFn);
-  overlay.addEventListener("click", closeMenuFn);
-
-  document.querySelectorAll(".mobile-menu a").forEach(link => {
-    link.addEventListener("click", closeMenuFn);
-  });
-  document.addEventListener("keydown", e => {
-  if (e.key === "Escape") closeMenuFn();
-});
-
+  if(hamBtn) hamBtn.addEventListener("click", openMenu);
+  if(closeMenu) closeMenu.addEventListener("click", closeMenuFn);
+  if(overlay) overlay.addEventListener("click", closeMenuFn);
 </script>
 
 </body>

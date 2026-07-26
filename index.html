@@ -15,14 +15,56 @@
 
   <link rel="shortcut icon" href="Logo-removebg-preview.png" type="image/x-icon">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-</head>
 
 <style>
+/* =========================================
+   YENİ EKLENEN ANİMASYONLAR (KEYFRAMES)
+   ========================================= */
+@keyframes slideDownFade {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes zoomInTitle {
+  from { opacity: 0; transform: scale(0.9); letter-spacing: -2px; }
+  to { opacity: 1; transform: scale(1); letter-spacing: normal; }
+}
+
+/* Animasyonları Elementlere Tanımlama */
+.navbar {
+  animation: slideDownFade 0.8s ease-out forwards;
+}
+h1 {
+  animation: zoomInTitle 1s ease-out forwards;
+}
+.image-center {
+  animation: fadeInUp 1s ease-out 0.3s backwards;
+}
+.text {
+  animation: fadeInUp 1s ease-out 0.6s backwards;
+}
+/* Galerideki elemanların sırayla gelmesi (Staggered Animation) */
+.bottom-gallery .gallery-item:nth-child(1) {
+  animation: fadeInUp 0.8s ease-out 0.8s backwards;
+}
+.bottom-gallery .gallery-item:nth-child(2) {
+  animation: fadeInUp 0.8s ease-out 1.0s backwards;
+}
+.bottom-gallery .gallery-item:nth-child(3) {
+  animation: fadeInUp 0.8s ease-out 1.2s backwards;
+}
+
+/* Genel Stiller */
 body {
   margin: 0;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, serif;
   background: #ffffff7c;
+  overflow-x: hidden; /* Animasyonlarda yatay kaymayı engeller */
 }
+
 .navbar {
   position: sticky;
   top: 0;
@@ -34,6 +76,7 @@ body {
   justify-content: center;
   z-index: 1000;
   box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  backdrop-filter: blur(5px); /* Menü arkasına hafif fluluk katar */
 }
 
 .nav-center {
@@ -49,6 +92,11 @@ body {
   font-size: 0.95rem;
   position: relative;
   font-family: Arial;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: rgb(197, 39, 39);
 }
 
 .navbar a::after {
@@ -58,8 +106,8 @@ body {
   bottom: -4px;
   width: 0;
   height: 2px;
-  background: #000;
-  transition: 0.3s;
+  background: rgb(197, 39, 39);
+  transition: 0.3s ease-out;
 }
 
 .navbar a:hover::after {
@@ -74,6 +122,7 @@ body {
   display: none;
   background: none;
   border: none;
+  color: #000;
 }
 
 .gallery {
@@ -125,16 +174,6 @@ body {
   color: white;
   padding: 10px;
   margin-top: 80px;
-  font-size: 0.90rem;
-  height: 1/200px;
-}
-
-.copyright {
-  text-align: center;
-  background: rgb(197, 39, 39);
-  color: white;
-  padding: 10px;
-  margin-top: 80px;
   font-size: 0.85rem;
   font-weight: 400; 
   line-height: 1.5;
@@ -151,15 +190,6 @@ body {
   line-height: 1.5;
   font-style: bold;
 }
-
-</style>
-</head>
-
-<body>
-<h1 style="text-align: center; font-family: playfair; font-size: 3.5rem;">
-  Shahrzad Art Studio
-</h1>
-<style>
 
 .gallery-item a {
   margin-top: 12px;
@@ -186,145 +216,37 @@ body {
 .mobile-menu {
   position: fixed;
   top: 0;
-  right: -100%;
-  width: 260px;
-  height: 100vh;
-  background: #838383b7;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transition: right 0.35s ease;
-  z-index: 999;
-}
-
-.mobile-menu.active {
-  right: 0;
-}
-
-.mobile-menu a {
-  color: #000c2c;
-  text-decoration: none;
-  padding: 12px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 6px;
-}
-
-.mobile-sub span {
-  color: #fff;
-  cursor: pointer;
-}
-
-.mobile-sub-items {
-  display: none;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 6px;
-}
-.copyright {
-  text-align: center;
-  background: rgb(197, 39, 39);
-  color: white;
-  padding: 6px;
-  margin-top: 30%;
-}
-@media (max-width: 768px) {
-
-  .nav-center {
-    display: none;
-  }
-
-  .hamburger {
-    display: block;
-  }
-
-  .bottom-gallery {
-    flex-direction: column;
-    align-items: center;
-  }
-
-} /* ← این آکولاد خیلی مهم است */
-
-/* فقط دسکتاپ */
-@media (min-width: 1024px) {
-  .bottom-gallery {
-    gap: 220px;
-  }
-}
-
-  .image-center {
-    margin-top: 60px;
-  }
-  .image-center img {
-    max-width: calc(100% - 80px);
-    width: auto;
-  }
-
-</style>
-</head>
-<body>
-<div class="navbar">
-  <div></div>
-
-  <div class="nav-center">
-    <a href="index.html">Home</a>
-    <a href="Available_Works.html">Available Works</a>
-    <a href="iranian_miniature.html">Contemporary Persian Miniature</a>
-    <a href="Contemporary_Art.html">Contemporary Painting</a>
-    <a href="motive.html">Contemporary Persian Motifs</a>
-    <a href="contact.html">Contact</a>
-    <a href="about.html">About</a>
-  </div>
-
-  <div class="hamburger" id="hamburgerBtn">
-    <i class='bx bx-menu'></i>
-  </div>
-</div>
-<div class="mobile-menu" id="mobileMenu">
-  <button class="close-menu" id="closeMenu">✕</button>
-  <a href="index.html">Home</a>
-  <a href="Available_Works.html">Available Works</a>
-  <a href="iranian_miniature.html">Contemporary Persian Miniature</a>
-  <a href="Contemporary_Art.html">Contemporary Painting</a>
-  <a href="motive.html">Contemporary Persian Motifs</a>
-  <a href="contact.html">Contact</a>
-  <a href="about.html">About</a>    
-</div>
-<div class="overlay" id="overlay"></div>
-
-<style>
-.hamburger {
-  font-size: 1.8rem;
-  cursor: pointer;
-  display: none;
-  margin-left: auto;
-  color: #000;
-}
-
-.mobile-menu {
-  position: fixed;
-  top: 0;
   right: 0;
   width: 260px;
   height: 100vh;
   background: #fff;
   padding: 70px 25px;
-
   display: flex;
   flex-direction: column;
   gap: 18px;
-
   transform: translateX(110%);
   transition: transform 0.35s ease;
   z-index: 1002;
-}
-.mobile-menu.active ~ .navbar .hamburger {
-  display: none;
 }
 
 .mobile-menu.active {
   transform: translateX(0);
 }
+
+.mobile-menu a {
+  color: #000;
+  text-decoration: none;
+  padding: 12px;
+  background: rgba(0,0,0,0.04);
+  border-radius: 6px;
+  font-family: sans-serif;
+  font-size: 1rem;
+}
+
+.mobile-menu a:hover {
+  background: rgba(0,0,0,0.1);
+}
+
 .close-menu {
   position: absolute;
   top: 18px;
@@ -340,59 +262,370 @@ body {
   opacity: 0.6;
 }
 
-
-.mobile-menu a {
-  color: #000;
-  text-decoration: none;
-  padding: 12px;
-  border-radius: 6px;
-  font-size: 1rem;
-  font-family: sans-serif;
-  background: rgba(0,0,0,0.04);
-}
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
-  z-index: 1001;
-}
-.mobile-menu a:hover {
-  background: rgba(0,0,0,0.1);
-}
-.overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
 @media (max-width: 768px) {
   .nav-center {
     display: none;
   }
-
   .hamburger {
     display: block;
+    margin-left: auto;
   }
-
+  .bottom-gallery {
+    flex-direction: column;
+    align-items: center;
+  }
   .gallery {
     grid-template-columns: 1fr;
     gap: 40px;
   }
-}
-@media (max-width: 768px) {
   .gallery-item img {
     margin-bottom: 2px;
   }
-
   .gallery-item a {
     margin-top: 2px;
     font-size: 13px;
   }
 }
 
+@media (min-width: 1024px) {
+  .bottom-gallery {
+    gap: 100px;
+  }
+}
+
+.image-center {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+.image-center img {
+  max-width: calc(100% - 80px);
+  width: 333px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* Fotoğrafa hafif bir derinlik */
+}
+
+.text {
+  text-align: left;
+  font-family: Arial, sans-serif;
+  font-size: 1.1rem;
+  margin-top: 25px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+@media (min-width: 769px) {
+  .text {
+    padding-left: 200px;
+    padding-right: 200px;
+  }
+}
+
+.bottom-gallery {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 80px;
+}
+
+.gallery-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gallery-item a {
+  margin-top: 12px;
+  text-decoration: none;
+  color: #000;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.gallery-item a:hover {
+  background: rgba(197, 39, 39, 0.1);
+  color: rgb(197, 39, 39);
+}
+
+.gallery-item img {
+  width: 220px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+
+/* Animasyonlu şık hover efekti */
+.gallery-item img:hover {
+  transform: scale(1.08) translateY(-8px);
+  box-shadow: 0 15px 30px rgba(197, 39, 39, 0.25);
+}
+
+div.imgstylenow {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  margin-top: 50px;
+  align-items: center;
+} 
+
+div.imgstylenow img {
+  width: auto;
+  height: 300px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Host Modal Stilleri */
+.host-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.host-modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  width: 380px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.art-input {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: border-color 0.3s;
+}
+.art-input:focus {
+  border-color: rgb(197, 39, 39);
+  outline: none;
+}
+
+.dimensions-container {
+  margin: 8px 0;
+  text-align: left;
+}
+.dim-inputs-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dim-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.dim-input {
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+.dim-unit {
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 2px;
+  text-align: right;
+}
+.cm-calc {
+  color: #d9534f;
+  font-weight: bold;
+}
+.upload-drop-zone {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 25px;
+  text-align: center;
+  background: #fafafa;
+  cursor: pointer;
+  margin: 10px 0;
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.upload-drop-zone:hover, .upload-drop-zone.dragover {
+  border-color: rgb(197, 39, 39);
+  background: #fff5f5;
+}
+.upload-drop-zone span {
+  font-family: Arial, sans-serif;
+  font-size: 0.95rem;
+  color: #333;
+  font-weight: bold;
+}
+.upload-submit-btn {
+  width: 100%;
+  padding: 10px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.upload-submit-btn:hover {
+  background: #218838;
+}
 </style>
+</head>
+<body>
+
+<div class="navbar">
+  <div></div>
+
+  <div style="position: absolute; left: 20px;">
+    <button id="hostLoginBtn" style="background: none; border: 1px solid #000; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;">Host Login</button>
+  </div>
+
+  <div class="nav-center">
+    <a href="index.html">Home</a>
+    <a href="Available_Works.html">Available Works</a>
+    <a href="iranian_miniature.html">Contemporary Persian Miniature</a>
+    <a href="Contemporary_Art.html">Contemporary Painting</a>
+    <a href="motive.html">Contemporary Persian Motifs</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About</a>
+  </div>
+
+  <div class="hamburger" id="hamburgerBtn">
+    <i class='bx bx-menu'></i>
+  </div>
+</div>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-menu" id="closeMenu">✕</button>
+  <a href="index.html">Home</a>
+  <a href="Available_Works.html">Available Works</a>
+  <a href="iranian_miniature.html">Contemporary Persian Miniature</a>
+  <a href="Contemporary_Art.html">Contemporary Painting</a>
+  <a href="motive.html">Contemporary Persian Motifs</a>
+  <a href="contact.html">Contact</a>
+  <a href="about.html">About</a>    
+</div>
+<div class="overlay" id="overlay"></div>
+
+<h1 style="text-align: center; font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-top: 40px;">
+  Shahrzad Art Studio
+</h1>
+
+<div class="image-center">
+  <img src="Asbii.avif" alt="A painting titled Battle of Dawn by Shahrzad">
+</div>
+
+<div class="text">
+  <p>
+    Shahrzad Art Studio is a personal art studio dedicated to Contemporary Persian Miniature, Contemporary Painting, and Contemporary Persian Motifs. The works reinterpret Persian visual heritage through storytelling, symbolism, and contemporary artistic expression.
+  </p>
+</div>
+
+<div class="bottom-gallery">
+  <div class="gallery-item">
+    <img src="demons.webp" onclick="location.href='iranian_miniature.html';" alt="A contemporary Persian miniature painting by Shahrzad" style="cursor:pointer;">
+    <a href="iranian_miniature.html">Contemporary Persian Miniature</a>
+  </div>
+  <div class="gallery-item">
+    <img src="four-seasons.webp" onclick="location.href='Contemporary_Art.html';" alt="A mixed-media Contemporary painting" style="cursor:pointer;">
+    <a href="Contemporary_Art.html">Contemporary Painting</a>
+  </div>
+  <div class="gallery-item">
+    <img src="garden-of-Imagination.webp" onclick="location.href='motive.html';" alt="A Persian illumination painting as Motif Art" style="cursor:pointer;">
+    <a href="motive.html">Contemporary Persian Motifs</a>
+  </div>
+</div>
+
+<div class="copyright" data-nosnippet>
+  <h4>
+    © 2026 Shahrzad Momenzadeh. All rights reserved.<br>
+    <span style="display:block; margin-top: 5px;">Website Design: Behrouz Mohebi Moghaddam | Website Developed: Artin Mohebi Moghaddam</span>
+  </h4>
+</div>
+
+<!-- Host Login and Add Artwork Modal -->
+<div id="hostModal" class="host-modal">
+  <div class="host-modal-content">
+    <span id="closeHostModal" style="float: right; cursor: pointer; font-size: 1.5rem; color:#888; transition:0.3s;">&times;</span>
+    
+    <!-- Login Form Section -->
+    <div id="loginFormSection">
+      <h2 style="margin-bottom: 20px;">Host Login</h2>
+      <input type="email" id="hostEmail" placeholder="Email" class="art-input">
+      <input type="password" id="hostPassword" placeholder="Password" class="art-input">
+      <button id="loginSubmitBtn" style="width: 100%; padding: 10px; margin-top: 15px; background: rgb(197, 39, 39); color: white; border: none; border-radius: 5px; cursor: pointer; transition: 0.3s;">Log In</button>
+      <p id="loginError" style="color: red; font-size: 0.9rem; display: none; margin-top: 10px;">Incorrect email or password!</p>
+    </div>
+
+    <!-- Add Art Section (Inside Host Modal) -->
+    <div id="addArtSection" style="display: none;">
+      <h2 style="margin-bottom: 15px;">Add New Artwork</h2>
+      <input type="text" id="artTitle" placeholder="Artwork Title" class="art-input">
+      <input type="text" id="artMedium" placeholder="Medium (e.g., Oil on canvas)" class="art-input">
+      <input type="text" id="artYear" placeholder="Year (e.g., 2026)" class="art-input">
+      <input type="text" id="artPrice" placeholder="Price (e.g., $500)" class="art-input">
+      
+      <!-- Boyutlar (Dimensions) Alanı -->
+      <div class="dimensions-container">
+        <label style="display:block; text-align:left; font-size: 0.85rem; font-weight:bold; margin-bottom:4px; color:#555;">Dimensions (Inches):</label>
+        <div class="dim-inputs-wrapper">
+          <div class="dim-box">
+            <input type="number" id="widthInches" placeholder="Width" min="0" step="any" class="dim-input">
+            <span class="dim-unit">in <span id="widthCm" class="cm-calc">(0.0 cm)</span></span>
+          </div>
+          <span style="font-weight: bold; color: #666;">×</span>
+          <div class="dim-box">
+            <input type="number" id="heightInches" placeholder="Height" min="0" step="any" class="dim-input">
+            <span class="dim-unit">in <span id="heightCm" class="cm-calc">(0.0 cm)</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Drag or Upload Box -->
+      <div id="dropZone" class="upload-drop-zone">
+        <i class='bx bx-cloud-upload' style="font-size: 2.2rem; color: #666; margin-bottom: 5px;"></i>
+        <span id="uploadText">Drag or upload</span>
+        <input type="file" id="artImageFile" accept="image/*" style="display: none;">
+      </div>
+      
+      <div style="margin: 10px 0; text-align: left; font-size: 0.9rem;">
+        <label><input type="checkbox" id="showAvailable"> Show in Available Works</label><br>
+        <label><input type="checkbox" id="showMiniature"> Show in Iranian Miniature</label><br>
+        <label><input type="checkbox" id="showContemporary"> Show in Contemporary Painting</label><br>
+        <label><input type="checkbox" id="showMotive"> Show in Contemporary Persian Motifs</label>
+      </div>
+
+      <button id="uploadArtBtn" class="upload-submit-btn">Upload Artwork</button>
+    </div>
+  </div>
+</div>
+
 <script>
+  // Navbar Mobile Menu Logic
   const hamBtn = document.getElementById("hamburgerBtn");
   const mobileMenu = document.getElementById("mobileMenu");
   const overlay = document.getElementById("overlay");
@@ -416,151 +649,200 @@ body {
     link.addEventListener("click", closeMenuFn);
   });
   document.addEventListener("keydown", e => {
-  if (e.key === "Escape") closeMenuFn();
-});
+    if (e.key === "Escape") closeMenuFn();
+  });
+
+  // Dimensions Calculator Logic
+  const widthInches = document.getElementById("widthInches");
+  const heightInches = document.getElementById("heightInches");
+  const widthCm = document.getElementById("widthCm");
+  const heightCm = document.getElementById("heightCm");
+
+  function updateCmConversions() {
+    const wVal = parseFloat(widthInches.value) || 0;
+    const hVal = parseFloat(heightInches.value) || 0;
+
+    const wCmResult = (wVal * 2.54).toFixed(1);
+    const hCmResult = (hVal * 2.54).toFixed(1);
+
+    widthCm.textContent = `(${wCmResult} cm)`;
+    heightCm.textContent = `(${hCmResult} cm)`;
+  }
+
+  widthInches.addEventListener("input", updateCmConversions);
+  heightInches.addEventListener("input", updateCmConversions);
+
+  widthInches.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      heightInches.focus();
+    }
+  });
+
+  // Dropzone and File Upload Logic
+  const dropZone = document.getElementById("dropZone");
+  const artImageFile = document.getElementById("artImageFile");
+  const uploadText = document.getElementById("uploadText");
+  let selectedImageBase64 = "";
+
+  dropZone.addEventListener("click", () => artImageFile.click());
+
+  artImageFile.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) handleFile(file);
+  });
+
+  ["dragenter", "dragover"].forEach(eventName => {
+    dropZone.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      dropZone.classList.add("dragover");
+    }, false);
+  });
+
+  ["dragleave", "drop"].forEach(eventName => {
+    dropZone.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      dropZone.classList.remove("dragover");
+    }, false);
+  });
+
+  dropZone.addEventListener("drop", (e) => {
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      artImageFile.files = e.dataTransfer.files;
+      handleFile(file);
+    }
+  });
+
+  function handleFile(file) {
+    uploadText.textContent = "Selected: " + file.name;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      selectedImageBase64 = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Upload Button Logic
+  document.getElementById("uploadArtBtn").addEventListener("click", () => {
+    const title = document.getElementById("artTitle").value.trim();
+    const medium = document.getElementById("artMedium").value.trim();
+    const year = document.getElementById("artYear").value.trim();
+    const price = document.getElementById("artPrice").value.trim();
+    const w = widthInches.value.trim();
+    const h = heightInches.value.trim();
+
+    if (!title || !selectedImageBase64) {
+      alert("Please fill in the artwork title and select an image!");
+      return;
+    }
+
+    let dimensionText = "";
+    if (w && h) {
+      dimensionText = `${w} × ${h} in (${(w * 2.54).toFixed(1)} × ${(h * 2.54).toFixed(1)} cm)`;
+    }
+
+    const newArt = {
+      title: title,
+      medium: medium,
+      year: year,
+      price: price,
+      size: dimensionText,
+      image: selectedImageBase64,
+      showAvailable: document.getElementById("showAvailable").checked,
+      showMiniature: document.getElementById("showMiniature").checked,
+      showContemporary: document.getElementById("showContemporary").checked,
+      showMotive: document.getElementById("showMotive").checked,
+    };
+
+    let artworks = JSON.parse(localStorage.getItem("shahrzadArtworks")) || [];
+    artworks.push(newArt);
+    localStorage.setItem("shahrzadArtworks", JSON.stringify(artworks));
+
+    alert("Artwork successfully added to the website!");
+    document.getElementById("hostModal").style.display = "none";
+    
+    document.getElementById("artTitle").value = "";
+    document.getElementById("artMedium").value = "";
+    document.getElementById("artYear").value = "";
+    document.getElementById("artPrice").value = "";
+    widthInches.value = "";
+    heightInches.value = "";
+    widthCm.textContent = "(0.0 cm)";
+    heightCm.textContent = "(0.0 cm)";
+    uploadText.textContent = "Drag or upload";
+    selectedImageBase64 = "";
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+  });
+
+  // Display Artworks on Load (If Applicable)
+  window.addEventListener("DOMContentLoaded", () => {
+    const artworks = JSON.parse(localStorage.getItem("shahrzadArtworks")) || [];
+    const galleryContainer = document.querySelector(".gallery") || document.body;
+
+    artworks.forEach(art => {
+      if (art.showContemporary) {
+        const card = document.createElement("div");
+        card.className = "art-card";
+        card.innerHTML = `
+          <img src="${art.image}" alt="${art.title}">
+          <div class="art-details">
+            <h3>${art.title}</h3>
+            <p><strong>Medium:</strong> ${art.medium || '-'}</p>
+            <p><strong>Year:</strong> ${art.year || '-'}</p>
+            <p><strong>Size:</strong> ${art.size || '-'}</p>
+            <p><strong>Price:</strong> ${art.price || '-'}</p>
+          </div>
+        `;
+        galleryContainer.appendChild(card);
+      }
+    });
+  });
+
+  // Host Login Modal Logic
+  const hostModal = document.getElementById("hostModal");
+  const hostLoginBtn = document.getElementById("hostLoginBtn");
+  const closeHostModal = document.getElementById("closeHostModal");
+  const loginSubmitBtn = document.getElementById("loginSubmitBtn");
+  const loginFormSection = document.getElementById("loginFormSection");
+  const addArtSection = document.getElementById("addArtSection");
+
+  hostLoginBtn.addEventListener("click", () => {
+    hostModal.style.display = "flex";
+    if(localStorage.getItem("isHostLoggedIn") === "true") {
+      loginFormSection.style.display = "none";
+      addArtSection.style.display = "block";
+    } else {
+      loginFormSection.style.display = "block";
+      addArtSection.style.display = "none";
+    }
+  });
+
+  closeHostModal.addEventListener("click", () => {
+    hostModal.style.display = "none";
+  });
+
+  document.getElementById("closeHostModal").addEventListener("mouseover", function() {
+    this.style.color = "red";
+  });
+  document.getElementById("closeHostModal").addEventListener("mouseout", function() {
+    this.style.color = "#888";
+  });
+
+  loginSubmitBtn.addEventListener("click", () => {
+    const email = document.getElementById("hostEmail").value.trim();
+    const password = document.getElementById("hostPassword").value.trim();
+
+    if(email === "shahrzadmomen@gmail.com" && password === "^SHAHRZADpainTING2026ARTIN@231246") {
+      localStorage.setItem("isHostLoggedIn", "true");
+      loginFormSection.style.display = "none";
+      addArtSection.style.display = "block";
+      document.getElementById("loginError").style.display = "none";
+    } else {
+      document.getElementById("loginError").style.display = "block";
+    }
+  });
 </script>
-<div class="image-center">
-  <img src="Asbii.avif" alt="A painting titled Battle of Dawn by Shahrzad">
-</div>
-<div class="text">
-  <p>
-Shahrzad Art Studio is a personal art studio dedicated to Contemporary Persian Miniature, Contemporary Painting, and Contemporary Persian Motifs. The works reinterpret Persian visual heritage through storytelling, symbolism, and contemporary artistic expression.
-</p>
-</div>
-<style>
- .text {
-  text-align: left;
-  font-family: Arial, sans-serif;
-  font-size: 1.1rem;
-  margin-top: 25px;
-   margin-left: 30px;
-   margin-right: 30px;
-}
 
-/* فقط دسکتاپ */
-@media (min-width: 769px) {
-  .text {
-    padding-left: 200px;
-    padding-right: 200px;
-  }
-}
-</style>
-<div class="bottom-gallery">
-  <div class="gallery-item">
-    <img src="demons.webp" onclick="location.href='iranian_miniature.html';" alt="A contemporary Persian miniature painting by Shahrzad">
-    <a href="iranian_miniature.html">Contemporary Persian Miniature</a>
-  </div>
-  <div class="gallery-item">
-    <img src="four-seasons.webp" onclick="location.href='Contemporary_Art.html';" alt="A mixed-media Contemporary painting">
-    <a href="Contemporary_Art.html">Contemporary Painting</a>
-  </div>
-  <div class="gallery-item">
-    <img src="garden-of-Imagination.webp" onclick="location.href='motive.html';" alt="A Persian illumination painting as Motif Art">
-    <a href="motive.html">Contemporary Persian Motifs</a>
-  </div>
-</div>
-<style>
-.image-center {
-  display: flex;
-  justify-content: center;
-  margin-top: 120px;
-}
-
-.image-center img {
-  width: 333px;
-  border-radius: 8px;
-}
-.bottom-gallery {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 80px;
-}
-/* فقط دسکتاپ */
-@media (min-width: 1024px) {
-  .bottom-gallery {
-    gap: 100px; /* هر عددی دوست داری */
-  }
-}
-.gallery-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.gallery-item a {
-  margin-top: 12px;
-  text-decoration: none;
-  color: #000;
-  font-size: 14px;
-  padding: 8px 12px;
-  border-radius: 6px;
-  transition: background 0.3s ease;
-}
-
-.gallery-item a:hover {
-  background: rgba(255,255,255,0.35);
-  text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  transition: background 0.3s ease;
-}
-.gallery-item img {
-  width: 220px;
-  height: 280px;
-  object-fit: cover;
-  border-radius: 10px;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.gallery-item img:hover {
-  transform: scale(1.05);
-  transition: 0.3s;
-}
-
-.gallery-item a {
-  margin-top: 12px;
-  text-decoration: none;
-  color: #000;
-  font-size: 14px;
-}
-
-.gallery-item a:hover {
-  text-decoration: underline;
-}
-</style>
-<style>
-  div.imgstylenow {
-    display: flex;
-    justify-content: center;
-    gap: 80px;
-    margin-top: 50px;
-    align-items: center;
-  } 
-
-  div.imgstylenow img {
-   width: auto;
-    height: 300px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-</style>
-
-<div class="copyright" data-nosnippet>
-  <h4>
-    © 2026 Shahrzad Momenzadeh. All rights reserved.
-      Website Design: Behrouz Mohebi Moghaddam |
-      Website Developed: Artin Mohebi Moghaddam
-      </h4>
-</div>
 </body>
 </html>
-<!-- 
-<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-<div class="cunsturaction">
-  <h2 style="text-align: center; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; margin-top: 200px; color:hsl(0, 0%, 9%)">
-    <i class='bx bx-wrench'></i>This page is under construction. Please check back later.
-  </h2>
-</div>
-
-  -->

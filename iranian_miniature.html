@@ -7,16 +7,319 @@
 <link rel="shortcut icon" href="Logo-removebg-preview.png" type="image/x-icon">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
 <link rel="stylesheet" href="styles.css">
+
+<style>
+/* ===== NAVBAR ===== */
+.navbar {
+  position: sticky;
+  top: 0;
+  background: #ffdfdfc7;
+  padding: 12px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.nav-center {
+  display: flex;
+  gap: 18px;
+}
+
+.navbar a {
+  color: #000;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  position: relative;
+}
+
+.navbar a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: #000;
+  transition: 0.3s;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+.hamburger {
+  position: absolute;
+  right: 18px;
+  font-size: 2rem;
+  cursor: pointer;
+  display: none;
+  background: none;
+  border: none;
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 260px;
+  height: 100vh;
+  background: #fff;
+  padding: 70px 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  transition: 0.35s ease;
+  z-index: 1002;
+}
+
+.mobile-menu.active {
+  right: 0;
+}
+
+.mobile-menu a {
+  color: #000;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: rgba(0,0,0,0.04);
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 1001;
+}
+
+.mobile-menu a:hover {
+  background: rgba(0,0,0,0.1);
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+  .nav-center {
+    display: none;
+  }
+  .hamburger {
+    display: block;
+    color: #000;
+  }
+  .navbar {
+    justify-content: space-between;
+  }
+}
+
+/* ===== GALLERY & CARDS ===== */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .gallery {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+.art-card {
+  width: 100%;
+  background: #fff9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  overflow: hidden;
+  text-align: center;
+}
+
+.art-card img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.art-card p {
+  font-size: 1.05rem;
+  margin-top: 6px;
+}
+
+@media (max-width: 768px) {
+  .art-card {
+    margin-bottom: 6px;
+  }
+  .art-card img {
+    height: auto !important;
+    max-height: 220px;
+    padding: 0 !important;
+  }
+  .art-card p {
+    font-size: 0.95rem;
+    margin-top: 4px;
+    margin-bottom: 0;
+  }
+}
+
+.text {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-size: 1.1rem;
+  margin-top: 25px;
+}
+
+.copyright {
+  text-align: center;
+  background: rgb(197, 39, 39);
+  color: white;
+  padding: 10px;
+  margin-top: 30%;
+  font-size: 0.85rem;
+}
+
+/* ===== MODAL STYLES (Animasyonlu ve Gelişmiş) ===== */
+.art-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 3000;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  animation: overlayFadeIn 0.3s ease forwards;
+}
+
+.art-modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  max-width: 550px;
+  width: 100%;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.1);
+  font-family: Arial, sans-serif;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalScaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalScaleUp {
+  0% { opacity: 0; transform: scale(0.7) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.art-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: #f1f1f1;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.art-modal-close:hover {
+  background: #ff4d4d;
+  color: white;
+  transform: rotate(90deg) scale(1.1);
+}
+
+.art-modal-details {
+  text-align: left;
+}
+
+.art-modal-details h3 {
+  margin: 0 0 10px 0;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.art-modal-details p {
+  margin: 6px 0;
+  font-size: 0.95rem;
+}
+
+/* ===== REMOVE & DELETE MODAL ===== */
+.remove-art-btn {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-right: 10px;
+}
+.remove-art-btn:hover { background: #cc0000; }
+
+.delete-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 4000;
+  justify-content: center;
+  align-items: center;
+}
+.delete-modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  max-width: 380px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.delete-icon { font-size: 3rem; margin-bottom: 10px; }
+.delete-actions { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+.btn-yes { background: #ff4d4d; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+.btn-no { background: #e0e0e0; color: #333; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+</style>
 </head>
 
 <body>
 
 <h1 style="text-align: center; font-family: playfair; font-size: 3.5rem;">Shahrzad Art Studio</h1>
 
-
 <div class="navbar">
   <div></div>
-
   <div class="nav-center">
     <a href="index.html">Home</a>
     <a href="Available_Works.html">Available Works</a>
@@ -26,11 +329,11 @@
     <a href="contact.html">Contact</a>
     <a href="about.html">About</a>
   </div>
-
   <div class="hamburger" id="hamburgerBtn">
     <i class='bx bx-menu'></i>
   </div>
 </div>
+
 <div class="mobile-menu" id="mobileMenu">
   <button class="close-menu" id="closeMenu">✕</button>
   <a href="index.html">Home</a>
@@ -45,161 +348,299 @@
 
 <div class="text">
   <h2>Contemporary Persian Miniature</h2>
-  <p>
-    A Selection of works rooted in Iranian miniature traditions, reinterpreted through a contemporary lens.
-  </p>
+  <p>A Selection of works rooted in Iranian miniature traditions, reinterpreted through a contemporary lens.</p>
 </div>
-<style>
-  .text {
-    text-align: center;
-    font-family: Arial, sans-serif;
-    font-size: 1.1rem;
-    margin-top: 25px;
-  }
 
-  .art-card img {
-    border-radius: 10px;
-  }
-</style>
 <div class="gallery">
-
+  <!-- Statik Eserler (17 Eserin Tümü, Tam Boyut, Yıl, ID ve Detay Eşleşmeleriyle) -->
   <div class="art-card">
-    <a href="FairyBeing.html"><img src="fairy-Being.webp" alt="Painting titled A Fairy Being by Shahrzad"></a>
+    <a href="#" class="static-art-link" data-id="SM-2015-AC-02" data-title="A Fairy Being" data-image="fairy-Being.webp" data-medium="Acrylic" data-size="83x63 cm" data-year="2015">
+      <img src="fairy-Being.webp" alt="Painting titled A Fairy Being by Shahrzad">
+    </a>
     <p>A Fairy Being</p>
   </div>
-     <div class="art-card">
-    <a href="InTheGarden.html"><img src="in-the-garden.webp" alt="Painting titled In the Garden by Shahrzad"></a>
+  <div class="art-card">
+    <a href="#" class="static-art-link" data-id="SM-2010-WC&GC-02" data-title="In the Garden" data-image="in-the-garden.webp" data-medium="Watercolor & Gouache" data-size="72x59 cm" data-year="2010">
+      <img src="in-the-garden.webp" alt="Painting titled In the Garden by Shahrzad">
+    </a>
     <p>In the Garden</p>
   </div>
   <div class="art-card">
-    <a href="BattleOfDawn.html"><img src="battleofdawn.webp" alt="Painting titled Battle of Dawn by Shahrzad"></a>
+    <a href="#" class="static-art-link" data-id="SM-2018-AC-08" data-title="Battle of Dawn" data-image="battleofdawn.webp" data-medium="Acrylic" data-size="81x66 cm" data-year="2018">
+      <img src="battleofdawn.webp" alt="Painting titled Battle of Dawn by Shahrzad">
+    </a>
     <p>Battle of Dawn</p>
   </div>
   <div class="art-card">
-    <a href="layla-majnun.html"><img src="Layla-Majnun.webp" alt="Painting titled Layla and Majnun by Shahrzad"></a>
+    <a href="#" class="static-art-link" data-id="SM-2020-WC&GC-03" data-title="Layla & Majnun" data-image="Layla-Majnun.webp" data-medium="Watercolor & Gouache" data-size="70x50 cm" data-year="2020">
+      <img src="Layla-Majnun.webp" alt="Painting titled Layla and Majnun by Shahrzad">
+    </a>
     <p>Layla & Majnun</p>
   </div>
   <div class="art-card">
-    <a href="thesheikhandthemaiden.html"><img src="thesheikh-themaiden.webp" alt="Painting titled The Sheikh and the Maiden by Shahrzad"></a>
+    <a href="#" class="static-art-link" data-id="SM-2019-WC&GC-04" data-title="The Sheikh and the Maiden" data-image="thesheikh-themaiden.webp" data-medium="Watercolor & Gouache" data-size="65x50 cm" data-year="2019">
+      <img src="thesheikh-themaiden.webp" alt="Painting titled The Sheikh and the Maiden by Shahrzad">
+    </a>
     <p>The Sheikh and the Maiden</p>
   </div>
   <div class="art-card">
-    <a href="Sunrise.html"><img src="sunrise.webp" alt="Painting titled Sunrise by Shahrzad"></a>
+    <a href="#" class="static-art-link" data-id="SM-2016-AC-03" data-title="Sunrise" data-image="sunrise.webp" data-medium="Acrylic" data-size="80x60 cm" data-year="2016">
+      <img src="sunrise.webp" alt="Painting titled Sunrise by Shahrzad">
+    </a>
     <p>Sunrise</p>
   </div>
   <div class="art-card">
-    <a href="slayingthewhitedemon.html"><img src="slaying-the-white-demon.webp" alt="Painting titled Slaying the White Demon by Shahrzad"></a>
+    <a href="#" class="static-art-link" data-id="SM-2011-WC&GC-03" data-title="Slaying the White Demon" data-image="slaying-the-white-demon.webp" data-medium="Watercolor & Gouache" data-size="70x64 cm" data-year="2011">
+      <img src="slaying-the-white-demon.webp" alt="Painting titled Slaying the White Demon by Shahrzad">
+    </a>
     <p>Slaying the White Demon</p>
   </div>
   <div class="art-card">
-    <a href="GashtabKingOfIran.html"><img src="Gashtasb.webp" alt="Painting titled Gashtasb The Legendary King Of Iran by Shahrzad"></a>
-    <p>Gashtasb - The Legendary King of Iran </p>
+    <a href="#" class="static-art-link" data-id="SM-2010-WC&GC-01" data-title="Gashtasb - The Legendary King of Iran" data-image="Gashtasb.webp" data-medium="Watercolor & Gouache" data-size="57x45 cm" data-year="2010">
+      <img src="Gashtasb.webp" alt="Painting titled Gashtasb The Legendary King Of Iran by Shahrzad">
+    </a>
+    <p>Gashtasb - The Legendary King of Iran</p>
   </div>
   <div class="art-card">
-    <a href="esfandiyarthehero.html"><img src="Esfandiyar.webp" alt="Painting titled Esfandiyar - The Hero by Shahrzad"></a>
+    <a href="#" class="static-art-link" data-id="SM-2013-WC&GC-01" data-title="Esfandiyar - The Hero" data-image="Esfandiyar.webp" data-medium="Watercolor & Gouache" data-size="72x62 cm" data-year="2013">
+      <img src="Esfandiyar.webp" alt="Painting titled Esfandiyar - The Hero by Shahrzad">
+    </a>
     <p>Esfandiyar - The Hero</p>
   </div>
   <div class="art-card">
-    <a href="InTheDeeps.html"><img src="in-the-depths.webp" alt="Painting titled In the Depths by Shahrzad"></a>
+    <a href="#" class="static-art-link" data-id="SM-2014-AC-01" data-title="In the Depths" data-image="in-the-depths.webp" data-medium="Acrylic" data-size="90x65 cm" data-year="2014">
+      <img src="in-the-depths.webp" alt="Painting titled In the Depths by Shahrzad">
+    </a>
     <p>In the Depths</p>
   </div>
-     
   <div class="art-card">
-    <a href="Shirin-Farhad.html"><img src="Shirin-Farhad.webp" alt="Painting titled Shirin & Farhad by Shahrzad"></a>
+    <a href="#" class="static-art-link" data-id="SM-2025-IM-11" data-title="Shirin & Farhad" data-image="Shirin-Farhad.webp" data-medium="Iranian Miniature" data-size="50x70 cm" data-year="2025">
+      <img src="Shirin-Farhad.webp" alt="Painting titled Shirin & Farhad by Shahrzad">
+    </a>
     <p>Shirin & Farhad</p>
   </div>
   <div class="art-card">
-    <a href="MirEmad.html"><img src="Mir-Emad-2.webp" alt="Painting titled Mir Emad - Iranian Calligrapher by Shahrzad"></a>
+    <a href="#" class="static-art-link" data-id="SM-2025-IM-12" data-title="Mir Emad - Iranian Calligrapher" data-image="Mir-Emad-2.webp" data-medium="Iranian Miniature" data-size="40x50 cm" data-year="2025">
+      <img src="Mir-Emad-2.webp" alt="Painting titled Mir Emad - Iranian Calligrapher by Shahrzad">
+    </a>
     <p>Mir Emad - Iranian Calligrapher</p>
   </div>
   <div class="art-card">
-    <a href="Untitled-Miniature3.html"><img src="Untitled-miniature-3.webp" alt="Painting titled Untitled - Miniature 3 by Shahrzad"></a>
+    <a href="#" class="static-art-link" data-id="SM-2026-WC&GC+GL-01" data-title="Untitled - Miniature 3" data-image="Untitled-miniature-3.webp" data-medium="Gouache & Watercolor + Gold Leaf" data-size="40x31 cm" data-year="2026">
+      <img src="Untitled-miniature-3.webp" alt="Painting titled Untitled - Miniature 3 by Shahrzad">
+    </a>
     <p>Untitled - Miniature 3</p>
   </div>
   <div class="art-card">
-    <a href="Untitled-Miniature2.html"><img src="untitled2.webp" alt="Painting titled Untitled - Miniature 2 by Shahrzad"></a>
+    <a href="#" class="static-art-link" data-id="SM-2025-WC&GC-03" data-title="Untitled - Miniature 2" data-image="untitled2.webp" data-medium="Watercolor & Gouache" data-size="40x31 cm" data-year="2025">
+      <img src="untitled2.webp" alt="Painting titled Untitled - Miniature 2 by Shahrzad">
+    </a>
     <p>Untitled - Miniature 2</p>
   </div>
   <div class="art-card">
-    <a href="untitled-miniature1.html"><img src="Untitled-Miniature1.webp" alt="Painting titled Untitled - Miniature 1 by Shahrzad"></a>
+    <a href="#" class="static-art-link" data-id="SM-2025-IM-15" data-title="Untitled - Miniature 1" data-image="Untitled-Miniature1.webp" data-medium="Iranian Miniature" data-size="30x40 cm" data-year="2025">
+      <img src="Untitled-Miniature1.webp" alt="Painting titled Untitled - Miniature 1 by Shahrzad">
+    </a>
     <p>Untitled - Miniature 1</p>
   </div>
-
   <div class="art-card">
-    <a href="Dawn.html"><img src="Dawn.webp" alt="Painting titled Dawn by Shahrzad"></a>
+    <a href="#" class="static-art-link" data-id="SM-2005-AC-02" data-title="Dawn" data-image="Dawn.webp" data-medium="Acrylic" data-size="73x55 cm" data-year="2005">
+      <img src="Dawn.webp" alt="Painting titled Dawn by Shahrzad">
+    </a>
     <p>Dawn</p>
   </div>
   <div class="art-card">
-    <a href="kave.html"><img src="kaveh.webp" alt="Painting titled Uprising of Kaveh by Shahrzad"></a>
+    <a href="#" class="static-art-link" data-id="SM-2025-IM-17" data-title="Uprising of Kaveh" data-image="kaveh.webp" data-medium="Iranian Miniature" data-size="70x100 cm" data-year="2025">
+      <img src="kaveh.webp" alt="Painting titled Uprising of Kaveh by Shahrzad">
+    </a>
     <p>Uprising of Kaveh</p>
   </div>
-    </div>
+</div>
 
-<style>
-  .gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding: 20px;
-  }
-
-  @media (max-width: 768px) {
-    .gallery {
-  grid-template-columns: 1fr;
-    }
-  }
-</style>
 <div class="copyright">
   © 2026 Shahrzad Momenzadeh. All rights reserved. |
   Website Design: Behrouz Mohebi Moghaddam – Website Developed: Artin Mohebi Moghaddam
 </div>
-<style>
-.copyright {
-        text-align: center;
-        background: rgb(197, 39, 39);
-        color: white;
-        padding: 2px;
-        margin-top: 30%;
-      }
-      .art-card p {
-  font-size: 1.05rem;
-}
 
-@media (max-width: 768px) {
-  .art-card p {
-    font-size: 0.95rem;
-  }
-}
-</style>
+<!-- Dinamik Eser Detay Modalı -->
+<div id="artModal" class="art-modal-overlay">
+  <div class="art-modal-content">
+    <button id="closeArtModal" class="art-modal-close">&times;</button>
+    <div class="art-modal-body">
+      <div id="modalImagesContainer" style="display: flex; gap: 10px; justify-content: center; align-items: center; margin-bottom: 15px;">
+        <img id="modalArtImage" src="" alt="Artwork Main" style="max-width: 48%; max-height: 280px; object-fit: contain; border-radius: 6px; background: #f9f9f9;">
+        <img id="modalArtImage2" src="" alt="Artwork Secondary" style="max-width: 48%; max-height: 280px; object-fit: contain; border-radius: 6px; background: #f9f9f9; display: none;">
+      </div>
+      <div class="art-modal-details">
+        <h3 id="modalArtTitle"></h3>
+        <p><strong>ID:</strong> <span id="modalArtId"></span></p>
+        <p><strong>Medium:</strong> <span id="modalArtMedium"></span></p>
+        <p><strong>Size:</strong> <span id="modalArtSize"></span></p>
+        <p><strong>Year:</strong> <span id="modalArtYear"></span></p>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- Silme Onay Modalı -->
+<div id="deleteModal" class="delete-modal-overlay">
+  <div class="delete-modal-content">
+    <div class="delete-icon">⚠️</div>
+    <h3>Remove Artwork</h3>
+    <p>Are you sure you want to permanently delete this artwork?</p>
+    <div class="delete-actions">
+      <button id="confirmDeleteBtn" class="btn-yes">Yes, Remove</button>
+      <button id="cancelDeleteBtn" class="btn-no">Cancel</button>
+    </div>
+  </div>
+</div>
 
 <script>
+  window.addEventListener("DOMContentLoaded", () => {
+    let artworks = JSON.parse(localStorage.getItem("shahrzadArtworks")) || [];
+    const gallery = document.querySelector(".gallery");
+    const modal = document.getElementById("artModal");
+    const closeModal = document.getElementById("closeArtModal");
+    const deleteModal = document.getElementById("deleteModal");
+    const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+    const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+    
+    const modalImg1 = document.getElementById("modalArtImage");
+    const modalImg2 = document.getElementById("modalArtImage2");
+
+    let itemIndexToDelete = null;
+    const isHostUser = true;
+
+    if(closeModal) {
+      closeModal.addEventListener("click", () => { modal.style.display = "none"; });
+    }
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) modal.style.display = "none";
+      if (e.target === deleteModal) deleteModal.style.display = "none";
+    });
+
+    function resetModal() {
+      modalImg1.src = "";
+      modalImg2.src = "";
+      modalImg2.style.display = "none";
+    }
+
+    function openArtModal(id, title, image, image2, medium, size, year) {
+      resetModal();
+      modalImg1.src = image;
+
+      if (image2) {
+        modalImg2.src = image2;
+        modalImg2.style.display = "block";
+      }
+
+      document.getElementById("modalArtTitle").textContent = title || '';
+      document.getElementById("modalArtId").textContent = id || '-';
+      document.getElementById("modalArtMedium").textContent = medium || '-';
+      document.getElementById("modalArtSize").textContent = size || '-';
+      document.getElementById("modalArtYear").textContent = year || '-';
+      
+      modal.style.display = "flex";
+    }
+
+    function renderGallery() {
+      if (!gallery) return;
+
+      artworks.forEach((art, index) => {
+        if (art.showMiniature) {
+          const card = document.createElement("div");
+          card.className = "art-card";
+          const removeButtonHTML = isHostUser ? `<button class="remove-art-btn" data-delete-index="${index}"><i class='bx bx-trash'></i> Remove</button>` : '';
+
+          card.innerHTML = `
+            <a href="#" class="dynamic-art-link" data-index="${index}">
+              <img src="${art.image}" alt="${art.title}">
+            </a>
+            <div class="art-details" style="padding:10px; text-align:left;">
+              <h3 style="margin:0 0 8px; text-align:center;">${art.title}</h3>
+              <div style="display: flex; align-items: center; justify-content: flex-end; margin-top: 10px;">
+                ${removeButtonHTML}
+              </div>
+            </div>
+          `;
+          gallery.appendChild(card);
+        }
+      });
+
+      document.querySelectorAll(".dynamic-art-link").forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const index = link.getAttribute("data-index");
+          const art = artworks[index];
+          if (art) {
+            openArtModal(art.id, art.title, art.image, art.image2, art.medium, art.size, art.year);
+          }
+        });
+      });
+
+      document.querySelectorAll(".static-art-link").forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          openArtModal(
+            link.getAttribute("data-id"),
+            link.getAttribute("data-title"),
+            link.getAttribute("data-image"),
+            link.getAttribute("data-image2"),
+            link.getAttribute("data-medium"),
+            link.getAttribute("data-size"),
+            link.getAttribute("data-year")
+          );
+        });
+      });
+
+      document.querySelectorAll(".remove-art-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation(); 
+          itemIndexToDelete = btn.getAttribute("data-delete-index");
+          deleteModal.style.display = "flex"; 
+        });
+      });
+    }
+
+    renderGallery();
+
+    if(confirmDeleteBtn) {
+      confirmDeleteBtn.addEventListener("click", () => {
+        if (itemIndexToDelete !== null) {
+          artworks.splice(itemIndexToDelete, 1);
+          localStorage.setItem("shahrzadArtworks", JSON.stringify(artworks));
+          location.reload();
+        }
+      });
+    }
+
+    if(cancelDeleteBtn) {
+      cancelDeleteBtn.addEventListener("click", () => {
+        deleteModal.style.display = "none";
+        itemIndexToDelete = null;
+      });
+    }
+  });
+
+  // Mobil Menü Scripti
   const hamBtn = document.getElementById("hamburgerBtn");
   const mobileMenu = document.getElementById("mobileMenu");
   const overlay = document.getElementById("overlay");
   const closeMenu = document.getElementById("closeMenu");
 
-  function openMenu() {
-    mobileMenu.classList.add("active");
-    overlay.classList.add("active");
-  }
+  function openMenu() { mobileMenu.classList.add("active"); overlay.classList.add("active"); }
+  function closeMenuFn() { mobileMenu.classList.remove("active"); overlay.classList.remove("active"); }
 
-  function closeMenuFn() {
-    mobileMenu.classList.remove("active");
-    overlay.classList.remove("active");
-  }
-
-  hamBtn.addEventListener("click", openMenu);
-  closeMenu.addEventListener("click", closeMenuFn);
-  overlay.addEventListener("click", closeMenuFn);
+  if(hamBtn) hamBtn.addEventListener("click", openMenu);
+  if(closeMenu) closeMenu.addEventListener("click", closeMenuFn);
+  if(overlay) overlay.addEventListener("click", closeMenuFn);
 
   document.querySelectorAll(".mobile-menu a").forEach(link => {
     link.addEventListener("click", closeMenuFn);
   });
   document.addEventListener("keydown", e => {
-  if (e.key === "Escape") closeMenuFn();
-});
-
+    if (e.key === "Escape") closeMenuFn();
+  });
 </script>
 
 </body>
