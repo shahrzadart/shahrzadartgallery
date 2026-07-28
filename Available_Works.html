@@ -90,7 +90,7 @@
   .art-modal-details h3 { margin: 0 0 10px 0; text-align: center; font-size: 1.4rem; }
   .art-modal-details p { margin: 6px 0; font-size: 0.95rem; }
 
-  .remove-art-btn { background: #ff4d4d; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: bold; display: inline-flex; align-items: center; gap: 5px; margin-right: 10px; }
+  .remove-art-btn { background: #ff4d4d; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: bold; display: inline-flex; align-items: center; gap: 5px; }
   .remove-art-btn:hover { background: #cc0000; }
 
   .delete-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 4000; justify-content: center; align-items: center; }
@@ -171,105 +171,105 @@
 </style>
 
 <div class="gallery">
+  <!-- Statik Eserlere data-static-id Eklendi -->
   <!-- 1. Untitled - Miniature 3 -->
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-1">
     <a href="#" class="static-art-link" data-title="Untitled - Miniature 3" data-image="Untitled-miniature-3.webp" data-medium="Gouache & Watercolor + Gold Leaf" data-size="15.7 x 12.2 in (40 x 31 cm)" data-year="2026" data-price="800">
       <img src="Untitled-miniature-3.webp" alt="Painting titled Untitled - Miniature 3 by Shahrzad">
     </a>
     <p>Price: $800 USD</p>
   </div>
 
-<!-- 2. Untitled 8 -->
-  <div class="art-card">
+  <!-- 2. Untitled 8 -->
+  <div class="art-card" data-static-id="static-2">
     <a href="#" class="static-art-link" data-title="Untitled 8" data-image="untitle 8.jpeg" data-medium="Watercolor & Gouache" data-size="5.5 x 8.2 in (14 x 21 cm)" data-year="2026" data-price="150" data-id="SM-2026-WC&GC-01">
       <img src="untitle 8.jpeg" alt="Painting titled Untitled 8 by Shahrzad">
     </a>
     <p>Price: $150 USD</p>
   </div>
 
-
-  <!-- 2. Untitled - Miniature 2 -->
-  <div class="art-card">
+  <!-- 3. Untitled - Miniature 2 -->
+  <div class="art-card" data-static-id="static-3">
     <a href="#" class="static-art-link" data-title="Untitled - Miniature 2" data-image="untitled2.webp" data-medium="Watercolor & Gouache" data-size="15.7 x 12.2 in (40 x 31 cm)" data-year="2025" data-price="800">
       <img src="untitled2.webp" alt="Painting titled Untitled - Miniature 2 by Shahrzad">
     </a>
     <p>Price: $800 USD</p>
   </div>
 
-  <!-- 3. Untitled - Portrait 10 -->
-  <div class="art-card">
+  <!-- 4. Untitled - Portrait 10 -->
+  <div class="art-card" data-static-id="static-4">
     <a href="#" class="static-art-link" data-title="Untitled - Portrait 10" data-image="green-1.webp" data-medium="Mixed Media" data-size="21.2 x 15.3 in (54 x 39 cm)" data-year="2019" data-price="300">
       <img src="green-1.webp" alt="Painting titled Untitled - Portrait 10 by Shahrzad">
     </a>
     <p>Price: $300 USD</p>
   </div>
 
-  <!-- 4. Summer -->
-  <div class="art-card">
+  <!-- 5. Summer -->
+  <div class="art-card" data-static-id="static-5">
     <a href="#" class="static-art-link" data-title="Summer" data-image="summer.webp" data-medium="Acrylic on Canvas" data-size="19.7 x 19.7 in (50 x 50 cm)" data-year="2018" data-price="1,100">
       <img src="summer.webp" alt="Painting titled Summer by Shahrzad">
     </a>
     <p>Price: $1,100 USD</p>
   </div>
 
-  <!-- 5. Four Seasons -->
-  <div class="art-card">
+  <!-- 6. Four Seasons -->
+  <div class="art-card" data-static-id="static-6">
     <a href="#" class="static-art-link" data-title="Four Seasons" data-image="four-seasons.webp" data-medium="Mixed Media" data-size="19.7 x 19.7 in (50 x 50 cm)" data-year="2023" data-price="1,500">
       <img src="four-seasons.webp" alt="Painting titled Four Seasons by Shahrzad">
     </a>
     <p>Price: $1,500 USD</p>
   </div>
 
-  <!-- 6. Autumn (Örnek Sold / Satıldı Durumu) -->
-  <div class="art-card">
+  <!-- 7. Autumn -->
+  <div class="art-card" data-static-id="static-7">
     <a href="#" class="static-art-link" data-title="Autumn" data-image="autumn.webp" data-medium="Mixed Media" data-size="21.2 x 15.3 in (54 x 39 cm)" data-year="2018" data-price="1,100">
       <img src="autumn.webp" alt="Painting titled Autumn by Shahrzad">
     </a>
     <p>Price: $1,100 USD - <span class="sold">Sold</span></p>
   </div>
 
-  <!-- 7. Untitled - Tazhib 5 -->
-  <div class="art-card">
+  <!-- 8. Untitled - Tazhib 5 -->
+  <div class="art-card" data-static-id="static-8">
     <a href="#" class="static-art-link" data-title="Untitled - Tazhib 5" data-image="calligraphy.webp" data-medium="Watercolor & Gouache + Ink" data-size="21.2 x 25.2 in (54 x 64 cm)" data-year="2012" data-price="1,200">
       <img src="calligraphy.webp" alt="Painting titled Untitled - Tazhib 5 by Shahrzad">
     </a>
     <p>Price: $1,200 USD</p>
   </div>
 
-  <!-- 8. Untitled 6 -->
-  <div class="art-card">
+  <!-- 9. Untitled 6 -->
+  <div class="art-card" data-static-id="static-9">
     <a href="#" class="static-art-link" data-title="Untitled 6" data-image="un-sc-4.webp" data-medium="Acrylic" data-size="20.9 x 15.3 in (53 x 39 cm)" data-year="2008" data-price="300">
       <img src="un-sc-4.webp" alt="Painting titled Untitled 6 by Shahrzad">
     </a>
     <p>Price: $300 USD</p>
   </div>
 
-  <!-- 9. Untitled 5 -->
-  <div class="art-card">
+  <!-- 10. Untitled 5 -->
+  <div class="art-card" data-static-id="static-10">
     <a href="#" class="static-art-link" data-title="Untitled 5" data-image="russian-girl.webp" data-medium="Oil Painting" data-size="42.9 x 23.6 in (109 x 60 cm)" data-year="2020" data-price="1,400">
       <img src="russian-girl.webp" alt="Painting titled Untitled 5 by Shahrzad">
     </a>
     <p>Price: $1,400 USD</p>
   </div>
 
-  <!-- 10. Untitled 4 -->
-  <div class="art-card">
+  <!-- 11. Untitled 4 -->
+  <div class="art-card" data-static-id="static-11">
     <a href="#" class="static-art-link" data-title="Untitled 4" data-image="deer.webp" data-medium="Watercolor" data-size="20.5 x 12.6 in (52 x 32 cm)" data-year="2006" data-price="500">
       <img src="deer.webp" alt="Painting titled Untitled 4 by Shahrzad">
     </a>
     <p>Price: $500 USD</p>
   </div>
 
-  <!-- 11. Untitled 3 -->
-  <div class="art-card">
+  <!-- 12. Untitled 3 -->
+  <div class="art-card" data-static-id="static-12">
     <a href="#" class="static-art-link" data-title="Untitled 3" data-image="untitled3.webp" data-medium="Watercolor" data-size="17 x 11 in (43 x 28 cm)" data-year="2006" data-price="500">
       <img src="untitled3.webp" alt="Painting titled Untitled 3 by Shahrzad">
     </a>
     <p>Price: $500 USD</p>
   </div>
 
-  <!-- 12. Untitled - Scratchboard 2 -->
-  <div class="art-card">
+  <!-- 13. Untitled - Scratchboard 2 -->
+  <div class="art-card" data-static-id="static-13">
     <a href="#" class="static-art-link" data-title="Untitled - Scratchboard 2" data-image="horse-dragon(2).webp" data-medium="Scratchboard" data-size="18.9 x 15 in (48 x 38 cm)" data-year="2007" data-price="500">
       <img src="horse-dragon(2).webp" alt="Painting titled Untitled - Scratchboard 2 by Shahrzad">
     </a>
@@ -356,7 +356,8 @@
     const modalImg1 = document.getElementById("modalArtImage");
     const modalImg2 = document.getElementById("modalArtImage2");
 
-    let docIdToDelete = null;
+    let docIdToDelete = null;       // Dinamik Firestore eseri için
+    let staticIdToDelete = null;    // Statik eser ID'si için
 
     if(closeModal) closeModal.addEventListener("click", () => { modal.style.display = "none"; });
     if(modalCloseBtnAction) modalCloseBtnAction.addEventListener("click", () => { modal.style.display = "none"; });
@@ -389,7 +390,50 @@
       modal.style.display = "flex";
     }
 
-    // Firestore'dan Eserleri Çek ve Galeriyi Oluştur
+    // 1. DAHANIN BAŞINDA: Firestore'da daha önce silinmiş statik eserleri gizle
+    function filterDeletedStaticWorks() {
+      db.collection("deleted_static_artworks").get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          const deletedStaticId = doc.id;
+          const cardToRemove = document.querySelector(`.art-card[data-static-id="${deletedStaticId}"]`);
+          if (cardToRemove) {
+            cardToRemove.remove(); // Silinen statik eseri DOM'dan kaldır
+          }
+        });
+      }).catch(err => console.error("Silinmiş statik eser kontrol hatası:", err));
+    }
+
+    // 2. Oturum Açıkken Tüm Kartlara (Statik + Dinamik) Remove Butonu Ekleme
+    function setupRemoveButtons(user) {
+      if (!user) return;
+      document.querySelectorAll(".art-card").forEach(card => {
+        if (!card.querySelector(".remove-art-btn")) {
+          const removeDiv = document.createElement("div");
+          removeDiv.style.textAlign = "center";
+          removeDiv.style.marginTop = "6px";
+          removeDiv.innerHTML = `<button class="remove-art-btn" type="button"><i class='bx bx-trash'></i> Remove</button>`;
+          card.appendChild(removeDiv);
+
+          const btn = removeDiv.querySelector(".remove-art-btn");
+          btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const docId = card.getAttribute("data-doc-id");
+            const staticId = card.getAttribute("data-static-id");
+
+            if (docId) {
+              docIdToDelete = docId;
+              staticIdToDelete = null;
+            } else if (staticId) {
+              staticIdToDelete = staticId;
+              docIdToDelete = null;
+            }
+            deleteModal.style.display = "flex";
+          });
+        }
+      });
+    }
+
+    // 3. Firestore'dan Dinamik Eserleri Çek ve Galeriyi Oluştur
     function renderGalleryFromFirestore() {
       if (!gallery) return;
 
@@ -401,25 +445,16 @@
             const art = doc.data();
             const docId = doc.id;
 
-            // Eğer "Show in Available Works" kutusu işaretlendiyse göster
             if (art.showAvailable) {
               const card = document.createElement("div");
               card.className = "art-card";
-              
-              // Giriş yapmış kullanıcılar için silme butonu (İsteğe bağlı)
-              const removeButtonHTML = auth.currentUser ? `<button class="remove-art-btn" data-id="${docId}"><i class='bx bx-trash'></i> Remove</button>` : '';
+              card.setAttribute("data-doc-id", docId);
 
               card.innerHTML = `
                 <a href="#" class="dynamic-art-link" data-title="${art.title}" data-image="${art.image}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}" data-price="${art.price || ''}">
                   <img src="${art.image}" alt="${art.title}">
                 </a>
-                <div class="art-details" style="text-align:center;">
-                  <p style="margin:6px 0; font-size:1.05rem;"><strong>${art.title}</strong></p>
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
-                    ${removeButtonHTML}
-                    <p style="margin:0;">Price: ${art.price ? art.price + ' USD' : '-'}</p>
-                  </div>
-                </div>
+                <p>Price: $${art.price || ''} USD</p>
               `;
               gallery.appendChild(card);
             }
@@ -441,13 +476,9 @@
             });
           });
 
-          // Silme butonları için dinleyici
-          document.querySelectorAll(".remove-art-btn").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-              e.stopPropagation();
-              docIdToDelete = btn.getAttribute("data-id");
-              deleteModal.style.display = "flex";
-            });
+          // Oturum durumunu dinle ve butonları ekle
+          auth.onAuthStateChanged((user) => {
+            setupRemoveButtons(user);
           });
         })
         .catch(error => {
@@ -455,21 +486,48 @@
         });
     }
 
-    // Sayfa açıldığında galeriyi doldur
+    // Statik kartlar için tıklama olayı
+    document.querySelectorAll(".static-art-link").forEach(link => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        openArtModal(
+          link.getAttribute("data-title"),
+          link.getAttribute("data-image"),
+          null,
+          link.getAttribute("data-medium"),
+          link.getAttribute("data-size"),
+          link.getAttribute("data-year"),
+          link.getAttribute("data-price")
+        );
+      });
+    });
+
+    // Sayfa Açılış Süreçleri
+    filterDeletedStaticWorks();
     renderGalleryFromFirestore();
 
-    // Silme onayı
+    // 4. Kalıcı Silme Onayı
     if(confirmDeleteBtn) {
       confirmDeleteBtn.addEventListener("click", () => {
         if (docIdToDelete) {
+          // Dinamik eseri Firestore'dan sil
           db.collection("artworks").doc(docIdToDelete).delete()
             .then(() => {
               deleteModal.style.display = "none";
-              location.reload(); // Sayfayı yenile
+              location.reload();
             })
-            .catch(error => {
-              alert("Silme hatası: " + error.message);
-            });
+            .catch(error => alert("Silme hatası: " + error.message));
+        } 
+        else if (staticIdToDelete) {
+          // Statik eserin ID'sini Firestore'daki 'deleted_static_artworks' koleksiyonuna kaydet (Kalıcı silme)
+          db.collection("deleted_static_artworks").doc(staticIdToDelete).set({
+            deletedAt: firebase.firestore.FieldValue.serverTimestamp()
+          })
+          .then(() => {
+            deleteModal.style.display = "none";
+            location.reload(); // Sayfa yenilendiğinde filterDeletedStaticWorks fonksiyonu bunu yakalayıp silecek
+          })
+          .catch(error => alert("Statik eser silme hatası: " + error.message));
         }
       });
     }
@@ -478,6 +536,7 @@
       cancelDeleteBtn.addEventListener("click", () => {
         deleteModal.style.display = "none";
         docIdToDelete = null;
+        staticIdToDelete = null;
       });
     }
   });

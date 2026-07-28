@@ -193,7 +193,7 @@
   font-size: 0.85rem;
 }
 
-/* ===== MODAL STYLES (Animasyonlu ve Gelişmiş) ===== */
+/* ===== MODAL STYLES ===== */
 .art-modal-overlay {
   display: none;
   position: fixed;
@@ -352,7 +352,7 @@
 </div>
 
 <div class="gallery">
-  <!-- Statik Eserler (17 Eserin Tümü) -->
+  <!-- Statik Eserler -->
   <div class="art-card">
     <a href="#" class="static-art-link" data-id="SM-2015-AC-02" data-title="A Fairy Being" data-image="fairy-Being.webp" data-medium="Acrylic" data-size="30x50 cm (11.8x19.7 in)" data-year="2015">
       <img src="fairy-Being.webp" alt="Painting titled A Fairy Being by Shahrzad">
@@ -482,7 +482,7 @@
   </div>
 </div>
 
-<!-- Silme Onay Modalı -->
+<!-- Fancy Delete Confirmation Modal -->
 <div id="deleteModal" class="delete-modal-overlay">
   <div class="delete-modal-content">
     <div class="delete-icon">⚠️</div>
@@ -502,7 +502,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
 
 <script>
-  // Firebase Yapılandırması
   const firebaseConfig = {
     apiKey: "AIzaSyBbPEgL7OF_O0RVxPnHoNAb5vozTDrOFyc",
     authDomain: "shahrzad-art-studio.firebaseapp.com",
@@ -562,7 +561,6 @@
       modal.style.display = "flex";
     }
 
-    // Firestore'dan "Contemporary Persian Miniature" Eserlerini Çek
     function renderGalleryFromFirestore() {
       if (!gallery) return;
 
@@ -574,7 +572,6 @@
             const art = doc.data();
             const docId = doc.id;
 
-            // Eğer "Show in Contemporary Persian Miniature" işaretlendiyse göster
             if (art.showMiniature) {
               const card = document.createElement("div");
               card.className = "art-card";
@@ -595,7 +592,6 @@
             }
           });
 
-          // Dinamik eklenen kartlar için tıklama olayları
           document.querySelectorAll(".dynamic-art-link").forEach(link => {
             link.addEventListener("click", (e) => {
               e.preventDefault();
@@ -611,7 +607,6 @@
             });
           });
 
-          // Statik kartlar için tıklama olayları
           document.querySelectorAll(".static-art-link").forEach(link => {
             link.addEventListener("click", (e) => {
               e.preventDefault();
@@ -627,7 +622,6 @@
             });
           });
 
-          // Silme butonları
           document.querySelectorAll(".remove-art-btn").forEach(btn => {
             btn.addEventListener("click", (e) => {
               e.stopPropagation(); 
@@ -666,7 +660,6 @@
     }
   });
 
-  // Mobil Menü Scripti
   const hamBtn = document.getElementById("hamburgerBtn");
   const mobileMenu = document.getElementById("mobileMenu");
   const overlay = document.getElementById("overlay");

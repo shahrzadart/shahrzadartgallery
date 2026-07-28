@@ -9,80 +9,144 @@
 <link rel="stylesheet" href="styles.css">
 <style>
   /* CONTAINER */
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  text-align: left;
-  font-family: sans-serif;
-}
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: left;
+    font-family: sans-serif;
+  }
 
-/* PROFILE */
-.profile {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Ortala */
-  gap: 20px;
-  margin-bottom: 50px;
-  text-align: left;
-}
+  /* PROFILE Layout */
+  .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 50px;
+    text-align: left;
+  }
 
-.profile img {
-  width: 250px;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
+  /* ⚡ SANATÇI GÖRSELİ İÇİN ÖZEL ANİMASYONLU ÇERÇEVE VE AURA ⚡ */
+  .profile-img-wrapper {
+    position: relative;
+    display: inline-block;
+    padding: 6px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #d4af37, #c52727, #8a2be2, #d4af37);
+    background-size: 300% 300%;
+    animation: gradientShift 6s ease infinite, floatImage 4s ease-in-out infinite alternate;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
+    cursor: pointer;
+  }
 
-/* HEADINGS */
-h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 3rem;
-  margin-bottom: 20px;
-}
+  .profile-img-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 22px;
+    background: inherit;
+    filter: blur(15px);
+    opacity: 0.6;
+    z-index: -1;
+    animation: gradientShift 6s ease infinite;
+  }
 
-h2 {
-  font-size: 2rem;
-  margin-top: 40px;
-  margin-bottom: 15px;
-  border-bottom: 2px solid #ddd;
-  display: inline-block; /* Ortala sınır */
-  padding-bottom: 5px;
-}
+  .profile-img-wrapper:hover {
+    transform: scale(1.04) rotate(1deg) translateY(-8px);
+    box-shadow: 0 25px 50px rgba(212, 175, 55, 0.4), 0 0 30px rgba(197, 39, 39, 0.3);
+  }
 
-h3 {
-  margin: 15px 0 8px;
-}
+  .profile-img-wrapper img {
+    display: block;
+    width: 260px;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 14px;
+    background: #fff;
+  }
 
-/* PARAGRAPHS AND LISTS */
-p {
-  margin-bottom: 15px;
-}
+  /* GÖRSEL ANİMASYON KEYFRAME'LERİ */
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 
-ul {
-  padding-left: 0;
-  list-style: none;
-  margin: 15px 0;
-}
+  @keyframes floatImage {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-12px); }
+  }
 
-ul li {
-  margin-bottom: 8px;
-}
+  /* HEADINGS */
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
 
-/* COPYRIGHT */
-.copyright {
-  text-align: center;
-  background: rgb(197, 39, 39);
-  color: white;
-  padding: 6px;
-  margin-top: 30%;
-}
+  h2 {
+    font-size: 2rem;
+    margin-top: 40px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+    display: inline-block;
+    padding-bottom: 5px;
+  }
+
+  h3 {
+    margin: 15px 0 8px;
+  }
+
+  /* PARAGRAPHS AND LISTS */
+  p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+  }
+
+  ul {
+    padding-left: 0;
+    list-style: none;
+    margin: 15px 0;
+  }
+
+  ul li {
+    margin-bottom: 8px;
+  }
+
+  /* COPYRIGHT */
+  .copyright {
+    text-align: center;
+    background: rgb(197, 39, 39);
+    color: white;
+    padding: 10px;
+    margin-top: 15%;
+  }
+
+  /* 🌊 SCROLL REVEAL (KAYDIRMA) ANİMASYONLARI 🌊 */
+  .reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Farklı elemanlara gecikme (staggered effect) eklemek için */
+  .delay-1 { transition-delay: 0.1s; }
+  .delay-2 { transition-delay: 0.2s; }
+  .delay-3 { transition-delay: 0.3s; }
 </style>
 </head>
 <body>
 
-<h1 style="text-align: center; font-family: playfair; font-size: 3.5rem;">Shahrzad Art Studio</h1>
+<h1 class="reveal">Shahrzad Art Studio</h1>
 
 <div class="navbar">
   <div></div>
@@ -101,6 +165,7 @@ ul li {
     <i class='bx bx-menu'></i>
   </div>
 </div>
+
 <div class="mobile-menu" id="mobileMenu">
   <button class="close-menu" id="closeMenu">✕</button>
   <a href="index.html">Home</a>
@@ -113,53 +178,72 @@ ul li {
 </div>
 <div class="overlay" id="overlay"></div>
 
-
-<!-- PROFILE -->
+<!-- MAIN CONTAINER -->
 <div class="container">
+  
+  <!-- PROFILE SECTION -->
   <div class="profile">
-    <div class="profile-text" >
+    <div class="profile-text reveal delay-1">
       <h2>About the Artist</h2>
       <p>Shahrzad Momenzadeh is an Iranian visual artist based in Türkiye. Her practice bridges Persian miniature traditions, ornamental motifs, and contemporary artistic expressions.</p>
       <p>Her work explores narrative, motif, and form, drawing from historical visual languages while engaging with modern concepts and materials. The motifs in her works are inspired by Persian calligraphy and Iranian illumination (tazhib).</p>
       <p>Shahrzad's practice includes Persian miniature, contemporary painting, and motif-based works, with a strong focus on visual storytelling and cultural memory.</p>
     </div>
-    <img src="sh-profile.webp" alt="Shahrzad Momenzadeh">
-    
+
+    <!-- ANİMASYONLU KADIN GÖRSELİ -->
+    <div class="profile-img-wrapper reveal delay-2">
+      <img src="sh-profile.webp" alt="Shahrzad Momenzadeh">
+    </div>
   </div>
 
-  <h2>Artist Statement</h2>
-  <p>My artistic practice is shaped by a dynamic dialogue between Persian miniature traditions and contemporary visual language. In my work, the past is not treated as something fixed or distant, but as a living memory—one that can be revisited, transformed, and reimagined within the present. Drawing from the visual structures, narrative qualities, and aesthetic principles of Persian miniature painting, I reinterpret these elements through a personal and contemporary perspective.</p>
-  <p>Influenced by Persian calligraphy and Iranian illumination (tazhib), my work explores the relationship between tradition and contemporaneity through composition, detail, and visual rhythm. Rather than reproducing historical forms, I engage with them conceptually, using the language of contemporary painting to reflect on memory, continuity, and transformation, and to question how cultural heritage can be reactivated within the present.</p>
+  <!-- ARTIST STATEMENT -->
+  <div class="reveal">
+    <h2>Artist Statement</h2>
+    <p>My artistic practice is shaped by a dynamic dialogue between Persian miniature traditions and contemporary visual language. In my work, the past is not treated as something fixed or distant, but as a living memory—one that can be revisited, transformed, and reimagined within the present. Drawing from the visual structures, narrative qualities, and aesthetic principles of Persian miniature painting, I reinterpret these elements through a personal and contemporary perspective.</p>
+    <p>Influenced by Persian calligraphy and Iranian illumination (tazhib), my work explores the relationship between tradition and contemporaneity through composition, detail, and visual rhythm. Rather than reproducing historical forms, I engage with them conceptually, using the language of contemporary painting to reflect on memory, continuity, and transformation, and to question how cultural heritage can be reactivated within the present.</p>
+  </div>
 
-  <h2>Selected Exhibitions</h2>
-  <h3>Solo Exhibitions</h3>
-  <ul>
-    <li>2010 – Solo Painting Exhibition, Tehran, Iran</li>
-    <li>2008 – Solo Painting Exhibition, Tehran, Iran</li>
-    <li>2007 – Solo Painting Exhibition, Tehran, Iran</li>
-    <li>2006 – Solo Painting Exhibition, Tehran, Iran</li>
-  </ul>
+  <!-- EXHIBITIONS -->
+  <div class="reveal">
+    <h2>Selected Exhibitions</h2>
+    <h3>Solo Exhibitions</h3>
+    <ul>
+      <li>2010 – Solo Painting Exhibition, Tehran, Iran</li>
+      <li>2008 – Solo Painting Exhibition, Tehran, Iran</li>
+      <li>2007 – Solo Painting Exhibition, Tehran, Iran</li>
+      <li>2006 – Solo Painting Exhibition, Tehran, Iran</li>
+    </ul>
 
-  <h3>Group Exhibitions</h3>
-  <ul>
-    <li>2011 – Group Painting Exhibition, Tehran, Iran</li>
-    <li>2010 – Group Painting Exhibition, Tehran, Iran</li>
-  </ul>
+    <h3>Group Exhibitions</h3>
+    <ul>
+      <li>2011 – Group Painting Exhibition, Tehran, Iran</li>
+      <li>2010 – Group Painting Exhibition, Tehran, Iran</li>
+    </ul>
+  </div>
 
-  <h2>Awards / Recognitions</h2>
-  <ul>
-    <li>2011 – International Visual Arts Competition, Tehran, Iran</li>
-    <li>2011 – Iran Visual Arts Competition, Tehran, Iran</li>
-  </ul>
+  <!-- AWARDS -->
+  <div class="reveal">
+    <h2>Awards / Recognitions</h2>
+    <ul>
+      <li>2011 – International Visual Arts Competition, Tehran, Iran</li>
+      <li>2011 – Iran Visual Arts Competition, Tehran, Iran</li>
+    </ul>
+  </div>
 
-  <h2>Education</h2>
-  <ul>
-    <li>2011 - University of Applied Science and Technology (Culture & Art Unit 7), Tehran, Iran</li>
-<h2>Training & Workshops</h2>
-  </ul>
-  <li>2006–2012 – Workshops in Persian Miniature & Contemporary Painting</li>
-  <li>2001–2011 – Painting training, Tehran, Iran</li>
-  </ul>
+  <!-- EDUCATION & WORKSHOPS -->
+  <div class="reveal">
+    <h2>Education</h2>
+    <ul>
+      <li>2011 - University of Applied Science and Technology (Culture & Art Unit 7), Tehran, Iran</li>
+    </ul>
+
+    <h2>Training & Workshops</h2>
+    <ul>
+      <li>2006–2012 – Workshops in Persian Miniature & Contemporary Painting</li>
+      <li>2001–2011 – Painting training, Tehran, Iran</li>
+    </ul>
+  </div>
+
 </div>
 
 <!-- COPYRIGHT -->
@@ -169,6 +253,7 @@ ul li {
 
 <!-- SCRIPT -->
 <script>
+  // Mobile Menu JS
   const hamBtn = document.getElementById("hamburgerBtn");
   const mobileMenu = document.getElementById("mobileMenu");
   const overlay = document.getElementById("overlay");
@@ -191,9 +276,27 @@ ul li {
   document.querySelectorAll(".mobile-menu a").forEach(link => {
     link.addEventListener("click", closeMenuFn);
   });
+  
   document.addEventListener("keydown", e => {
-  if (e.key === "Escape") closeMenuFn();
-});
+    if (e.key === "Escape") closeMenuFn();
+  });
+
+  // 🚀 SCROLL REVEAL INTERSECTION OBSERVER
+  const revealElements = document.querySelectorAll('.reveal');
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, {
+    threshold: 0.15 // Elemanın %15'i göründüğünde tetiklenir
+  });
+
+  revealElements.forEach(element => {
+    revealObserver.observe(element);
+  });
 </script>
 
 </body>
