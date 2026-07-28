@@ -639,22 +639,39 @@ div.imgstylenow img {
   </div>
 </div>
 
+<!-- ============================================== -->
+<!-- FIREBASE VE YENİ JAVASCRIPT EKLENTİLERİ        -->
+<!-- ============================================== -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
 <script>
-  // Navbar Mobile Menu Logic
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBbPEgL7OF_O0RVxPnHoNAb5vozTDrOFyc",
+  authDomain: "shahrzad-art-studio.firebaseapp.com",
+  projectId: "shahrzad-art-studio",
+  storageBucket: "shahrzad-art-studio.firebasestorage.app",
+  messagingSenderId: "1008937118209",
+  appId: "1:1008937118209:web:883ba33be2bb3c5e09ee00",
+  measurementId: "G-59WZ224YKK"
+};
+  // Firebase'i Başlat
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  const storage = firebase.storage();
+
+  // 1. Mobil Menü Mantığı
   const hamBtn = document.getElementById("hamburgerBtn");
   const mobileMenu = document.getElementById("mobileMenu");
   const overlay = document.getElementById("overlay");
   const closeMenu = document.getElementById("closeMenu");
 
-  function openMenu() {
-    mobileMenu.classList.add("active");
-    overlay.classList.add("active");
-  }
-
-  function closeMenuFn() {
-    mobileMenu.classList.remove("active");
-    overlay.classList.remove("active");
-  }
+  function openMenu() { mobileMenu.classList.add("active"); overlay.classList.add("active"); }
+  function closeMenuFn() { mobileMenu.classList.remove("active"); overlay.classList.remove("active"); }
 
   hamBtn.addEventListener("click", openMenu);
   closeMenu.addEventListener("click", closeMenuFn);
@@ -667,7 +684,7 @@ div.imgstylenow img {
     if (e.key === "Escape") closeMenuFn();
   });
 
-  // Dimensions Calculator Logic
+  // 2. Boyut Hesaplayıcı Mantığı
   const widthInches = document.getElementById("widthInches");
   const heightInches = document.getElementById("heightInches");
   const widthCm = document.getElementById("widthCm");
@@ -676,29 +693,21 @@ div.imgstylenow img {
   function updateCmConversions() {
     const wVal = parseFloat(widthInches.value) || 0;
     const hVal = parseFloat(heightInches.value) || 0;
-
-    const wCmResult = (wVal * 2.54).toFixed(1);
-    const hCmResult = (hVal * 2.54).toFixed(1);
-
-    widthCm.textContent = `(${wCmResult} cm)`;
-    heightCm.textContent = `(${hCmResult} cm)`;
+    widthCm.textContent = `(${(wVal * 2.54).toFixed(1)} cm)`;
+    heightCm.textContent = `(${(hVal * 2.54).toFixed(1)} cm)`;
   }
 
   widthInches.addEventListener("input", updateCmConversions);
   heightInches.addEventListener("input", updateCmConversions);
-
   widthInches.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      heightInches.focus();
-    }
+    if (e.key === "Enter") { e.preventDefault(); heightInches.focus(); }
   });
 
-  // Dropzone and File Upload Logic
+  // 3. Sürükle Bırak ve Dosya Seçimi (Firebase İçin Düzenlendi)
   const dropZone = document.getElementById("dropZone");
   const artImageFile = document.getElementById("artImageFile");
   const uploadText = document.getElementById("uploadText");
-  let selectedImageBase64 = "";
+  let selectedFileObj = null; // Base64 yerine direkt dosyayı tutuyoruz
 
   dropZone.addEventListener("click", () => artImageFile.click());
 
@@ -709,15 +718,13 @@ div.imgstylenow img {
 
   ["dragenter", "dragover"].forEach(eventName => {
     dropZone.addEventListener(eventName, (e) => {
-      e.preventDefault();
-      dropZone.classList.add("dragover");
+      e.preventDefault(); dropZone.classList.add("dragover");
     }, false);
   });
 
   ["dragleave", "drop"].forEach(eventName => {
     dropZone.addEventListener(eventName, (e) => {
-      e.preventDefault();
-      dropZone.classList.remove("dragover");
+      e.preventDefault(); dropZone.classList.remove("dragover");
     }, false);
   });
 
@@ -731,100 +738,28 @@ div.imgstylenow img {
 
   function handleFile(file) {
     uploadText.textContent = "Selected: " + file.name;
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      selectedImageBase64 = e.target.result;
-    };
-    reader.readAsDataURL(file);
+    selectedFileObj = file; 
   }
 
-  // Upload Button Logic
-  document.getElementById("uploadArtBtn").addEventListener("click", () => {
-    const title = document.getElementById("artTitle").value.trim();
-    const medium = document.getElementById("artMedium").value.trim();
-    const year = document.getElementById("artYear").value.trim();
-    const price = document.getElementById("artPrice").value.trim();
-    const w = widthInches.value.trim();
-    const h = heightInches.value.trim();
-
-    if (!title || !selectedImageBase64) {
-      alert("Please fill in the artwork title and select an image!");
-      return;
-    }
-
-    let dimensionText = "";
-    if (w && h) {
-      dimensionText = `${w} × ${h} in (${(w * 2.54).toFixed(1)} × ${(h * 2.54).toFixed(1)} cm)`;
-    }
-
-    const newArt = {
-      title: title,
-      medium: medium,
-      year: year,
-      price: price,
-      size: dimensionText,
-      image: selectedImageBase64,
-      showAvailable: document.getElementById("showAvailable").checked,
-      showMiniature: document.getElementById("showMiniature").checked,
-      showContemporary: document.getElementById("showContemporary").checked,
-      showMotive: document.getElementById("showMotive").checked,
-    };
-
-    let artworks = JSON.parse(localStorage.getItem("shahrzadArtworks")) || [];
-    artworks.push(newArt);
-    localStorage.setItem("shahrzadArtworks", JSON.stringify(artworks));
-
-    alert("Artwork successfully added to the website!");
-    document.getElementById("hostModal").style.display = "none";
-    
-    document.getElementById("artTitle").value = "";
-    document.getElementById("artMedium").value = "";
-    document.getElementById("artYear").value = "";
-    document.getElementById("artPrice").value = "";
-    widthInches.value = "";
-    heightInches.value = "";
-    widthCm.textContent = "(0.0 cm)";
-    heightCm.textContent = "(0.0 cm)";
-    uploadText.textContent = "Drag or upload";
-    selectedImageBase64 = "";
-    document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-  });
-
-  // Display Artworks on Load (If Applicable)
-  window.addEventListener("DOMContentLoaded", () => {
-    const artworks = JSON.parse(localStorage.getItem("shahrzadArtworks")) || [];
-    const galleryContainer = document.querySelector(".gallery") || document.body;
-
-    artworks.forEach(art => {
-      if (art.showContemporary) {
-        const card = document.createElement("div");
-        card.className = "art-card";
-        card.innerHTML = `
-          <img src="${art.image}" alt="${art.title}">
-          <div class="art-details">
-            <h3>${art.title}</h3>
-            <p><strong>Medium:</strong> ${art.medium || '-'}</p>
-            <p><strong>Year:</strong> ${art.year || '-'}</p>
-            <p><strong>Size:</strong> ${art.size || '-'}</p>
-            <p><strong>Price:</strong> ${art.price || '-'}</p>
-          </div>
-        `;
-        galleryContainer.appendChild(card);
-      }
-    });
-  });
-
-  // Host Login Modal Logic
+  // 4. Host Modal Mantığı & Firebase Oturum Kontrolü
   const hostModal = document.getElementById("hostModal");
   const hostLoginBtn = document.getElementById("hostLoginBtn");
   const closeHostModal = document.getElementById("closeHostModal");
-  const loginSubmitBtn = document.getElementById("loginSubmitBtn");
   const loginFormSection = document.getElementById("loginFormSection");
   const addArtSection = document.getElementById("addArtSection");
+  const loginSubmitBtn = document.getElementById("loginSubmitBtn");
 
   hostLoginBtn.addEventListener("click", () => {
     hostModal.style.display = "flex";
-    if(localStorage.getItem("isHostLoggedIn") === "true") {
+  });
+
+  closeHostModal.addEventListener("click", () => {
+    hostModal.style.display = "none";
+  });
+
+  // Oturum durumunu dinle
+  auth.onAuthStateChanged((user) => {
+    if (user) {
       loginFormSection.style.display = "none";
       addArtSection.style.display = "block";
     } else {
@@ -833,31 +768,119 @@ div.imgstylenow img {
     }
   });
 
-  closeHostModal.addEventListener("click", () => {
-    hostModal.style.display = "none";
-  });
-
-  document.getElementById("closeHostModal").addEventListener("mouseover", function() {
-    this.style.color = "red";
-  });
-  document.getElementById("closeHostModal").addEventListener("mouseout", function() {
-    this.style.color = "#888";
-  });
-
+  // Firebase ile Güvenli Giriş
   loginSubmitBtn.addEventListener("click", () => {
     const email = document.getElementById("hostEmail").value.trim();
     const password = document.getElementById("hostPassword").value.trim();
-
-    if(email === "shahrzadmomen@gmail.com" && password === "^SHAHRZADpainTING2026ARTIN@231246") {
-      localStorage.setItem("isHostLoggedIn", "true");
-      loginFormSection.style.display = "none";
-      addArtSection.style.display = "block";
-      document.getElementById("loginError").style.display = "none";
-    } else {
-      document.getElementById("loginError").style.display = "block";
-    }
+    
+    loginSubmitBtn.textContent = "Logging in...";
+    
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => {
+        document.getElementById("loginError").style.display = "none";
+        loginSubmitBtn.textContent = "Log In";
+      })
+      .catch((error) => {
+        document.getElementById("loginError").textContent = "Giriş başarısız: " + error.message;
+        document.getElementById("loginError").style.display = "block";
+        loginSubmitBtn.textContent = "Log In";
+      });
   });
-</script>
 
+  // 5. Firebase Storage ve Firestore'a Yükleme Mantığı
+  const uploadArtBtn = document.getElementById("uploadArtBtn");
+  
+  uploadArtBtn.addEventListener("click", () => {
+    const title = document.getElementById("artTitle").value.trim();
+    const medium = document.getElementById("artMedium").value.trim();
+    const year = document.getElementById("artYear").value.trim();
+    const price = document.getElementById("artPrice").value.trim();
+    const w = widthInches.value.trim();
+    const h = heightInches.value.trim();
+
+    if (!title || !selectedFileObj) {
+      alert("Please fill in the artwork title and select an image!");
+      return;
+    }
+
+    // Butonu yükleniyor moduna al
+    uploadArtBtn.disabled = true;
+    uploadArtBtn.textContent = "Uploading to Server...";
+
+    let dimensionText = "";
+    if (w && h) {
+      dimensionText = `${w} × ${h} in (${(w * 2.54).toFixed(1)} × ${(h * 2.54).toFixed(1)} cm)`;
+    }
+
+    // Önce resmi Storage'a yükle
+    const storageRef = storage.ref(`artworks/${Date.now()}_${selectedFileObj.name}`);
+    
+    storageRef.put(selectedFileObj)
+      .then(snapshot => snapshot.ref.getDownloadURL())
+      .then(downloadURL => {
+        // Resim başarıyla yüklendiyse, URL'i alıp Firestore veritabanına yaz
+        return db.collection("artworks").add({
+          title: title,
+          medium: medium,
+          year: year,
+          price: price,
+          size: dimensionText,
+          image: downloadURL, // Bulut üzerindeki resim linki
+          showAvailable: document.getElementById("showAvailable").checked,
+          showMiniature: document.getElementById("showMiniature").checked,
+          showContemporary: document.getElementById("showContemporary").checked,
+          showMotive: document.getElementById("showMotive").checked,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      })
+      .then(() => {
+        alert("Artwork successfully added to the Cloud Server!");
+        hostModal.style.display = "none";
+        
+        // Formu temizle
+        document.getElementById("artTitle").value = "";
+        document.getElementById("artMedium").value = "";
+        document.getElementById("artYear").value = "";
+        document.getElementById("artPrice").value = "";
+        widthInches.value = "";
+        heightInches.value = "";
+        widthCm.textContent = "(0.0 cm)";
+        heightCm.textContent = "(0.0 cm)";
+        uploadText.textContent = "Drag or upload";
+        selectedFileObj = null;
+        document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+      })
+      .catch(err => {
+        alert("Upload error: " + err.message);
+      })
+      .finally(() => {
+        uploadArtBtn.disabled = false;
+        uploadArtBtn.textContent = "Upload Artwork";
+      });
+  });
+
+
+// 6. Firestore'dan Eserleri Çekip Ekranda Gösterme Fonksiyonu
+window.addEventListener('DOMContentLoaded', () => {
+  // Eğer ana sayfada eserleri listeleyeceğimiz bir alan varsa verileri çekelim
+  db.collection("artworks")
+    .orderBy("createdAt", "desc")
+    .limit(3) // Şimdilik en son eklenen 3 eseri göstersin
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const art = doc.data();
+        console.log("Veritabanından çekilen eser:", art.title, art.image);
+        
+        // Buraya istersen verileri ekrandaki özel bir galeri div'ine dinamik olarak yazdırabiliriz.
+      });
+    })
+    .catch((error) => {
+      console.log("Veriler çekilirken hata oluştu: ", error);
+    });
+});
+
+
+</script>
 </body>
 </html>

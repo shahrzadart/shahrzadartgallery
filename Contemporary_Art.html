@@ -7,6 +7,10 @@
 <link rel="shortcut icon" href="Logo-removebg-preview.png" type="image/x-icon">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
 <link rel="stylesheet" href="styles.css">
+
+<!-- Firebase SDK (Compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 </head>
 
 <body>
@@ -479,8 +483,22 @@
 </div>
 
 <script>
+  // Firebase Yapılandırması
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "shahrzad-art-studio.firebaseapp.com",
+    projectId: "shahrzad-art-studio",
+    storageBucket: "shahrzad-art-studio.appspot.com",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  const db = firebase.firestore();
+
   window.addEventListener("DOMContentLoaded", () => {
-    let artworks = JSON.parse(localStorage.getItem("shahrzadArtworks")) || [];
     const gallery = document.querySelector(".gallery");
     const modal = document.getElementById("artModal");
     const closeModal = document.getElementById("closeArtModal");
@@ -491,7 +509,7 @@
     const modalImg1 = document.getElementById("modalArtImage");
     const modalImg2 = document.getElementById("modalArtImage2");
 
-    let itemIndexToDelete = null;
+    let docIdToDelete = null;
     const isHostUser = true;
 
     if(closeModal) {
@@ -526,73 +544,86 @@
       modal.style.display = "flex";
     }
 
-    function renderGallery() {
-      if (!gallery) return;
+    function fetchAndRenderFirestoreArtworks() {
+      db.collection("artworks").where("showContemporary", "==", true).get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const art = doc.data();
+            const docId = doc.id;
 
-      artworks.forEach((art, index) => {
-        if (art.showContemporary) {
-          const card = document.createElement("div");
-          card.className = "art-card";
-          const removeButtonHTML = isHostUser ? `<button class="remove-art-btn" data-delete-index="${index}"><i class='bx bx-trash'></i> Remove</button>` : '';
+            const card = document.createElement("div");
+            card.className = "art-card";
+            const removeButtonHTML = isHostUser ? `<button class="remove-art-btn" data-doc-id="${docId}"><i class='bx bx-trash'></i> Remove</button>` : '';
 
-          card.innerHTML = `
-            <a href="#" class="dynamic-art-link" data-index="${index}">
-              <img src="${art.image}" alt="${art.title}">
-            </a>
-            <div class="art-details" style="padding:10px; text-align:left;">
-              <h3 style="margin:0 0 8px; text-align:center;">${art.title}</h3>
-              <div style="display: flex; align-items: center; justify-content: flex-end; margin-top: 10px;">
-                ${removeButtonHTML}
+            card.innerHTML = `
+              <a href="#" class="dynamic-art-link" data-doc-id="${docId}">
+                <img src="${art.image}" alt="${art.title}">
+              </a>
+              <div class="art-details" style="padding:10px; text-align:left;">
+                <h3 style="margin:0 0 8px; text-align:center;">${art.title}</h3>
+                <div style="display: flex; align-items: center; justify-content: flex-end; margin-top: 10px;">
+                  ${removeButtonHTML}
+                </div>
               </div>
-            </div>
-          `;
-          gallery.appendChild(card);
-        }
-      });
+            `;
+            gallery.appendChild(card);
+          });
 
-      document.querySelectorAll(".dynamic-art-link").forEach(link => {
-        link.addEventListener("click", (e) => {
-          e.preventDefault();
-          const index = link.getAttribute("data-index");
-          const art = artworks[index];
-          if (art) {
-            openArtModal(art.id, art.title, art.image, art.image2, art.medium, art.size, art.year);
-          }
-        });
-      });
+          // Dinamik Link Eventleri
+          document.querySelectorAll(".dynamic-art-link").forEach(link => {
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+              const docId = link.getAttribute("data-doc-id");
+              db.collection("artworks").doc(docId).get().then((docSnap) => {
+                if (docSnap.exists) {
+                  const art = docSnap.data();
+                  openArtModal(art.id, art.title, art.image, art.image2, art.medium, art.size, art.year);
+                }
+              });
+            });
+          });
 
-      document.querySelectorAll(".static-art-link").forEach(link => {
-        link.addEventListener("click", (e) => {
-          e.preventDefault();
-          openArtModal(
-            link.getAttribute("data-id"),
-            link.getAttribute("data-title"),
-            link.getAttribute("data-image"),
-            link.getAttribute("data-image2"),
-            link.getAttribute("data-medium"),
-            link.getAttribute("data-size"),
-            link.getAttribute("data-year")
-          );
+          // Silme Butonu Eventleri
+          document.querySelectorAll(".remove-art-btn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+              e.stopPropagation(); 
+              docIdToDelete = btn.getAttribute("data-doc-id");
+              deleteModal.style.display = "flex"; 
+            });
+          });
+        })
+        .catch((error) => {
+          console.error("Error fetching artworks: ", error);
         });
-      });
-
-      document.querySelectorAll(".remove-art-btn").forEach(btn => {
-        btn.addEventListener("click", (e) => {
-          e.stopPropagation(); 
-          itemIndexToDelete = btn.getAttribute("data-delete-index");
-          deleteModal.style.display = "flex"; 
-        });
-      });
     }
 
-    renderGallery();
+    // Statik Linkler için Modal Dinleyicileri
+    document.querySelectorAll(".static-art-link").forEach(link => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        openArtModal(
+          link.getAttribute("data-id"),
+          link.getAttribute("data-title"),
+          link.getAttribute("data-image"),
+          link.getAttribute("data-image2"),
+          link.getAttribute("data-medium"),
+          link.getAttribute("data-size"),
+          link.getAttribute("data-year")
+        );
+      });
+    });
+
+    // Firestore verilerini çek ve yükle
+    fetchAndRenderFirestoreArtworks();
 
     if(confirmDeleteBtn) {
       confirmDeleteBtn.addEventListener("click", () => {
-        if (itemIndexToDelete !== null) {
-          artworks.splice(itemIndexToDelete, 1);
-          localStorage.setItem("shahrzadArtworks", JSON.stringify(artworks));
-          location.reload();
+        if (docIdToDelete !== null) {
+          db.collection("artworks").doc(docIdToDelete).delete().then(() => {
+            location.reload();
+          }).catch((error) => {
+            console.error("Error removing document: ", error);
+          });
         }
       });
     }
@@ -600,7 +631,7 @@
     if(cancelDeleteBtn) {
       cancelDeleteBtn.addEventListener("click", () => {
         deleteModal.style.display = "none";
-        itemIndexToDelete = null;
+        docIdToDelete = null;
       });
     }
   });
