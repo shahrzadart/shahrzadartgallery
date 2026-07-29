@@ -3,17 +3,108 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shahrzad_Painting</title>
+<title>Shahrzad Art Studio – Available Works</title>
 <link rel="shortcut icon" href="Logo-removebg-preview.png" type="image/x-icon">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
 <link rel="stylesheet" href="styles.css">
+
+<style>
+  /* ===== NAVBAR ===== */
+  .navbar { position: sticky; top: 0; background: #ffdfdfc7; padding: 12px 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+  .nav-center { display: flex; gap: 18px; }
+  .navbar a { color: #000; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 0.95rem; position: relative; }
+  .navbar a::after { content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px; background: #000; transition: 0.3s; }
+  .navbar a:hover::after { width: 100%; }
+  .hamburger { position: absolute; right: 18px; font-size: 2rem; cursor: pointer; display: none; background: none; border: none; }
+  .mobile-menu { position: fixed; top: 0; right: -100%; width: 260px; height: 100vh; background: #fff; padding: 70px 25px; display: flex; flex-direction: column; gap: 18px; transition: 0.35s ease; z-index: 1002; }
+  .mobile-menu.active { right: 0; }
+  .mobile-menu a { color: #000; text-decoration: none; padding: 12px; border-radius: 6px; font-size: 1rem; background: rgba(0,0,0,0.04); }
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); opacity: 0; pointer-events: none; transition: 0.3s; z-index: 1001; }
+  .mobile-menu a:hover { background: rgba(0,0,0,0.1); }
+  .overlay.active { opacity: 1; pointer-events: auto; }
+
+  @media (max-width: 768px) {
+    .nav-center { display: none; }
+    .hamburger { display: block; color: #000; }
+    .navbar { justify-content: space-between; }
+  }
+
+  /* ===== TEXT & TYPOGRAPHY ===== */
+  .text { text-align: center; font-family: Arial, sans-serif; font-size: 1.1rem; max-width: 1100px; margin: 25px auto !important; padding: 0 40px; }
+  .text p { text-align: left; line-height: 1.7; }
+  
+  /* ===== GALLERY & CARDS ===== */
+  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 20px; row-gap: 40px; padding: 20px; margin-top: 20px;}
+  .art-card { display: flex; flex-direction: column; background: #fff9f9; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); overflow: hidden; padding-bottom: 10px; }
+  .art-card img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 10px; padding: 10px; background: #fff; }
+  .art-card p { margin-top: 6px; text-align: center; font-size: 1.05rem; }
+
+  @media (max-width: 768px) {
+    .gallery { grid-template-columns: 1fr; row-gap: 30px; padding: 16px; }
+    .art-card img { aspect-ratio: 3 / 4; padding: 0 !important; }
+    .art-card p { font-size: 0.95rem; }
+  }
+  .sold { color: red; font-weight: bold; display: block; text-align: center; margin-top: 5px; }
+
+  /* ===== MODALS ===== */
+  .art-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px); z-index: 3000; justify-content: center; align-items: center; padding: 20px; animation: overlayFadeIn 0.3s ease forwards; }
+  .art-modal-content { background: #fff; padding: 30px; border-radius: 16px; max-width: 580px; width: 100%; position: relative; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.1); font-family: Arial, sans-serif; max-height: 90vh; overflow-y: auto; animation: modalScaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+  
+  @keyframes overlayFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes modalScaleUp { 0% { opacity: 0; transform: scale(0.7) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+
+  .art-modal-close { position: absolute; top: 15px; right: 20px; background: #f1f1f1; border: none; width: 35px; height: 35px; border-radius: 50%; font-size: 1.4rem; cursor: pointer; color: #333; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+  .art-modal-close:hover { background: #ff4d4d; color: white; transform: rotate(90deg) scale(1.1); }
+  
+  .art-modal-details { text-align: left; }
+  .art-modal-details h3 { margin: 0 0 10px 0; text-align: center; font-size: 1.4rem; }
+  .art-modal-details p { margin: 6px 0; font-size: 0.95rem; }
+
+  /* ===== ADMIN BUTTONS ===== */
+  .remove-art-btn { background: #ff4d4d; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: bold; display: inline-flex; align-items: center; gap: 5px; }
+  .remove-art-btn:hover { background: #cc0000; }
+
+  .edit-art-btn { background: #1976d2; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: bold; display: inline-flex; align-items: center; gap: 5px; transition: .25s; }
+  .edit-art-btn:hover { background: #1258a8; }
+
+  .admin-buttons { display: flex; justify-content: center; gap: 8px; padding: 10px; margin-top: auto; }
+
+  /* Form Group Styles for Edit Modal */
+  .edit-form-group { margin-bottom: 14px; text-align: left; }
+  .edit-form-group label { font-size: 0.75rem; color: #757575; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+  .edit-form-input { width: 100%; padding: 10px 12px; font-size: 0.95rem; border: 1px solid #ccc; border-radius: 8px; outline: none; background: #fdfdfd; box-sizing: border-box; transition: border-color 0.2s, box-shadow 0.2s; }
+  .edit-form-input:focus { border-color: #1976d2; box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.15); }
+  .save-edit-btn { background: #2e7d32; color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
+  .save-edit-btn:hover { background: #1b5e20; }
+
+  /* DELETE MODAL */
+  .delete-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 4000; justify-content: center; align-items: center; }
+  .delete-modal-content { background: #fff; padding: 30px; border-radius: 16px; max-width: 380px; width: 90%; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+  .delete-icon { font-size: 3rem; margin-bottom: 10px; }
+  .delete-actions { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+  .btn-yes { background: #ff4d4d; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+  .btn-no { background: #e0e0e0; color: #333; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+  /* AVAILABLE WORKS SPECIFIC BUTTONS */
+  .modal-actions-container { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 20px; }
+  .inquire-btn { display: inline-block; width: 180px; padding: 12px 20px; background: linear-gradient(135deg, #ff416c, #ff4b2b, #ff7e5f); background-size: 200% 200%; color: #fff; font-size: 1.1rem; font-weight: bold; text-align: center; text-decoration: none; border-radius: 10px; border: none; cursor: pointer; box-shadow: 0 0 15px rgba(255, 65, 108, 0.7), 0 0 30px rgba(255, 75, 43, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.4); animation: gradientBG 4s ease infinite, intenseGlow 2s ease-in-out infinite alternate, subtlePulse 1.5s ease-in-out infinite; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .inquire-btn:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(255, 65, 108, 1), 0 0 50px rgba(255, 75, 43, 0.9), 0 0 75px rgba(255, 126, 95, 0.8); }
+  .modal-close-btn { display: inline-block; width: 120px; padding: 12px 20px; background: #e0e0e0; color: #333; font-size: 1.1rem; font-weight: bold; text-align: center; border-radius: 10px; border: none; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease; }
+  .modal-close-btn:hover { background: #d0d0d0; transform: scale(1.03); }
+
+  @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+  @keyframes intenseGlow { 0% { box-shadow: 0 0 10px rgba(255, 65, 108, 0.6), 0 0 20px rgba(255, 75, 43, 0.4), inset 0 0 8px rgba(255, 255, 255, 0.3); } 100% { box-shadow: 0 0 25px rgba(255, 65, 108, 1), 0 0 45px rgba(255, 75, 43, 0.9), 0 0 65px rgba(255, 126, 95, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.7); } }
+  @keyframes subtlePulse { 0% { transform: scale(1); } 50% { transform: scale(1.015); } 100% { transform: scale(1); } }
+  
+  .copyright { text-align: center; background: rgb(197, 39, 39); color: white; padding: 10px; margin-top: 30%; font-size: 0.85rem;}
+</style>
 </head>
 <body>
+
 <h1 style="text-align: center; font-family: playfair; font-size: 3.5rem;">Shahrzad Art Studio</h1>
 
 <div class="navbar">
   <div></div>
-
   <div class="nav-center">
     <a href="index.html">Home</a>
     <a href="Available_Works.html">Available Works</a>
@@ -23,7 +114,6 @@
     <a href="contact.html">Contact</a>
     <a href="about.html">About</a>
   </div>
-
   <div class="hamburger" id="hamburgerBtn">
     <i class='bx bx-menu'></i>
   </div>
@@ -48,131 +138,11 @@
   <p class="left-text">All artworks are delivered with an official Certificate of Authenticity signed by the artist.</p>
   <p class="left-text">Fine Art Prints of selected artworks are available for purchase through:</p>
   <a href="https://www.saatchiart.com/en-tr/prints?query=shahrzad%20momenzadeh" target="_blank" style="text-decoration: none; color: blue;">Saatchi Art</a>
-  <p class="left_text">Visit the gallery to explore the collection and order directly online.</p>
+  <p class="left_text" style="margin-top: 15px;">Visit the gallery to explore the collection and order directly online.</p>
 </div>
 
-<style>
-  .text { text-align: center; font-family: Arial, sans-serif; font-size: 1.1rem; max-width: 1100px; margin: 25px auto !important; padding: 0 40px; }
-  .text p { text-align: left; line-height: 1.7; }
-  .art-card img { border-radius: 10px; }
-  .copyright { text-align: center; background: rgb(197, 39, 39); color: white; padding: 2px; margin-top: 30%; }
-  
-  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 20px; row-gap: 40px; padding: 20px; }
-  .art-card { display: flex; flex-direction: column; }
-  .art-card img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 10px; }
-  .art-card p { margin-top: 6px; text-align: center; font-size: 1.05rem; }
-
-  @media (max-width: 768px) {
-    .gallery { grid-template-columns: 1fr; row-gap: 30px; padding: 16px; }
-    .art-card img { aspect-ratio: 3 / 4; }
-    .art-card p { font-size: 0.95rem; }
-  }
-  .sold { color: red; font-weight: bold; }
-
-  /* Modal ve Buton Stilleri */
-  .art-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px); z-index: 3000; justify-content: center; align-items: center; padding: 20px; animation: overlayFadeIn 0.3s ease forwards; }
-  .art-modal-content { background: #fff; padding: 30px; border-radius: 16px; max-width: 550px; width: 100%; position: relative; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.1); font-family: Arial, sans-serif; max-height: 90vh; overflow-y: auto; animation: modalScaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-  
-  @keyframes overlayFadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  @keyframes modalScaleUp {
-    0% { opacity: 0; transform: scale(0.7) translateY(20px); }
-    100% { opacity: 1; transform: scale(1) translateY(0); }
-  }
-
-  .art-modal-close { position: absolute; top: 15px; right: 20px; background: #f1f1f1; border: none; width: 35px; height: 35px; border-radius: 50%; font-size: 1.4rem; cursor: pointer; color: #333; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
-  .art-modal-close:hover { background: #ff4d4d; color: white; transform: rotate(90deg) scale(1.1); }
-  
-  .art-modal-details { text-align: left; }
-  .art-modal-details h3 { margin: 0 0 10px 0; text-align: center; font-size: 1.4rem; }
-  .art-modal-details p { margin: 6px 0; font-size: 0.95rem; }
-
-  .remove-art-btn { background: #ff4d4d; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: bold; display: inline-flex; align-items: center; gap: 5px; }
-  .remove-art-btn:hover { background: #cc0000; }
-
-  .delete-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 4000; justify-content: center; align-items: center; }
-  .delete-modal-content { background: #fff; padding: 30px; border-radius: 16px; max-width: 380px; width: 90%; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-  .delete-icon { font-size: 3rem; margin-bottom: 10px; }
-  .delete-actions { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
-  .btn-yes { background: #ff4d4d; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-  .btn-no { background: #e0e0e0; color: #333; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-
-  .modal-actions-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin-top: 20px;
-  }
-
-  .inquire-btn {
-    display: inline-block;
-    width: 180px;
-    padding: 12px 20px;
-    background: linear-gradient(135deg, #ff416c, #ff4b2b, #ff7e5f);
-    background-size: 200% 200%;
-    color: #fff;
-    font-size: 1.1rem;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 0 15px rgba(255, 65, 108, 0.7), 0 0 30px rgba(255, 75, 43, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.4);
-    animation: gradientBG 4s ease infinite, intenseGlow 2s ease-in-out infinite alternate, subtlePulse 1.5s ease-in-out infinite;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .inquire-btn:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 25px rgba(255, 65, 108, 1), 0 0 50px rgba(255, 75, 43, 0.9), 0 0 75px rgba(255, 126, 95, 0.8);
-  }
-
-  .modal-close-btn {
-    display: inline-block;
-    width: 120px;
-    padding: 12px 20px;
-    background: #e0e0e0;
-    color: #333;
-    font-size: 1.1rem;
-    font-weight: bold;
-    text-align: center;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
-  }
-
-  .modal-close-btn:hover {
-    background: #d0d0d0;
-    transform: scale(1.03);
-  }
-
-  @keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  @keyframes intenseGlow {
-    0% { box-shadow: 0 0 10px rgba(255, 65, 108, 0.6), 0 0 20px rgba(255, 75, 43, 0.4), inset 0 0 8px rgba(255, 255, 255, 0.3); }
-    100% { box-shadow: 0 0 25px rgba(255, 65, 108, 1), 0 0 45px rgba(255, 75, 43, 0.9), 0 0 65px rgba(255, 126, 95, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.7); }
-  }
-
-  @keyframes subtlePulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.015); }
-    100% { transform: scale(1); }
-  }
-</style>
-
 <div class="gallery">
-  <!-- Statik Eserlere data-static-id Eklendi -->
-  <!-- 1. Untitled - Miniature 3 -->
+  <!-- Statik Eserler -->
   <div class="art-card" data-static-id="static-1">
     <a href="#" class="static-art-link" data-title="Untitled - Miniature 3" data-image="Untitled-miniature-3.webp" data-medium="Gouache & Watercolor + Gold Leaf" data-size="15.7 x 12.2 in (40 x 31 cm)" data-year="2026" data-price="800">
       <img src="Untitled-miniature-3.webp" alt="Painting titled Untitled - Miniature 3 by Shahrzad">
@@ -180,7 +150,6 @@
     <p>Price: $800 USD</p>
   </div>
 
-  <!-- 2. Untitled 8 -->
   <div class="art-card" data-static-id="static-2">
     <a href="#" class="static-art-link" data-title="Untitled 8" data-image="untitle 8.jpeg" data-medium="Watercolor & Gouache" data-size="5.5 x 8.2 in (14 x 21 cm)" data-year="2026" data-price="150" data-id="SM-2026-WC&GC-01">
       <img src="untitle 8.jpeg" alt="Painting titled Untitled 8 by Shahrzad">
@@ -188,7 +157,6 @@
     <p>Price: $150 USD</p>
   </div>
 
-  <!-- 3. Untitled - Miniature 2 -->
   <div class="art-card" data-static-id="static-3">
     <a href="#" class="static-art-link" data-title="Untitled - Miniature 2" data-image="untitled2.webp" data-medium="Watercolor & Gouache" data-size="15.7 x 12.2 in (40 x 31 cm)" data-year="2025" data-price="800">
       <img src="untitled2.webp" alt="Painting titled Untitled - Miniature 2 by Shahrzad">
@@ -196,7 +164,6 @@
     <p>Price: $800 USD</p>
   </div>
 
-  <!-- 4. Untitled - Portrait 10 -->
   <div class="art-card" data-static-id="static-4">
     <a href="#" class="static-art-link" data-title="Untitled - Portrait 10" data-image="green-1.webp" data-medium="Mixed Media" data-size="21.2 x 15.3 in (54 x 39 cm)" data-year="2019" data-price="300">
       <img src="green-1.webp" alt="Painting titled Untitled - Portrait 10 by Shahrzad">
@@ -204,7 +171,6 @@
     <p>Price: $300 USD</p>
   </div>
 
-  <!-- 5. Summer -->
   <div class="art-card" data-static-id="static-5">
     <a href="#" class="static-art-link" data-title="Summer" data-image="summer.webp" data-medium="Acrylic on Canvas" data-size="19.7 x 19.7 in (50 x 50 cm)" data-year="2018" data-price="1,100">
       <img src="summer.webp" alt="Painting titled Summer by Shahrzad">
@@ -212,7 +178,6 @@
     <p>Price: $1,100 USD</p>
   </div>
 
-  <!-- 6. Four Seasons -->
   <div class="art-card" data-static-id="static-6">
     <a href="#" class="static-art-link" data-title="Four Seasons" data-image="four-seasons.webp" data-medium="Mixed Media" data-size="19.7 x 19.7 in (50 x 50 cm)" data-year="2023" data-price="1,500">
       <img src="four-seasons.webp" alt="Painting titled Four Seasons by Shahrzad">
@@ -220,7 +185,6 @@
     <p>Price: $1,500 USD</p>
   </div>
 
-  <!-- 7. Autumn -->
   <div class="art-card" data-static-id="static-7">
     <a href="#" class="static-art-link" data-title="Autumn" data-image="autumn.webp" data-medium="Mixed Media" data-size="21.2 x 15.3 in (54 x 39 cm)" data-year="2018" data-price="1,100">
       <img src="autumn.webp" alt="Painting titled Autumn by Shahrzad">
@@ -228,7 +192,6 @@
     <p>Price: $1,100 USD - <span class="sold">Sold</span></p>
   </div>
 
-  <!-- 8. Untitled - Tazhib 5 -->
   <div class="art-card" data-static-id="static-8">
     <a href="#" class="static-art-link" data-title="Untitled - Tazhib 5" data-image="calligraphy.webp" data-medium="Watercolor & Gouache + Ink" data-size="21.2 x 25.2 in (54 x 64 cm)" data-year="2012" data-price="1,200">
       <img src="calligraphy.webp" alt="Painting titled Untitled - Tazhib 5 by Shahrzad">
@@ -236,7 +199,6 @@
     <p>Price: $1,200 USD</p>
   </div>
 
-  <!-- 9. Untitled 6 -->
   <div class="art-card" data-static-id="static-9">
     <a href="#" class="static-art-link" data-title="Untitled 6" data-image="un-sc-4.webp" data-medium="Acrylic" data-size="20.9 x 15.3 in (53 x 39 cm)" data-year="2008" data-price="300">
       <img src="un-sc-4.webp" alt="Painting titled Untitled 6 by Shahrzad">
@@ -244,7 +206,6 @@
     <p>Price: $300 USD</p>
   </div>
 
-  <!-- 10. Untitled 5 -->
   <div class="art-card" data-static-id="static-10">
     <a href="#" class="static-art-link" data-title="Untitled 5" data-image="russian-girl.webp" data-medium="Oil Painting" data-size="42.9 x 23.6 in (109 x 60 cm)" data-year="2020" data-price="1,400">
       <img src="russian-girl.webp" alt="Painting titled Untitled 5 by Shahrzad">
@@ -252,7 +213,6 @@
     <p>Price: $1,400 USD</p>
   </div>
 
-  <!-- 11. Untitled 4 -->
   <div class="art-card" data-static-id="static-11">
     <a href="#" class="static-art-link" data-title="Untitled 4" data-image="deer.webp" data-medium="Watercolor" data-size="20.5 x 12.6 in (52 x 32 cm)" data-year="2006" data-price="500">
       <img src="deer.webp" alt="Painting titled Untitled 4 by Shahrzad">
@@ -260,7 +220,6 @@
     <p>Price: $500 USD</p>
   </div>
 
-  <!-- 12. Untitled 3 -->
   <div class="art-card" data-static-id="static-12">
     <a href="#" class="static-art-link" data-title="Untitled 3" data-image="untitled3.webp" data-medium="Watercolor" data-size="17 x 11 in (43 x 28 cm)" data-year="2006" data-price="500">
       <img src="untitled3.webp" alt="Painting titled Untitled 3 by Shahrzad">
@@ -268,7 +227,6 @@
     <p>Price: $500 USD</p>
   </div>
 
-  <!-- 13. Untitled - Scratchboard 2 -->
   <div class="art-card" data-static-id="static-13">
     <a href="#" class="static-art-link" data-title="Untitled - Scratchboard 2" data-image="horse-dragon(2).webp" data-medium="Scratchboard" data-size="18.9 x 15 in (48 x 38 cm)" data-year="2007" data-price="500">
       <img src="horse-dragon(2).webp" alt="Painting titled Untitled - Scratchboard 2 by Shahrzad">
@@ -282,34 +240,72 @@
   Website Design: Behrouz Mohebi Moghaddam – Website Developed: Artin Mohebi Moghaddam
 </div>
 
-<!-- Dinamik Eser Detay Modalı -->
+<!-- Dinamik Eser Detay Modalı (Available Works Özel) -->
 <div id="artModal" class="art-modal-overlay">
   <div class="art-modal-content">
     <button id="closeArtModal" class="art-modal-close">&times;</button>
-    
     <div class="art-modal-body">
       <div id="modalImagesContainer" style="display: flex; gap: 10px; justify-content: center; align-items: center; margin-bottom: 15px;">
         <img id="modalArtImage" src="" alt="Artwork Main" style="max-width: 48%; max-height: 280px; object-fit: contain; border-radius: 6px; background: #f9f9f9;">
         <img id="modalArtImage2" src="" alt="Artwork Secondary" style="max-width: 48%; max-height: 280px; object-fit: contain; border-radius: 6px; background: #f9f9f9; display: none;">
       </div>
-      
       <div class="art-modal-details">
         <h3 id="modalArtTitle"></h3>
+        <p><strong>ID:</strong> <span id="modalArtId"></span></p>
         <p><strong>Medium:</strong> <span id="modalArtMedium"></span></p>
         <p><strong>Size:</strong> <span id="modalArtSize"></span></p>
         <p><strong>Year:</strong> <span id="modalArtYear"></span></p>
-        <p><strong>Price:</strong> <span id="modalArtPrice"></span></p>
-
-        <div class="modal-actions-container">
-          <a href="contact.html" class="inquire-btn">Inquire</a>
-          <button type="button" id="modalCloseBtnAction" class="modal-close-btn">Close</button>
-        </div>
+        <p><strong>Price:</strong> <span id="modalArtPrice" style="color: #2e7d32; font-weight: bold;"></span></p>
+      </div>
+      
+      <!-- INQUIRE BUTTON -->
+      <div class="modal-actions-container">
+        <a href="mailto:info@shahrzadartstudio.com?subject=Inquiry about Artwork" id="modalInquireBtn" class="inquire-btn">Inquire</a>
+        <button id="closeArtModalBtn" class="modal-close-btn">Close</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Fancy Delete Confirmation Modal -->
+<!-- Professional Edit Modal with Form Inputs -->
+<div id="editModal" class="art-modal-overlay">
+  <div class="art-modal-content">
+    <button id="closeEditModal" class="art-modal-close">&times;</button>
+    <h3 style="margin-bottom: 15px; font-weight: 700; color: #222;">Edit Artwork Details</h3>
+    <div style="text-align: center; margin-bottom: 20px;">
+      <img id="editModalImg" src="" alt="Preview" style="max-height: 150px; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+    </div>
+    <form id="editArtworkForm">
+      <div class="edit-form-group">
+        <label>Title</label>
+        <input type="text" id="inputEditTitle" class="edit-form-input" required>
+      </div>
+      <div class="edit-form-group">
+        <label>Artwork ID</label>
+        <input type="text" id="inputEditArtId" class="edit-form-input" required>
+      </div>
+      <div class="edit-form-group">
+        <label>Medium</label>
+        <input type="text" id="inputEditMedium" class="edit-form-input">
+      </div>
+      <div class="edit-form-group">
+        <label>Size</label>
+        <input type="text" id="inputEditSize" class="edit-form-input">
+      </div>
+      <div class="edit-form-group">
+        <label>Year</label>
+        <input type="text" id="inputEditYear" class="edit-form-input">
+      </div>
+      <div class="edit-form-group">
+        <label>Price (e.g. $1200 or Sold)</label>
+        <input type="text" id="inputEditPrice" class="edit-form-input">
+      </div>
+      <button type="submit" class="save-edit-btn">Save Changes</button>
+    </form>
+  </div>
+</div>
+
+<!-- Silme Onay Modalı -->
 <div id="deleteModal" class="delete-modal-overlay">
   <div class="delete-modal-content">
     <div class="delete-icon">⚠️</div>
@@ -329,7 +325,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
 
 <script>
-  // Firebase Yapılandırması
   const firebaseConfig = {
     apiKey: "AIzaSyBbPEgL7OF_O0RVxPnHoNAb5vozTDrOFyc",
     authDomain: "shahrzad-art-studio.firebaseapp.com",
@@ -348,21 +343,32 @@
     const gallery = document.querySelector(".gallery");
     const modal = document.getElementById("artModal");
     const closeModal = document.getElementById("closeArtModal");
-    const modalCloseBtnAction = document.getElementById("modalCloseBtnAction");
+    const closeArtModalBtn = document.getElementById("closeArtModalBtn");
+    
+    const editModal = document.getElementById("editModal");
+    const closeEditModal = document.getElementById("closeEditModal");
+    const editModalImg = document.getElementById("editModalImg");
+    const editArtworkForm = document.getElementById("editArtworkForm");
+
     const deleteModal = document.getElementById("deleteModal");
     const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
     const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
     
     const modalImg1 = document.getElementById("modalArtImage");
     const modalImg2 = document.getElementById("modalArtImage2");
+    const modalInquireBtn = document.getElementById("modalInquireBtn");
 
-    let docIdToDelete = null;       // Dinamik Firestore eseri için
-    let staticIdToDelete = null;    // Statik eser ID'si için
+    let docIdToDelete = null;
+    let staticIdToDelete = null;
+    let activeEditingContext = null;
 
     if(closeModal) closeModal.addEventListener("click", () => { modal.style.display = "none"; });
-    if(modalCloseBtnAction) modalCloseBtnAction.addEventListener("click", () => { modal.style.display = "none"; });
+    if(closeArtModalBtn) closeArtModalBtn.addEventListener("click", () => { modal.style.display = "none"; });
+    if(closeEditModal) closeEditModal.addEventListener("click", () => { editModal.style.display = "none"; });
+
     window.addEventListener("click", (e) => {
       if (e.target === modal) modal.style.display = "none";
+      if (e.target === editModal) editModal.style.display = "none";
       if (e.target === deleteModal) deleteModal.style.display = "none";
     });
 
@@ -372,7 +378,7 @@
       if(modalImg2) modalImg2.style.display = "none";
     }
 
-    function openArtModal(title, image, image2, medium, size, year, price) {
+    function openArtModal(id, title, image, image2, medium, size, year, price) {
       resetModal();
       modalImg1.src = image;
 
@@ -382,58 +388,185 @@
       }
 
       document.getElementById("modalArtTitle").textContent = title || '';
+      document.getElementById("modalArtId").textContent = id || '-';
       document.getElementById("modalArtMedium").textContent = medium || '-';
       document.getElementById("modalArtSize").textContent = size || '-';
       document.getElementById("modalArtYear").textContent = year || '-';
-      document.getElementById("modalArtPrice").textContent = price ? price + ' USD' : '-';
+      document.getElementById("modalArtPrice").textContent = price || 'Contact for price';
       
+      const emailSubject = encodeURIComponent(`Inquiry about Artwork: ${title || 'Untitled'}`);
+      const emailBody = encodeURIComponent(`Hello,\n\nI am interested in acquiring the artwork titled "${title || 'Untitled'}" (ID: ${id || 'N/A'}). Could you please provide more information regarding its availability and pricing?\n\nThank you.`);
+      modalInquireBtn.href = `mailto:info@shahrzadartstudio.com?subject=${emailSubject}&body=${emailBody}`;
+
       modal.style.display = "flex";
     }
 
-    // 1. DAHANIN BAŞINDA: Firestore'da daha önce silinmiş statik eserleri gizle
-    function filterDeletedStaticWorks() {
-      db.collection("deleted_static_artworks").get().then((snapshot) => {
-        snapshot.forEach((doc) => {
-          const deletedStaticId = doc.id;
-          const cardToRemove = document.querySelector(`.art-card[data-static-id="${deletedStaticId}"]`);
-          if (cardToRemove) {
-            cardToRemove.remove(); // Silinen statik eseri DOM'dan kaldır
-          }
-        });
-      }).catch(err => console.error("Silinmiş statik eser kontrol hatası:", err));
+    function openEditModal(artData, docId, isStaticCard, staticElement) {
+      activeEditingContext = { artData, docId, isStaticCard, staticElement };
+
+      editModalImg.src = artData.image || '';
+      document.getElementById("inputEditTitle").value = artData.title || '';
+      document.getElementById("inputEditArtId").value = artData.id || '';
+      document.getElementById("inputEditMedium").value = artData.medium || '';
+      document.getElementById("inputEditSize").value = artData.size || '';
+      document.getElementById("inputEditYear").value = artData.year || '';
+      document.getElementById("inputEditPrice").value = artData.price || '';
+
+      editModal.style.display = "flex";
     }
 
-    // 2. Oturum Açıkken Tüm Kartlara (Statik + Dinamik) Remove Butonu Ekleme
-    function setupRemoveButtons(user) {
-      if (!user) return;
-      document.querySelectorAll(".art-card").forEach(card => {
-        if (!card.querySelector(".remove-art-btn")) {
-          const removeDiv = document.createElement("div");
-          removeDiv.style.textAlign = "center";
-          removeDiv.style.marginTop = "6px";
-          removeDiv.innerHTML = `<button class="remove-art-btn" type="button"><i class='bx bx-trash'></i> Remove</button>`;
-          card.appendChild(removeDiv);
+    if (editArtworkForm) {
+      editArtworkForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (!activeEditingContext) return;
 
-          const btn = removeDiv.querySelector(".remove-art-btn");
-          btn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const docId = card.getAttribute("data-doc-id");
-            const staticId = card.getAttribute("data-static-id");
+        const { artData, docId, isStaticCard, staticElement } = activeEditingContext;
 
-            if (docId) {
-              docIdToDelete = docId;
-              staticIdToDelete = null;
-            } else if (staticId) {
-              staticIdToDelete = staticId;
-              docIdToDelete = null;
-            }
-            deleteModal.style.display = "flex";
-          });
+        const newTitle = document.getElementById("inputEditTitle").value;
+        const newArtId = document.getElementById("inputEditArtId").value;
+        const newMedium = document.getElementById("inputEditMedium").value;
+        const newSize = document.getElementById("inputEditSize").value;
+        const newYear = document.getElementById("inputEditYear").value;
+        const newPrice = document.getElementById("inputEditPrice").value;
+
+        const updatePayload = {
+          artID: newArtId,
+          title: newTitle,
+          medium: newMedium,
+          size: newSize,
+          year: newYear,
+          price: newPrice,
+          image: artData.image || '',
+          showAvailable: true
+        };
+
+        const saveUpdate = (targetDocId) => {
+          db.collection("artworks").doc(targetDocId).set(updatePayload, { merge: true })
+            .then(() => {
+              editModal.style.display = "none";
+              location.reload();
+            })
+            .catch(err => {
+              alert("Update error: " + err.message);
+            });
+        };
+
+        if (docId) {
+          saveUpdate(docId);
+        } else {
+          db.collection("artworks").add({
+            ...updatePayload,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).then(newDoc => {
+            editModal.style.display = "none";
+            location.reload();
+          }).catch(err => alert("Error: " + err.message));
         }
       });
     }
 
-    // 3. Firestore'dan Dinamik Eserleri Çek ve Galeriyi Oluştur
+    function filterDeletedStaticWorks() {
+      db.collection("deleted_static_available").get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          const deletedStaticId = doc.id;
+          const cardToRemove = document.querySelector(`.art-card[data-static-id="${deletedStaticId}"]`);
+          if (cardToRemove) {
+            cardToRemove.remove();
+          }
+        });
+      }).catch(err => console.error("Silinmiş statik available eser kontrol hatası:", err));
+    }
+
+    function attachLinkListeners() {
+      document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
+        link.replaceWith(link.cloneNode(true));
+      });
+
+      document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          openArtModal(
+            link.getAttribute("data-id"),
+            link.getAttribute("data-title"),
+            link.getAttribute("data-image"),
+            link.getAttribute("data-image2"),
+            link.getAttribute("data-medium"),
+            link.getAttribute("data-size"),
+            link.getAttribute("data-year"),
+            link.getAttribute("data-price")
+          );
+        });
+      });
+    }
+
+    function attachAdminListeners() {
+      document.querySelectorAll(".remove-art-btn").forEach(btn => {
+        btn.replaceWith(btn.cloneNode(true));
+      });
+      document.querySelectorAll(".remove-art-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const card = btn.closest(".art-card");
+          docIdToDelete = card.getAttribute("data-doc-id");
+          staticIdToDelete = card.getAttribute("data-static-id");
+          deleteModal.style.display = "flex";
+        });
+      });
+
+      document.querySelectorAll(".edit-art-btn").forEach(btn => {
+        btn.replaceWith(btn.cloneNode(true));
+      });
+      document.querySelectorAll(".edit-art-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const card = btn.closest(".art-card");
+          const link = card.querySelector(".static-art-link, .dynamic-art-link");
+          const docId = card.getAttribute("data-doc-id");
+          const staticId = card.getAttribute("data-static-id");
+          
+          const artData = {
+            id: link.getAttribute("data-id"),
+            title: link.getAttribute("data-title"),
+            image: link.getAttribute("data-image"),
+            image2: link.getAttribute("data-image2"),
+            medium: link.getAttribute("data-medium"),
+            size: link.getAttribute("data-size"),
+            year: link.getAttribute("data-year"),
+            price: link.getAttribute("data-price") || 'Contact for price'
+          };
+
+          if (docId) {
+            openEditModal(artData, docId, false, link);
+          } else if (staticId) {
+            db.collection("artworks").where("title", "==", artData.title).get().then(snapshot => {
+              let foundDocId = !snapshot.empty ? snapshot.docs[0].id : null;
+              openEditModal(artData, foundDocId, true, link);
+            });
+          }
+        });
+      });
+    }
+
+    auth.onAuthStateChanged((user) => {
+      document.querySelectorAll(".art-card").forEach(card => {
+        let existingAdminDiv = card.querySelector(".admin-buttons");
+        if (user) {
+          if (!existingAdminDiv) {
+            const adminDiv = document.createElement("div");
+            adminDiv.className = "admin-buttons";
+            adminDiv.innerHTML = `
+              <button class="remove-art-btn" type="button"><i class='bx bx-trash'></i> Remove</button>
+              <button class="edit-art-btn" type="button"><i class='bx bx-edit'></i> Edit</button>
+            `;
+            card.appendChild(adminDiv);
+          }
+        } else {
+          if (existingAdminDiv) existingAdminDiv.remove();
+        }
+      });
+      attachAdminListeners();
+    });
+
     function renderGalleryFromFirestore() {
       if (!gallery) return;
 
@@ -446,71 +579,50 @@
             const docId = doc.id;
 
             if (art.showAvailable) {
-              const card = document.createElement("div");
-              card.className = "art-card";
-              card.setAttribute("data-doc-id", docId);
+              if (!gallery.querySelector(`[data-doc-id="${docId}"]`)) {
+                const card = document.createElement("div");
+                card.className = "art-card";
+                card.setAttribute("data-doc-id", docId);
 
-              card.innerHTML = `
-                <a href="#" class="dynamic-art-link" data-title="${art.title}" data-image="${art.image}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}" data-price="${art.price || ''}">
-                  <img src="${art.image}" alt="${art.title}">
-                </a>
-                <p>Price: $${art.price || ''} USD</p>
-              `;
-              gallery.appendChild(card);
+                const resolvedId = art.artID || art.id || art.ID || art.Id || art.artworkId || art.artId || '-';
+                const artPrice = art.price || 'Contact for price';
+                const isSold = artPrice.toLowerCase().includes('sold') ? '<span class="sold">SOLD</span>' : '';
+
+                const adminButtonsHTML = auth.currentUser ? `
+                  <div class="admin-buttons">
+                    <button class="remove-art-btn" type="button"><i class='bx bx-trash'></i> Remove</button>
+                    <button class="edit-art-btn" type="button"><i class='bx bx-edit'></i> Edit</button>
+                  </div>` : '';
+
+                card.innerHTML = `
+                  <a href="#" class="dynamic-art-link" data-id="${resolvedId}" data-title="${art.title}" data-image="${art.image}" data-image2="${art.image2 || ''}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}" data-price="${artPrice}">
+                    <img src="${art.image}" alt="${art.title}">
+                  </a>
+                  <p>${art.title}</p>
+                  ${isSold}
+                  ${adminButtonsHTML}
+                `;
+                gallery.appendChild(card);
+              }
             }
           });
 
-          // Dinamik eklenen kartlar için tıklama olayları
-          document.querySelectorAll(".dynamic-art-link").forEach(link => {
-            link.addEventListener("click", (e) => {
-              e.preventDefault();
-              openArtModal(
-                link.getAttribute("data-title"),
-                link.getAttribute("data-image"),
-                null,
-                link.getAttribute("data-medium"),
-                link.getAttribute("data-size"),
-                link.getAttribute("data-year"),
-                link.getAttribute("data-price")
-              );
-            });
-          });
-
-          // Oturum durumunu dinle ve butonları ekle
-          auth.onAuthStateChanged((user) => {
-            setupRemoveButtons(user);
-          });
+          attachLinkListeners();
+          attachAdminListeners();
         })
         .catch(error => {
-          console.error("Eserler yüklenirken hata oluştu:", error);
+          console.error("Available Works yüklenirken hata oluştu:", error);
         });
     }
 
-    // Statik kartlar için tıklama olayı
-    document.querySelectorAll(".static-art-link").forEach(link => {
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
-        openArtModal(
-          link.getAttribute("data-title"),
-          link.getAttribute("data-image"),
-          null,
-          link.getAttribute("data-medium"),
-          link.getAttribute("data-size"),
-          link.getAttribute("data-year"),
-          link.getAttribute("data-price")
-        );
-      });
-    });
-
-    // Sayfa Açılış Süreçleri
     filterDeletedStaticWorks();
     renderGalleryFromFirestore();
+    attachLinkListeners();
+    attachAdminListeners();
 
-    // 4. Kalıcı Silme Onayı
     if(confirmDeleteBtn) {
       confirmDeleteBtn.addEventListener("click", () => {
         if (docIdToDelete) {
-          // Dinamik eseri Firestore'dan sil
           db.collection("artworks").doc(docIdToDelete).delete()
             .then(() => {
               deleteModal.style.display = "none";
@@ -519,13 +631,12 @@
             .catch(error => alert("Silme hatası: " + error.message));
         } 
         else if (staticIdToDelete) {
-          // Statik eserin ID'sini Firestore'daki 'deleted_static_artworks' koleksiyonuna kaydet (Kalıcı silme)
-          db.collection("deleted_static_artworks").doc(staticIdToDelete).set({
+          db.collection("deleted_static_available").doc(staticIdToDelete).set({
             deletedAt: firebase.firestore.FieldValue.serverTimestamp()
           })
           .then(() => {
             deleteModal.style.display = "none";
-            location.reload(); // Sayfa yenilendiğinde filterDeletedStaticWorks fonksiyonu bunu yakalayıp silecek
+            location.reload();
           })
           .catch(error => alert("Statik eser silme hatası: " + error.message));
         }
@@ -541,7 +652,6 @@
     }
   });
 
-  // Mobil Menü Kodları
   const hamBtn = document.getElementById("hamburgerBtn");
   const mobileMenu = document.getElementById("mobileMenu");
   const overlay = document.getElementById("overlay");
@@ -553,6 +663,13 @@
   if(hamBtn) hamBtn.addEventListener("click", openMenu);
   if(closeMenu) closeMenu.addEventListener("click", closeMenuFn);
   if(overlay) overlay.addEventListener("click", closeMenuFn);
+
+  document.querySelectorAll(".mobile-menu a").forEach(link => {
+    link.addEventListener("click", closeMenuFn);
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeMenuFn();
+  });
 </script>
 
 </body>

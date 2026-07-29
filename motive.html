@@ -126,7 +126,8 @@
 .gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  column-gap: 20px;
+  row-gap: 40px;
   padding: 20px;
   margin-top: 20px;
 }
@@ -139,12 +140,15 @@
 }
 
 .art-card {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   background: #fff9f9;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   overflow: hidden;
   text-align: center;
+  padding-bottom: 10px;
 }
 
 .art-card img {
@@ -162,6 +166,9 @@
 }
 
 @media (max-width: 768px) {
+  .art-card {
+    margin-bottom: 6px;
+  }
   .art-card img {
     height: auto !important;
     max-height: 220px;
@@ -208,10 +215,9 @@
   background: #fff;
   padding: 30px;
   border-radius: 16px;
-  max-width: 550px;
+  max-width: 580px;
   width: 100%;
   position: relative;
-  text-align: center;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.1);
   font-family: Arial, sans-serif;
   max-height: 90vh;
@@ -268,7 +274,7 @@
   font-size: 0.95rem;
 }
 
-/* ===== REMOVE & DELETE MODAL ===== */
+/* ===== ADMIN BUTTONS ===== */
 .remove-art-btn {
   background: #ff4d4d;
   color: white;
@@ -281,10 +287,42 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  margin-right: 10px;
 }
 .remove-art-btn:hover { background: #cc0000; }
 
+.edit-art-btn {
+  background: #1976d2;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: .25s;
+}
+.edit-art-btn:hover { background: #1258a8; }
+
+.admin-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  margin-top: auto;
+}
+
+/* Form Group Styles for Edit Modal */
+.edit-form-group { margin-bottom: 14px; text-align: left; }
+.edit-form-group label { font-size: 0.75rem; color: #757575; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+.edit-form-input { width: 100%; padding: 10px 12px; font-size: 0.95rem; border: 1px solid #ccc; border-radius: 8px; outline: none; background: #fdfdfd; box-sizing: border-box; transition: border-color 0.2s, box-shadow 0.2s; }
+.edit-form-input:focus { border-color: #1976d2; box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.15); }
+.save-edit-btn { background: #2e7d32; color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
+.save-edit-btn:hover { background: #1b5e20; }
+
+/* ===== DELETE MODAL ===== */
 .delete-modal-overlay {
   display: none;
   position: fixed;
@@ -350,31 +388,31 @@
 
 <div class="gallery">
   <!-- Statik Eserler -->
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-motive-1">
     <a href="#" class="static-art-link" data-id="SM-2017-AC-04" data-title="The Light" data-image="the light.webp" data-medium="Acrylic" data-size="46x46 cm (18.1x18.1 in)" data-year="2017">
       <img src="the light.webp" alt="Painting titled The Light by Shahrzad">
     </a>
-    <p>Untitled - Tazhib 1</p>
+    <p>The Light</p>
   </div>
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-motive-2">
     <a href="#" class="static-art-link" data-id="SM-2017-WC&GC-03" data-title="Untitled - Tazhib 6" data-image="garden-of-Imagination.webp" data-medium="Watercolor & Gouache" data-size="36.1x52 cm (10.3x20.5 in)" data-year="2017">
       <img src="garden-of-Imagination.webp" alt="Painting titled Untitled - Tazhib 6 by Shahrzad">
     </a>
     <p>Untitled - Tazhib 6</p>
   </div>
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-motive-3">
     <a href="#" class="static-art-link" data-id="SM-2012-WC&GC + INK-01" data-title="Untitled - Tazhib 5" data-image="calligraphy.webp" data-medium="Watercolor & Gouache + Ink" data-size="48.8x38.6 cm (19.2x15.2 in)" data-year="2009">
       <img src="calligraphy.webp" alt="Painting titled Untitled - Tazhib 5 by Shahrzad">
     </a>
     <p>Untitled - Tazhib 5</p>
   </div>
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-motive-4">
     <a href="#" class="static-art-link" data-id="SM-2009-GC-02" data-title="Untitled - Tazhib 4" data-image="kohl-container.webp" data-medium="Gouache" data-size="31.2x41.1 cm (12.3x16.2 in)" data-year="2009">
       <img src="kohl-container.webp" alt="Painting titled Untitled - Tazhib 4 by Shahrzad">
     </a>
     <p>Untitled - Tazhib 4</p>
   </div>
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-motive-5">
     <a href="#" class="static-art-link" data-id="SM-2009-GC-03" data-title="Untitled - Tazhib 3" data-image="dome.webp" data-medium="Gouache" data-size="31.2x41.1 cm (12.3x16.2 in)" data-year="2009">
       <img src="dome.webp" alt="Painting titled Untitled - Tazhib 3 by Shahrzad">
     </a>
@@ -404,6 +442,40 @@
         <p><strong>Year:</strong> <span id="modalArtYear"></span></p>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Professional Edit Modal with Form Inputs -->
+<div id="editModal" class="art-modal-overlay">
+  <div class="art-modal-content">
+    <button id="closeEditModal" class="art-modal-close">&times;</button>
+    <h3 style="margin-bottom: 15px; font-weight: 700; color: #222;">Edit Artwork Details</h3>
+    <div style="text-align: center; margin-bottom: 20px;">
+      <img id="editModalImg" src="" alt="Preview" style="max-height: 150px; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+    </div>
+    <form id="editArtworkForm">
+      <div class="edit-form-group">
+        <label>Title</label>
+        <input type="text" id="inputEditTitle" class="edit-form-input" required>
+      </div>
+      <div class="edit-form-group">
+        <label>Artwork ID</label>
+        <input type="text" id="inputEditArtId" class="edit-form-input" required>
+      </div>
+      <div class="edit-form-group">
+        <label>Medium</label>
+        <input type="text" id="inputEditMedium" class="edit-form-input">
+      </div>
+      <div class="edit-form-group">
+        <label>Size</label>
+        <input type="text" id="inputEditSize" class="edit-form-input">
+      </div>
+      <div class="edit-form-group">
+        <label>Year</label>
+        <input type="text" id="inputEditYear" class="edit-form-input">
+      </div>
+      <button type="submit" class="save-edit-btn">Save Changes</button>
+    </form>
   </div>
 </div>
 
@@ -445,6 +517,12 @@
     const gallery = document.querySelector(".gallery");
     const modal = document.getElementById("artModal");
     const closeModal = document.getElementById("closeArtModal");
+    
+    const editModal = document.getElementById("editModal");
+    const closeEditModal = document.getElementById("closeEditModal");
+    const editModalImg = document.getElementById("editModalImg");
+    const editArtworkForm = document.getElementById("editArtworkForm");
+
     const deleteModal = document.getElementById("deleteModal");
     const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
     const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
@@ -453,12 +531,15 @@
     const modalImg2 = document.getElementById("modalArtImage2");
 
     let docIdToDelete = null;
+    let staticIdToDelete = null;
+    let activeEditingContext = null;
 
-    if(closeModal) {
-      closeModal.addEventListener("click", () => { modal.style.display = "none"; });
-    }
+    if(closeModal) closeModal.addEventListener("click", () => { modal.style.display = "none"; });
+    if(closeEditModal) closeEditModal.addEventListener("click", () => { editModal.style.display = "none"; });
+
     window.addEventListener("click", (e) => {
       if (e.target === modal) modal.style.display = "none";
+      if (e.target === editModal) editModal.style.display = "none";
       if (e.target === deleteModal) deleteModal.style.display = "none";
     });
 
@@ -486,105 +567,86 @@
       modal.style.display = "flex";
     }
 
-    function renderGalleryFromFirestore() {
-      if (!gallery) return;
+    function openEditModal(artData, docId, isStaticCard, staticElement) {
+      activeEditingContext = { artData, docId, isStaticCard, staticElement };
 
-      db.collection("artworks")
-        .orderBy("createdAt", "desc")
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            const art = doc.data();
-            const docId = doc.id;
+      editModalImg.src = artData.image || '';
+      document.getElementById("inputEditTitle").value = artData.title || '';
+      document.getElementById("inputEditArtId").value = artData.id || '';
+      document.getElementById("inputEditMedium").value = artData.medium || '';
+      document.getElementById("inputEditSize").value = artData.size || '';
+      document.getElementById("inputEditYear").value = artData.year || '';
 
-            if (art.showMotive) {
-              const card = document.createElement("div");
-              card.className = "art-card";
-              const removeButtonHTML = auth.currentUser ? `<button class="remove-art-btn" data-id="${docId}"><i class='bx bx-trash'></i> Remove</button>` : '';
-
-              const resolvedId = art.artID || art.id || art.ID || art.Id || art.artworkId || art.artId || '-';
-
-              card.innerHTML = `
-                <a href="#" class="dynamic-art-link" data-title="${art.title}" data-image="${art.image}" data-image2="${art.image2 || ''}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}" data-id="${resolvedId}">
-                  <img src="${art.image}" alt="${art.title}">
-                </a>
-                <div class="art-details" style="padding:10px; text-align:left;">
-                  <h3 style="margin:0 0 8px; text-align:center;">${art.title}</h3>
-                  <div style="display: flex; align-items: center; justify-content: flex-end; margin-top: 10px;">
-                    ${removeButtonHTML}
-                  </div>
-                </div>
-              `;
-              gallery.appendChild(card);
-            }
-          });
-
-          document.querySelectorAll(".dynamic-art-link").forEach(link => {
-            link.addEventListener("click", (e) => {
-              e.preventDefault();
-              openArtModal(
-                link.getAttribute("data-id"),
-                link.getAttribute("data-title"),
-                link.getAttribute("data-image"),
-                link.getAttribute("data-image2"),
-                link.getAttribute("data-medium"),
-                link.getAttribute("data-size"),
-                link.getAttribute("data-year")
-              );
-            });
-          });
-
-          document.querySelectorAll(".static-art-link").forEach(link => {
-            link.addEventListener("click", (e) => {
-              e.preventDefault();
-              openArtModal(
-                link.getAttribute("data-id"),
-                link.getAttribute("data-title"),
-                link.getAttribute("data-image"),
-                link.getAttribute("data-image2"),
-                link.getAttribute("data-medium"),
-                link.getAttribute("data-size"),
-                link.getAttribute("data-year")
-              );
-            });
-          });
-
-          document.querySelectorAll(".remove-art-btn").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-              e.stopPropagation(); 
-              docIdToDelete = btn.getAttribute("data-id");
-              deleteModal.style.display = "flex"; 
-            });
-          });
-        })
-        .catch(error => {
-          console.error("Motif eserleri yüklenirken hata oluştu:", error);
-        });
+      editModal.style.display = "flex";
     }
 
-        // Oturum durumunu dinleyerek butonları ve verileri güvenli şekilde yönet
-    auth.onAuthStateChanged((user) => {
-      // 1. Statik kartlara oturum açılmışsa Remove butonu ekle
-      document.querySelectorAll(".art-card").forEach(card => {
-        const staticLink = card.querySelector(".static-art-link");
-        if (staticLink) {
-          let existingBtn = card.querySelector(".remove-art-btn");
-          if (user) {
-            if (!existingBtn) {
-              const artId = staticLink.getAttribute("data-id");
-              const btnContainer = document.createElement("div");
-              btnContainer.style.cssText = "display: flex; justify-content: flex-end; padding: 0 10px 10px;";
-              btnContainer.innerHTML = `<button class="remove-art-btn" data-id="${artId}"><i class='bx bx-trash'></i> Remove</button>`;
-              card.appendChild(btnContainer);
-            }
-          } else {
-            if (existingBtn) existingBtn.parentElement.remove();
-          }
+    if (editArtworkForm) {
+      editArtworkForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (!activeEditingContext) return;
+
+        const { artData, docId, isStaticCard, staticElement } = activeEditingContext;
+
+        const newTitle = document.getElementById("inputEditTitle").value;
+        const newArtId = document.getElementById("inputEditArtId").value;
+        const newMedium = document.getElementById("inputEditMedium").value;
+        const newSize = document.getElementById("inputEditSize").value;
+        const newYear = document.getElementById("inputEditYear").value;
+
+        const updatePayload = {
+          artID: newArtId,
+          title: newTitle,
+          medium: newMedium,
+          size: newSize,
+          year: newYear,
+          image: artData.image || '',
+          image2: artData.image2 || '',
+          showMotive: true
+        };
+
+        const saveUpdate = (targetDocId) => {
+          db.collection("artworks").doc(targetDocId).set(updatePayload, { merge: true })
+            .then(() => {
+              editModal.style.display = "none";
+              location.reload();
+            })
+            .catch(err => {
+              alert("Update error: " + err.message);
+            });
+        };
+
+        if (docId) {
+          saveUpdate(docId);
+        } else {
+          db.collection("artworks").add({
+            ...updatePayload,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).then(newDoc => {
+            editModal.style.display = "none";
+            location.reload();
+          }).catch(err => alert("Error: " + err.message));
         }
       });
+    }
 
+    function filterDeletedStaticWorks() {
+      db.collection("deleted_static_motives").get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          const deletedStaticId = doc.id;
+          const cardToRemove = document.querySelector(`.art-card[data-static-id="${deletedStaticId}"]`);
+          if (cardToRemove) {
+            cardToRemove.remove();
+          }
+        });
+      }).catch(err => console.error("Deleted static motive check error:", err));
+    }
 
-            document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
+    function attachLinkListeners() {
+      document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
+        link.replaceWith(link.cloneNode(true));
+      });
+
+      document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
         link.addEventListener("click", (e) => {
           e.preventDefault();
           openArtModal(
@@ -598,54 +660,155 @@
           );
         });
       });
-
-
-
-          // Modal link bağlama yardımcı fonksiyonu
-    function attachLinkListeners() {
-      document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
-        link.replaceWith(link.cloneNode(true)); // Çift tetiklenmeyi önle
-      });
     }
 
-
-    // Silme butonlarını bağlama
-    function attachRemoveListeners() {
+    function attachAdminListeners() {
       document.querySelectorAll(".remove-art-btn").forEach(btn => {
         btn.replaceWith(btn.cloneNode(true));
       });
+      document.querySelectorAll(".remove-art-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const card = btn.closest(".art-card");
+          docIdToDelete = card.getAttribute("data-doc-id");
+          staticIdToDelete = card.getAttribute("data-static-id");
+          deleteModal.style.display = "flex";
+        });
+      });
 
-      if(confirmDeleteBtn) {
-        confirmDeleteBtn.addEventListener("click", () => {
-          if (docIdToDelete) {
-            db.collection("artworks").doc(docIdToDelete).delete()
-              .then(() => {
-                deleteModal.style.display = "none";
-                location.reload();
-              })
-              .catch(error => {
-                alert("Silme hatası: " + error.message);
-              });
+      document.querySelectorAll(".edit-art-btn").forEach(btn => {
+        btn.replaceWith(btn.cloneNode(true));
+      });
+      document.querySelectorAll(".edit-art-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const card = btn.closest(".art-card");
+          const link = card.querySelector(".static-art-link, .dynamic-art-link");
+          const docId = card.getAttribute("data-doc-id");
+          const staticId = card.getAttribute("data-static-id");
+          
+          const artData = {
+            id: link.getAttribute("data-id"),
+            title: link.getAttribute("data-title"),
+            image: link.getAttribute("data-image"),
+            image2: link.getAttribute("data-image2"),
+            medium: link.getAttribute("data-medium"),
+            size: link.getAttribute("data-size"),
+            year: link.getAttribute("data-year")
+          };
+
+          if (docId) {
+            openEditModal(artData, docId, false, link);
+          } else if (staticId) {
+            db.collection("artworks").where("title", "==", artData.title).get().then(snapshot => {
+              let foundDocId = !snapshot.empty ? snapshot.docs[0].id : null;
+              openEditModal(artData, foundDocId, true, link);
+            });
           }
         });
-      }
-
-      if(cancelDeleteBtn) {
-        cancelDeleteBtn.addEventListener("click", () => {
-          deleteModal.style.display = "none";
-          docIdToDelete = null;
-        });
-      }
+      });
     }
+
+    auth.onAuthStateChanged((user) => {
+      document.querySelectorAll(".art-card").forEach(card => {
+        let existingAdminDiv = card.querySelector(".admin-buttons");
+        if (user) {
+          if (!existingAdminDiv) {
+            const adminDiv = document.createElement("div");
+            adminDiv.className = "admin-buttons";
+            adminDiv.innerHTML = `
+              <button class="remove-art-btn" type="button"><i class='bx bx-trash'></i> Remove</button>
+              <button class="edit-art-btn" type="button"><i class='bx bx-edit'></i> Edit</button>
+            `;
+            card.appendChild(adminDiv);
+          }
+        } else {
+          if (existingAdminDiv) existingAdminDiv.remove();
+        }
+      });
+      attachAdminListeners();
+    });
+
+    function renderGalleryFromFirestore() {
+      if (!gallery) return;
+
+      db.collection("artworks")
+        .orderBy("createdAt", "desc")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const art = doc.data();
+            const docId = doc.id;
+
+            if (art.showMotive) {
+              if (!gallery.querySelector(`[data-doc-id="${docId}"]`)) {
+                const card = document.createElement("div");
+                card.className = "art-card";
+                card.setAttribute("data-doc-id", docId);
+
+                const resolvedId = art.artID || art.id || art.ID || art.Id || art.artworkId || art.artId || '-';
+
+                const adminButtonsHTML = auth.currentUser ? `
+                  <div class="admin-buttons">
+                    <button class="remove-art-btn" type="button"><i class='bx bx-trash'></i> Remove</button>
+                    <button class="edit-art-btn" type="button"><i class='bx bx-edit'></i> Edit</button>
+                  </div>` : '';
+
+                card.innerHTML = `
+                  <a href="#" class="dynamic-art-link" data-id="${resolvedId}" data-title="${art.title || ''}" data-image="${art.image || ''}" data-image2="${art.image2 || ''}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}">
+                    <img src="${art.image}" alt="${art.title}">
+                  </a>
+                  <p>${art.title}</p>
+                  ${adminButtonsHTML}
+                `;
+                gallery.appendChild(card);
+              }
+            }
+          });
+
+          attachLinkListeners();
+          attachAdminListeners();
+        })
+        .catch(error => {
+          console.error("Error loading motif artworks:", error);
+        });
+    }
+
+    filterDeletedStaticWorks();
     renderGalleryFromFirestore();
-
     attachLinkListeners();
+    attachAdminListeners();
 
-    attachRemoveListeners();
-    
-    // Attach listeners after defining
-    attachLinkListeners();
-    attachRemoveListeners();
+    if(confirmDeleteBtn) {
+      confirmDeleteBtn.addEventListener("click", () => {
+        if (docIdToDelete) {
+          db.collection("artworks").doc(docIdToDelete).delete()
+            .then(() => {
+              deleteModal.style.display = "none";
+              location.reload();
+            })
+            .catch(error => alert("Delete error: " + error.message));
+        } 
+        else if (staticIdToDelete) {
+          db.collection("deleted_static_motives").doc(staticIdToDelete).set({
+            deletedAt: firebase.firestore.FieldValue.serverTimestamp()
+          })
+          .then(() => {
+            deleteModal.style.display = "none";
+            location.reload();
+          })
+          .catch(error => alert("Static motif delete error: " + error.message));
+        }
+      });
+    }
+
+    if(cancelDeleteBtn) {
+      cancelDeleteBtn.addEventListener("click", () => {
+        deleteModal.style.display = "none";
+        docIdToDelete = null;
+        staticIdToDelete = null;
+      });
+    }
   });
 
   const hamBtn = document.getElementById("hamburgerBtn");
@@ -665,7 +828,6 @@
   });
   document.addEventListener("keydown", e => {
     if (e.key === "Escape") closeMenuFn();
-  });
   });
 </script>
 

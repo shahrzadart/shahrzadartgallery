@@ -126,7 +126,8 @@
 .gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  column-gap: 20px;
+  row-gap: 40px;
   padding: 20px;
   margin-top: 20px;
 }
@@ -139,12 +140,15 @@
 }
 
 .art-card {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   background: #fff9f9;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   overflow: hidden;
   text-align: center;
+  padding-bottom: 10px;
 }
 
 .art-card img {
@@ -211,10 +215,9 @@
   background: #fff;
   padding: 30px;
   border-radius: 16px;
-  max-width: 550px;
+  max-width: 580px;
   width: 100%;
   position: relative;
-  text-align: center;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.1);
   font-family: Arial, sans-serif;
   max-height: 90vh;
@@ -271,7 +274,7 @@
   font-size: 0.95rem;
 }
 
-/* ===== REMOVE & DELETE MODAL ===== */
+/* ===== ADMIN BUTTONS & EDIT FORM ===== */
 .remove-art-btn {
   background: #ff4d4d;
   color: white;
@@ -284,10 +287,83 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  margin-right: 10px;
 }
 .remove-art-btn:hover { background: #cc0000; }
 
+.edit-art-btn {
+  background: #1976d2;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: .25s;
+}
+.edit-art-btn:hover { background: #1258a8; }
+
+.admin-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  margin-top: auto;
+}
+
+.edit-input-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.edit-input-group label {
+  font-size: 0.75rem;
+  color: #757575;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.edit-field-input {
+  width: 100%;
+  padding: 9px 12px;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.edit-field-input:focus {
+  border-color: #1976d2;
+}
+
+.btn-save-changes {
+  width: 100%;
+  background: #1976d2;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background 0.2s;
+}
+
+.btn-save-changes:hover {
+  background: #1258a8;
+}
+
+/* ===== DELETE MODAL ===== */
 .delete-modal-overlay {
   display: none;
   position: fixed;
@@ -353,217 +429,217 @@
 
 <div class="gallery">
   <!-- Statik Eserler -->
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-1">
     <a href="#" class="static-art-link" data-id="SM-2026-WC&GC-01" data-title="Untitled 8" data-image="untitle 8.jpeg" data-medium="WATERCOLOR & GOUACHE" data-size="14 X 20.8 cm (5.5 x 8.2 in)" data-year="2026">
       <img src="untitle 8.jpeg" alt="Painting titled Untitled 8 by Shahrzad">
     </a>
     <p>Untitled 8</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-2">
     <a href="#" class="static-art-link" data-id="SM-2025-AC-01" data-title="Phoenix" data-image="phoenix.webp" data-medium="Acrylic on Canvas" data-size="80 X 60 cm (39.3 x 39.3 in)" data-year="2025">
       <img src="phoenix.webp" alt="Painting titled Phoenix by Shahrzad">
     </a>
     <p>Phoenix</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-3">
     <a href="#" class="static-art-link" data-id="SM-2023-MIX-01" data-title="Four Seasons" data-image="four-seasons.webp" data-medium="Mixed Media" data-size="50 x 50 cm (19.7 x 19.7 in)" data-year="2023">
       <img src="four-seasons.webp" alt="Painting titled Four Seasons by Shahrzad">
     </a>
     <p>Four Seasons</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-4">
     <a href="#" class="static-art-link" data-id="SM-2018-AC-01" data-title="Autumn" data-image="autumn.webp" data-medium="Acrylic on Canvas" data-size="50 x 50 cm (19.7 x 19.7 in)" data-year="2018">
       <img src="autumn.webp" alt="Painting titled Autumn by Shahrzad">
     </a>
     <p>Autumn</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-5">
     <a href="#" class="static-art-link" data-id="SM-2018-AC-02" data-title="Spring" data-image="spring.webp" data-medium="Acrylic on Canvas" data-size="50 x 50 cm (19.7 x 19.7 in)" data-year="2018">
       <img src="spring.webp" alt="Painting titled Spring by Shahrzad">
     </a>
     <p>Spring</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-6">
     <a href="#" class="static-art-link" data-id="SM-2018-AC-03" data-title="Summer" data-image="summer.webp" data-medium="Acrylic on Canvas" data-size="50 x 50 cm (19.7 x 19.7 in)" data-year="2018">
       <img src="summer.webp" alt="Painting titled Summer by Shahrzad">
     </a>
     <p>Summer</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-7">
     <a href="#" class="static-art-link" data-id="SM-2019-MIX-03" data-title="Untitled - Portrait 11" data-image="Blue1.webp" data-medium="Mixed Media" data-size="20 x 25 cm (7.9 x 2.54 in)" data-year="2019">
       <img src="Blue1.webp" alt="Painting titled Untitled - Portrait 11 by Shahrzad">
     </a>
     <p>Untitled - Portrait 11</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-8">
     <a href="#" class="static-art-link" data-id="SM-2019-MIX-02" data-title="Untitled - Portrait 10" data-image="green1.webp" data-medium="Mixed Media" data-size="20 x 25 cm (7.9 x 2.54 in)" data-year="2019">
       <img src="green1.webp" alt="Painting titled Untitled - Portrait 10 by Shahrzad">
     </a>
     <p>Untitled - Portrait 10</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-9">
     <a href="#" class="static-art-link" data-id="SM-2019-MIX-01" data-title="Untitled - Portrait 9" data-image="maroon1.jpg" data-medium="Mixed Media" data-size="20 x 25 cm (7.9 x 2.54 in)" data-year="2019">
       <img src="maroon1.jpg" alt="Painting titled Untitled - Portrait 9 by Shahrzad">
     </a>
     <p>Untitled - Portrait 9</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-10">
     <a href="#" class="static-art-link" data-id="SM-2018-MIX-07" data-title="Untitled - Portrait 8" data-image="gray1.webp" data-medium="Mixed Media" data-size="20 x 25 cm (7.9 x 2.54 in)" data-year="2018">
       <img src="gray1.webp" alt="Painting titled Untitled - Portrait 8 by Shahrzad">
     </a>
     <p>Untitled - Portrait 8</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-11">
     <a href="#" class="static-art-link" data-id="SM-2018-MIX-06" data-title="Untitled - Portrait 7" data-image="Brown1.webp" data-medium="Mixed Media" data-size="20 x 25 cm (7.9 x 2.54 in)" data-year="2018">
       <img src="Brown1.webp" alt="Painting titled Untitled - Portrait 7 by Shahrzad">
     </a>
     <p>Untitled - Portrait 7</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-12">
     <a href="#" class="static-art-link" data-id="SM-2018-MIX-05" data-title="Untitled - Portrait 6" data-image="purple1.webp" data-medium="Mixed Media" data-size="20 x 25 cm (7.9 x 2.54 in)" data-year="2018">
       <img src="purple1.webp" alt="Painting titled Untitled - Portrait 6 by Shahrzad">
     </a>
     <p>Untitled - Portrait 6</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-13">
     <a href="#" class="static-art-link" data-id="SM-2018-MIX-04" data-title="Untitled - Portrait 5" data-image="yellow1.webp" data-medium="Mixed Media" data-size="20 x 25 cm (7.9 x 2.54 in)" data-year="2018">
       <img src="yellow1.webp" alt="Painting titled Untitled - Portrait 5 by Shahrzad">
     </a>
     <p>Untitled - Portrait 5</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-14">
     <a href="#" class="static-art-link" data-id="SM-2017-MIX-02" data-title="Untitled - Portrait 4" data-image="beige1.webp" data-medium="Mixed Media" data-size="20 x 25 cm (7.9 x 2.54 in)" data-year="2017">
       <img src="beige1.webp" alt="Painting titled Untitled - Portrait 4 by Shahrzad">
     </a>
     <p>Untitled - Portrait 4</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-15">
     <a href="#" class="static-art-link" data-id="SM-2017-MIX-01" data-title="Untitled - Portrait 3" data-image="red1.webp" data-medium="Mixed Media" data-size="20 x 25 cm (7.9 x 2.54 in)" data-year="2017">
       <img src="red1.webp" alt="Painting titled Untitled - Portrait 3 by Shahrzad">
     </a>
     <p>Untitled - Portrait 3</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-16">
     <a href="#" class="static-art-link" data-id="SM-2016-MIX-02" data-title="Untitled - Portrait 2" data-image="pink1.webp" data-medium="Mixed Media" data-size="20 x 25 cm (7.9 x 2.54 in)" data-year="2016">
       <img src="pink1.webp" alt="Painting titled Untitled - Portrait 2 by Shahrzad">
     </a>
     <p>Untitled - Portrait 2</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-17">
     <a href="#" class="static-art-link" data-id="SM-2016-MIX-01" data-title="Untitled - Portrait 1" data-image="olivegreen1.webp" data-medium="Mixed Media" data-size="14 x 18 cm (5.5 x 7.1 in)" data-year="2016">
       <img src="olivegreen1.webp" alt="Painting titled Untitled - Portrait 1 by Shahrzad">
     </a>
     <p>Untitled - Portrait 1</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-18">
     <a href="#" class="static-art-link" data-id="SM-2008-SB-01" data-title="Untitled 7" data-image="untitled7.webp" data-medium="Scratchboard" data-size="20 x 25 cm (8 x 10 in)" data-year="2008">
       <img src="untitled7.webp" alt="Painting titled Untitled 7 by Shahrzad">
     </a>
     <p>Untitled 7</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-19">
     <a href="#" class="static-art-link" data-id="NO ID" data-title="Untitled 6" data-image="un-sc-4.webp" data-medium="Scratchboard" data-size="28.7 x 42.9 cm (11.3 x 16.9 in)" data-year="2008">
       <img src="un-sc-4.webp" alt="Painting titled Untitled 6 by Shahrzad">
     </a>
     <p>Untitled 6</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-20">
     <a href="#" class="static-art-link" data-id="SM-2020-OP-02" data-title="Untitled 5" data-image="russian-girl.webp" data-medium="Oil Painting" data-size="50 x 99 cm (19.7 x 39 in)" data-year="2020">
       <img src="russian-girl.webp" alt="Painting titled Untitled 5 by Shahrzad">
     </a>
     <p>Untitled 5</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-21">
     <a href="#" class="static-art-link" data-id="SM-2006-WC-01" data-title="Untitled 4" data-image="deer.webp" data-medium="Watercolor" data-size="17.8 x 38.1 cm (7 x 15 in)" data-year="2006">
       <img src="deer.webp" alt="Painting titled Untitled 4 by Shahrzad">
     </a>
     <p>Untitled 4</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-22">
     <a href="#" class="static-art-link" data-id="SM-2006-WC-02" data-title="Untitled 3" data-image="untitled3.webp" data-medium="Watercolor" data-size="25.4 x 28 cm (10 x 11 in)" data-year="2006">
       <img src="untitled3.webp" alt="Painting titled Untitled 3 by Shahrzad">
     </a>
     <p>Untitled 3</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-23">
     <a href="#" class="static-art-link" data-id="SM-2005-CP-03" data-title="Untitled 2" data-image="1.webp" data-medium="Colored Pencil" data-size="40 x 33 cm (15.7 x 13 in)" data-year="2005">
       <img src="1.webp" alt="Painting titled Untitled 2 by Shahrzad">
     </a>
     <p>Untitled 2</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-24">
     <a href="#" class="static-art-link" data-id="SM-2005-CP-01" data-title="Untitled 1" data-image="man-with-fish-head.webp" data-medium="Colored Pencil" data-size="26.9 x 34.8 cm (10.6 x 13.7 in)" data-year="2005">
       <img src="man-with-fish-head.webp" alt="Painting titled Untitled 1 by Shahrzad">
     </a>
     <p>Untitled 1</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-25">
     <a href="#" class="static-art-link" data-id="SM-2025-OP-01" data-title="Rose" data-image="rose-2.webp" data-medium="Oil Painting" data-size="20 x 25 cm (11.8 x 11.8 in)" data-year="2025">
       <img src="rose-2.webp" alt="Painting titled Rose by Shahrzad">
     </a>
     <p>Rose</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-26">
     <a href="#" class="static-art-link" data-id="SM-2015-AC-01" data-title="Wheat Field" data-image="wheatfield.webp" data-medium="Acrylic" data-size="34 x 50 cm (13.4 x 19.7 in)" data-year="2015">
       <img src="wheatfield.webp" alt="Painting titled Wheat Field by Shahrzad">
     </a>
     <p>Wheat Field</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-27">
     <a href="#" class="static-art-link" data-id="SM-2008-SB-01" data-title="Untitled - Scratchboard 3" data-image="presence-animal.webp" data-medium="Scratchboard" data-size="25.4 x 35 cm (10 x 13.8 in)" data-year="2008">
       <img src="presence-animal.webp" alt="Painting titled Untitled - Scratchboard 3 by Shahrzad">
     </a>
     <p>Untitled - Scratchboard 3</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-28">
     <a href="#" class="static-art-link" data-id="SM-2007-SB-02" data-title="Untitled - Scratchboard 2" data-image="horse-dragon(2).webp" data-medium="Scratchboard" data-size="22.9 x32.8 cm (9 x 12.9 in)" data-year="2007">
       <img src="horse-dragon(2).webp" alt="Painting titled Untitled - Scratchboard 2 by Shahrzad">
     </a>
     <p>Untitled - Scratchboard 2</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-29">
     <a href="#" class="static-art-link" data-id="SM-2007-SB-01" data-title="Untitled - Scratchboard 1" data-image="IMG_2756-1.webp" data-medium="Scratchboard" data-size="18.3 x 29.2 cm (7.2 x 11.5 in)" data-year="2007">
       <img src="IMG_2756-1.webp" alt="Painting titled Untitled - Scratchboard 1 by Shahrzad">
     </a>
     <p>Untitled - Scratchboard 1</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-30">
     <a href="#" class="static-art-link" data-id="SM-2020-AC-01" data-title="Crane Bird" data-image="crane-bird.webp" data-medium="Acrylic" data-size="52.5 x 37.6 cm (20.7x 14.8 in)" data-year="2020">
       <img src="crane-bird.webp" alt="Painting titled Crane Bird by Shahrzad">
     </a>
     <p>Crane Bird</p>
   </div>
 
-  <div class="art-card">
+  <div class="art-card" data-static-id="static-cont-31">
     <a href="#" class="static-art-link" data-id="SM-2016-OP-04" data-title="Forest" data-image="Forest.webp" data-medium="Oil Painting" data-size="53 x 72 cm (20.9 x 28.3 in)" data-year="2016">
       <img src="Forest.webp" alt="Painting titled Forest by Shahrzad">
     </a>
@@ -592,6 +668,42 @@
         <p><strong>Size:</strong> <span id="modalArtSize"></span></p>
         <p><strong>Year:</strong> <span id="modalArtYear"></span></p>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Save Changes Butonlu Professional Edit Modal -->
+<div id="editModal" class="art-modal-overlay">
+  <div class="art-modal-content">
+    <button id="closeEditModal" class="art-modal-close">&times;</button>
+    <h3 style="margin-bottom: 15px; font-weight: 700; color: #222;">Edit Artwork Details</h3>
+    <div style="text-align: center; margin-bottom: 20px;">
+      <img id="editModalImg" src="" alt="Preview" style="max-height: 160px; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+    </div>
+    
+    <div id="editForm">
+      <div class="edit-input-group">
+        <label>ID</label>
+        <input type="text" id="editArtId" class="edit-field-input">
+      </div>
+      <div class="edit-input-group">
+        <label>Title</label>
+        <input type="text" id="editArtTitle" class="edit-field-input">
+      </div>
+      <div class="edit-input-group">
+        <label>Medium</label>
+        <input type="text" id="editArtMedium" class="edit-field-input">
+      </div>
+      <div class="edit-input-group">
+        <label>Size</label>
+        <input type="text" id="editArtSize" class="edit-field-input">
+      </div>
+      <div class="edit-input-group">
+        <label>Year</label>
+        <input type="text" id="editArtYear" class="edit-field-input">
+      </div>
+      
+      <button id="saveChangesBtn" type="button" class="btn-save-changes">Save Changes</button>
     </div>
   </div>
 </div>
@@ -634,6 +746,12 @@
     const gallery = document.querySelector(".gallery");
     const modal = document.getElementById("artModal");
     const closeModal = document.getElementById("closeArtModal");
+    
+    const editModal = document.getElementById("editModal");
+    const closeEditModal = document.getElementById("closeEditModal");
+    const editModalImg = document.getElementById("editModalImg");
+    const saveChangesBtn = document.getElementById("saveChangesBtn");
+
     const deleteModal = document.getElementById("deleteModal");
     const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
     const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
@@ -642,12 +760,20 @@
     const modalImg2 = document.getElementById("modalArtImage2");
 
     let docIdToDelete = null;
+    let staticIdToDelete = null;
 
-    if(closeModal) {
-      closeModal.addEventListener("click", () => { modal.style.display = "none"; });
-    }
+    // Aktif düzenlenen eser değişkenleri
+    let currentEditDocId = null;
+    let currentEditIsStatic = false;
+    let currentEditLink = null;
+    let currentArtData = null;
+
+    if(closeModal) closeModal.addEventListener("click", () => { modal.style.display = "none"; });
+    if(closeEditModal) closeEditModal.addEventListener("click", () => { editModal.style.display = "none"; });
+
     window.addEventListener("click", (e) => {
       if (e.target === modal) modal.style.display = "none";
+      if (e.target === editModal) editModal.style.display = "none";
       if (e.target === deleteModal) deleteModal.style.display = "none";
     });
 
@@ -675,111 +801,105 @@
       modal.style.display = "flex";
     }
 
-    function renderGalleryFromFirestore() {
-      if (!gallery) return;
+    function openEditModal(artData, initialDocId, isStaticCard, staticElement) {
+      currentEditDocId = initialDocId;
+      currentEditIsStatic = isStaticCard;
+      currentEditLink = staticElement;
+      currentArtData = artData;
 
-      db.collection("artworks")
-        .orderBy("createdAt", "desc")
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            const art = doc.data();
-            const docId = doc.id;
+      editModalImg.src = artData.image || '';
+      document.getElementById("editArtId").value = artData.id || '';
+      document.getElementById("editArtTitle").value = artData.title || '';
+      document.getElementById("editArtMedium").value = artData.medium || '';
+      document.getElementById("editArtSize").value = artData.size || '';
+      document.getElementById("editArtYear").value = artData.year || '';
 
-            if (art.showContemporary) {
-              const card = document.createElement("div");
-              card.className = "art-card";
-              const removeButtonHTML = auth.currentUser ? `<button class="remove-art-btn" data-id="${docId}"><i class='bx bx-trash'></i> Remove</button>` : '';
-
-              const resolvedId = art.artID || art.id || art.ID || art.Id || art.artworkId || art.artId || '-';
-
-              card.innerHTML = `
-                <a href="#" class="dynamic-art-link" data-title="${art.title}" data-image="${art.image}" data-image2="${art.image2 || ''}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}" data-id="${resolvedId}">
-                  <img src="${art.image}" alt="${art.title}">
-                </a>
-                <div class="art-details" style="padding:10px; text-align:left;">
-                  <h3 style="margin:0 0 8px; text-align:center;">${art.title}</h3>
-                  <div style="display: flex; align-items: center; justify-content: flex-end; margin-top: 10px;">
-                    ${removeButtonHTML}
-                  </div>
-                </div>
-              `;
-              gallery.appendChild(card);
-            }
-          });
-
-          document.querySelectorAll(".dynamic-art-link").forEach(link => {
-            link.addEventListener("click", (e) => {
-              e.preventDefault();
-              openArtModal(
-                link.getAttribute("data-id"),
-                link.getAttribute("data-title"),
-                link.getAttribute("data-image"),
-                link.getAttribute("data-image2"),
-                link.getAttribute("data-medium"),
-                link.getAttribute("data-size"),
-                link.getAttribute("data-year")
-              );
-            });
-          });
-
-          document.querySelectorAll(".static-art-link").forEach(link => {
-            link.addEventListener("click", (e) => {
-              e.preventDefault();
-              openArtModal(
-                link.getAttribute("data-id"),
-                link.getAttribute("data-title"),
-                link.getAttribute("data-image"),
-                link.getAttribute("data-image2"),
-                link.getAttribute("data-medium"),
-                link.getAttribute("data-size"),
-                link.getAttribute("data-year")
-              );
-            });
-          });
-
-          document.querySelectorAll(".remove-art-btn").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-              e.stopPropagation(); 
-              docIdToDelete = btn.getAttribute("data-id");
-              deleteModal.style.display = "flex"; 
-            });
-          });
-        })
-        .catch(error => {
-          console.error("Contemporary eserler yüklenirken hata oluştu:", error);
-        });
+      editModal.style.display = "flex";
     }
 
-        // Oturum durumunu dinleyerek butonları ve verileri güvenli şekilde yönet
-      auth.onAuthStateChanged((user) => {
-        // 1. Statik kartlara oturum açılmışsa Remove butonu ekle
-        document.querySelectorAll(".art-card").forEach(card => {
-          const staticLink = card.querySelector(".static-art-link");
-          if (staticLink) {
-            let existingBtn = card.querySelector(".remove-art-btn");
-            if (user) {
-              if (!existingBtn) {
-                const artId = staticLink.getAttribute("data-id");
-                const btnContainer = document.createElement("div");
-                btnContainer.style.cssText = "display: flex; justify-content: flex-end; padding: 0 10px 10px;";
-                btnContainer.innerHTML = `<button class="remove-art-btn" data-id="${artId}"><i class='bx bx-trash'></i> Remove</button>`;
-                card.appendChild(btnContainer);
-              }
-            } else {
-              if (existingBtn) existingBtn.parentElement.remove();
-            }
+    if (saveChangesBtn) {
+      saveChangesBtn.addEventListener("click", () => {
+        const newId = document.getElementById("editArtId").value;
+        const newTitle = document.getElementById("editArtTitle").value;
+        const newMedium = document.getElementById("editArtMedium").value;
+        const newSize = document.getElementById("editArtSize").value;
+        const newYear = document.getElementById("editArtYear").value;
+
+        const updateData = {
+          artID: newId,
+          title: newTitle,
+          medium: newMedium,
+          size: newSize,
+          year: newYear
+        };
+
+        const applyDOMUpdates = (targetDocId) => {
+          if (currentEditLink) {
+            currentEditLink.setAttribute("data-id", newId);
+            currentEditLink.setAttribute("data-title", newTitle);
+            currentEditLink.setAttribute("data-medium", newMedium);
+            currentEditLink.setAttribute("data-size", newSize);
+            currentEditLink.setAttribute("data-year", newYear);
+
+            const cardP = currentEditLink.parentElement.querySelector("p");
+            if (cardP) cardP.textContent = newTitle;
+
+            const card = currentEditLink.closest(".art-card");
+            if (card) card.setAttribute("data-doc-id", targetDocId);
+          }
+          editModal.style.display = "none";
+        };
+
+        saveChangesBtn.disabled = true;
+        saveChangesBtn.textContent = "Saving...";
+
+        if (currentEditDocId) {
+          db.collection("artworks").doc(currentEditDocId).update(updateData)
+            .then(() => {
+              applyDOMUpdates(currentEditDocId);
+              saveChangesBtn.disabled = false;
+              saveChangesBtn.textContent = "Save Changes";
+            })
+            .catch(err => {
+              alert("Update error: " + err.message);
+              saveChangesBtn.disabled = false;
+              saveChangesBtn.textContent = "Save Changes";
+            });
+        } else {
+          db.collection("artworks").add({
+            ...updateData,
+            image: currentArtData.image || '',
+            image2: currentArtData.image2 || '',
+            showContemporary: true,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).then(newDoc => {
+            applyDOMUpdates(newDoc.id);
+            saveChangesBtn.disabled = false;
+            saveChangesBtn.textContent = "Save Changes";
+          }).catch(err => {
+            alert("Creation error: " + err.message);
+            saveChangesBtn.disabled = false;
+            saveChangesBtn.textContent = "Save Changes";
+          });
+        }
+      });
+    }
+
+    function filterDeletedStaticWorks() {
+      db.collection("deleted_static_contemporary").get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          const deletedStaticId = doc.id;
+          const cardToRemove = document.querySelector(`.art-card[data-static-id="${deletedStaticId}"]`);
+          if (cardToRemove) {
+            cardToRemove.remove();
           }
         });
+      }).catch(err => console.error("Deleted static contemporary error:", err));
+    }
 
-    renderGalleryFromFirestore();
-    
-        attachLinkListeners();
-
-    attachRemoveListeners();
-
-              document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
-        link.replaceWith(link.cloneNode(true)); // Çift tetiklenmeyi önle
+    function attachLinkListeners() {
+      document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
+        link.replaceWith(link.cloneNode(true));
       });
 
       document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
@@ -796,35 +916,124 @@
           );
         });
       });
+    }
 
-
-      attachLinkListeners();
-attachRemoveListeners();
-
-
-
-          // Silme butonlarını bağlama
-    function attachRemoveListeners() {
+    function attachAdminListeners() {
       document.querySelectorAll(".remove-art-btn").forEach(btn => {
         btn.replaceWith(btn.cloneNode(true));
       });
-
       document.querySelectorAll(".remove-art-btn").forEach(btn => {
         btn.addEventListener("click", (e) => {
-          e.stopPropagation(); 
-          docIdToDelete = btn.getAttribute("data-id");
-          deleteModal.style.display = "flex"; 
+          e.stopPropagation();
+          const card = btn.closest(".art-card");
+          docIdToDelete = card.getAttribute("data-doc-id");
+          staticIdToDelete = card.getAttribute("data-static-id");
+          deleteModal.style.display = "flex";
+        });
+      });
+
+      document.querySelectorAll(".edit-art-btn").forEach(btn => {
+        btn.replaceWith(btn.cloneNode(true));
+      });
+      document.querySelectorAll(".edit-art-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const card = btn.closest(".art-card");
+          const link = card.querySelector(".static-art-link, .dynamic-art-link");
+          const docId = card.getAttribute("data-doc-id");
+          const staticId = card.getAttribute("data-static-id");
+          
+          const artData = {
+            id: link.getAttribute("data-id"),
+            title: link.getAttribute("data-title"),
+            image: link.getAttribute("data-image"),
+            image2: link.getAttribute("data-image2"),
+            medium: link.getAttribute("data-medium"),
+            size: link.getAttribute("data-size"),
+            year: link.getAttribute("data-year")
+          };
+
+          if (docId) {
+            openEditModal(artData, docId, false, link);
+          } else if (staticId) {
+            db.collection("artworks").where("title", "==", artData.title).get().then(snapshot => {
+              let foundDocId = !snapshot.empty ? snapshot.docs[0].id : null;
+              openEditModal(artData, foundDocId, true, link);
+            });
+          }
         });
       });
     }
 
-
-        function attachLinkListeners() {
-      document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
-        link.replaceWith(link.cloneNode(true)); // Çift tetiklenmeyi önle
-      });
-
+    auth.onAuthStateChanged((user) => {
+      document.querySelectorAll(".art-card").forEach(card => {
+        let existingAdminDiv = card.querySelector(".admin-buttons");
+        if (user) {
+          if (!existingAdminDiv) {
+            const adminDiv = document.createElement("div");
+            adminDiv.className = "admin-buttons";
+            adminDiv.innerHTML = `
+              <button class="remove-art-btn" type="button"><i class='bx bx-trash'></i> Remove</button>
+              <button class="edit-art-btn" type="button"><i class='bx bx-edit'></i> Edit</button>
+            `;
+            card.appendChild(adminDiv);
+          }
+        } else {
+          if (existingAdminDiv) existingAdminDiv.remove();
         }
+      });
+      attachAdminListeners();
+    });
+
+    function renderGalleryFromFirestore() {
+      if (!gallery) return;
+
+      db.collection("artworks")
+        .orderBy("createdAt", "desc")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const art = doc.data();
+            const docId = doc.id;
+
+            if (art.showContemporary) {
+              if (!gallery.querySelector(`[data-doc-id="${docId}"]`)) {
+                const card = document.createElement("div");
+                card.className = "art-card";
+                card.setAttribute("data-doc-id", docId);
+
+                const resolvedId = art.artID || art.id || art.ID || art.Id || art.artworkId || art.artId || '-';
+
+                const adminButtonsHTML = auth.currentUser ? `
+                  <div class="admin-buttons">
+                    <button class="remove-art-btn" type="button"><i class='bx bx-trash'></i> Remove</button>
+                    <button class="edit-art-btn" type="button"><i class='bx bx-edit'></i> Edit</button>
+                  </div>` : '';
+
+                card.innerHTML = `
+                  <a href="#" class="dynamic-art-link" data-id="${resolvedId}" data-title="${art.title || ''}" data-image="${art.image || ''}" data-image2="${art.image2 || ''}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}">
+                    <img src="${art.image}" alt="${art.title}">
+                  </a>
+                  <p>${art.title}</p>
+                  ${adminButtonsHTML}
+                `;
+                gallery.appendChild(card);
+              }
+            }
+          });
+
+          attachLinkListeners();
+          attachAdminListeners();
+        })
+        .catch(error => {
+          console.error("Error loading contemporary artworks:", error);
+        });
+    }
+
+    filterDeletedStaticWorks();
+    renderGalleryFromFirestore();
+    attachLinkListeners();
+    attachAdminListeners();
 
     if(confirmDeleteBtn) {
       confirmDeleteBtn.addEventListener("click", () => {
@@ -834,9 +1043,17 @@ attachRemoveListeners();
               deleteModal.style.display = "none";
               location.reload();
             })
-            .catch(error => {
-              alert("Silme hatası: " + error.message);
-            });
+            .catch(error => alert("Delete error: " + error.message));
+        } 
+        else if (staticIdToDelete) {
+          db.collection("deleted_static_contemporary").doc(staticIdToDelete).set({
+            deletedAt: firebase.firestore.FieldValue.serverTimestamp()
+          })
+          .then(() => {
+            deleteModal.style.display = "none";
+            location.reload();
+          })
+          .catch(error => alert("Static contemporary delete error: " + error.message));
         }
       });
     }
@@ -845,9 +1062,9 @@ attachRemoveListeners();
       cancelDeleteBtn.addEventListener("click", () => {
         deleteModal.style.display = "none";
         docIdToDelete = null;
+        staticIdToDelete = null;
       });
     }
-  });
   });
 
   const hamBtn = document.getElementById("hamburgerBtn");
