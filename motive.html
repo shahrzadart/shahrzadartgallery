@@ -584,6 +584,23 @@
       });
 
 
+            document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          openArtModal(
+            link.getAttribute("data-id"),
+            link.getAttribute("data-title"),
+            link.getAttribute("data-image"),
+            link.getAttribute("data-image2"),
+            link.getAttribute("data-medium"),
+            link.getAttribute("data-size"),
+            link.getAttribute("data-year")
+          );
+        });
+      });
+
+
+
           // Modal link bağlama yardımcı fonksiyonu
     function attachLinkListeners() {
       document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
@@ -620,7 +637,12 @@
         });
       }
     }
+    renderGalleryFromFirestore();
 
+    attachLinkListeners();
+
+    attachRemoveListeners();
+    
     // Attach listeners after defining
     attachLinkListeners();
     attachRemoveListeners();

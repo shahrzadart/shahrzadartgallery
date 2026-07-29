@@ -752,25 +752,55 @@
     }
 
         // Oturum durumunu dinleyerek butonları ve verileri güvenli şekilde yönet
-    auth.onAuthStateChanged((user) => {
-      // 1. Statik kartlara oturum açılmışsa Remove butonu ekle
-      document.querySelectorAll(".art-card").forEach(card => {
-        const staticLink = card.querySelector(".static-art-link");
-        if (staticLink) {
-          let existingBtn = card.querySelector(".remove-art-btn");
-          if (user) {
-            if (!existingBtn) {
-              const artId = staticLink.getAttribute("data-id");
-              const btnContainer = document.createElement("div");
-              btnContainer.style.cssText = "display: flex; justify-content: flex-end; padding: 0 10px 10px;";
-              btnContainer.innerHTML = `<button class="remove-art-btn" data-id="${artId}"><i class='bx bx-trash'></i> Remove</button>`;
-              card.appendChild(btnContainer);
+      auth.onAuthStateChanged((user) => {
+        // 1. Statik kartlara oturum açılmışsa Remove butonu ekle
+        document.querySelectorAll(".art-card").forEach(card => {
+          const staticLink = card.querySelector(".static-art-link");
+          if (staticLink) {
+            let existingBtn = card.querySelector(".remove-art-btn");
+            if (user) {
+              if (!existingBtn) {
+                const artId = staticLink.getAttribute("data-id");
+                const btnContainer = document.createElement("div");
+                btnContainer.style.cssText = "display: flex; justify-content: flex-end; padding: 0 10px 10px;";
+                btnContainer.innerHTML = `<button class="remove-art-btn" data-id="${artId}"><i class='bx bx-trash'></i> Remove</button>`;
+                card.appendChild(btnContainer);
+              }
+            } else {
+              if (existingBtn) existingBtn.parentElement.remove();
             }
-          } else {
-            if (existingBtn) existingBtn.parentElement.remove();
           }
-        }
+        });
+
+    renderGalleryFromFirestore();
+    
+        attachLinkListeners();
+
+    attachRemoveListeners();
+
+              document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
+        link.replaceWith(link.cloneNode(true)); // Çift tetiklenmeyi önle
       });
+
+      document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          openArtModal(
+            link.getAttribute("data-id"),
+            link.getAttribute("data-title"),
+            link.getAttribute("data-image"),
+            link.getAttribute("data-image2"),
+            link.getAttribute("data-medium"),
+            link.getAttribute("data-size"),
+            link.getAttribute("data-year")
+          );
+        });
+      });
+
+
+      attachLinkListeners();
+attachRemoveListeners();
+
 
 
           // Silme butonlarını bağlama
