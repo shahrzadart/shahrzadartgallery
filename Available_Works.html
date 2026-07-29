@@ -670,6 +670,176 @@
   document.addEventListener("keydown", e => {
     if (e.key === "Escape") closeMenuFn();
   });
+
+
+  // Edit butonuna tıklandığında çalışan fonksiyon
+function openEditModal(artData, link) {
+  activeEditingContext = link; // Kart bağlantısını referans alıyoruz
+
+  editModalImg.src = artData.image || '';
+  document.getElementById("inputEditTitle").value = artData.title || '';
+  document.getElementById("inputEditArtId").value = artData.artID || artData.id || '';
+  document.getElementById("inputEditMedium").value = artData.medium || '';
+  document.getElementById("inputEditSize").value = artData.size || '';
+  document.getElementById("inputEditYear").value = artData.year || '';
+  document.getElementById("inputEditPrice").value = artData.price || '';
+
+  editModal.style.display = "flex";
+}
+
+// Edit butonlarının tıklama dinleyicisi
+function attachAdminListeners() {
+  document.querySelectorAll(".remove-art-btn").forEach(btn => {
+    btn.replaceWith(btn.cloneNode(true));
+  });
+  document.querySelectorAll(".remove-art-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const card = btn.closest(".art-card");
+      docIdToDelete = card.getAttribute("data-doc-id");
+      staticIdToDelete = card.getAttribute("data-static-id");
+      deleteModal.style.display = "flex";
+    });
+  });
+
+  document.querySelectorAll(".edit-art-btn").forEach(btn => {
+    btn.replaceWith(btn.cloneNode(true));
+  });
+  document.querySelectorAll(".edit-art-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const card = btn.closest(".art-card");
+      const link = card.querySelector(".static-art-link, .dynamic-art-link");
+      
+      const artData = {
+        artID: link.getAttribute("data-id"),
+        title: link.getAttribute("data-title"),
+        image: link.getAttribute("data-image"),
+        image2: link.getAttribute("data-image2"),
+        medium: link.getAttribute("data-medium"),
+        size: link.getAttribute("data-size"),
+        year: link.getAttribute("data-year"),
+        price: link.getAttribute("data-price") || 'Contact for price'
+      };
+
+      openEditModal(artData, link);
+    });
+  });
+}
+
+// Edit Formu Kaydedildiğinde Firestore'a Kalıcı Olarak Yazma
+if (editArtworkForm) {
+  editArtworkForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!activeEditingContext) return;
+
+    const link = activeEditingContext;
+    const originalId = link.getAttribute("data-original-id");
+    const card = link.closest(".art-card");
+    const docKey = originalId || card.getAttribute("data-doc-id");
+
+    const newTitle = document.getElementById("inputEditTitle").value;
+    const newArtId = document.getElementById("inputEditArtId").value;
+    const newMedium = document.getElementById("inputEditMedium").value;
+    const newSize = document.getElementById("inputEditSize").value;
+    const newYear = document.getElementById("inputEditYear").value;
+    const newPrice = document.getElementById("inputEditPrice").value;
+    const currentImage = link.getAttribute("data-image");
+
+    const updatePayload = {
+      artID: newArtId,
+      title: newTitle,
+      medium: newMedium,
+      size: newSize,
+      year: newYear,
+      price: newPrice,
+      image: currentImage,
+      showAvailable: true
+    };
+
+    // Firestore'da ilgili docKey (original-id) üzerine kaydeder
+    db.collection("artworks").doc(docKey).set(updatePayload, { merge: true })
+      .then(() => {
+        editModal.style.display = "none";
+        location.reload(); // Sayfa yenilendiğinde veriler Firestore'dan çekilir
+      })
+      .catch(err => {
+        alert("Update error: " + err.message);
+      });
+  });
+}
+
+// Sayfa Yüklendiğinde Firestore'daki Kalıcı Değişiklikleri Statik Kartlara Yansıtma
+function renderGalleryFromFirestore() {
+  if (!gallery) return;
+
+  db.collection("artworks")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const art = doc.data();
+        const docId = doc.id;
+
+        // Statik kart eşleşmesi kontrol ediliyor
+        const staticLink = document.querySelector(`.static-art-link[data-original-id="${docId}"]`);
+
+        if (staticLink) {
+          // Güncellenmiş Firestore verilerini statik HTML elemanına yansıt
+          if (art.title) staticLink.setAttribute("data-title", art.title);
+          if (art.artID) staticLink.setAttribute("data-id", art.artID);
+          if (art.medium) staticLink.setAttribute("data-medium", art.medium);
+          if (art.size) staticLink.setAttribute("data-size", art.size);
+          if (art.year) staticLink.setAttribute("data-year", art.year);
+          if (art.price) {
+            staticLink.setAttribute("data-price", art.price);
+            const pTag = staticLink.parentElement.querySelector("p");
+            if (pTag) {
+              const isSold = art.price.toLowerCase().includes('sold') ? ' - <span class="sold">Sold</span>' : '';
+              pTag.innerHTML = `Price: ${art.price} USD${isSold}`;
+            }
+          }
+          if (art.image) {
+            staticLink.setAttribute("data-image", art.image);
+            const img = staticLink.querySelector("img");
+            if (img) img.src = art.image;
+          }
+        } else if (art.showAvailable) {
+          // Sonradan panel üzerinden eklenen dinamik eserler
+          if (!gallery.querySelector(`[data-doc-id="${docId}"]`)) {
+            const card = document.createElement("div");
+            card.className = "art-card";
+            card.setAttribute("data-doc-id", docId);
+
+            const resolvedId = art.artID || art.id || '-';
+            const artPrice = art.price || 'Contact for price';
+            const isSold = artPrice.toLowerCase().includes('sold') ? '<span class="sold">SOLD</span>' : '';
+
+            const adminButtonsHTML = auth.currentUser ? `
+              <div class="admin-buttons">
+                <button class="remove-art-btn" type="button"><i class='bx bx-trash'></i> Remove</button>
+                <button class="edit-art-btn" type="button"><i class='bx bx-edit'></i> Edit</button>
+              </div>` : '';
+
+            card.innerHTML = `
+              <a href="#" class="dynamic-art-link" data-id="${resolvedId}" data-title="${art.title}" data-image="${art.image}" data-image2="${art.image2 || ''}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}" data-price="${artPrice}">
+                <img src="${art.image}" alt="${art.title}">
+              </a>
+              <p>Price: ${artPrice} USD</p>
+              ${isSold}
+              ${adminButtonsHTML}
+            `;
+            gallery.appendChild(card);
+          }
+        }
+      });
+
+      attachLinkListeners();
+      attachAdminListeners();
+    })
+    .catch(error => {
+      console.error("Available Works yüklenirken hata oluştu:", error);
+    });
+}
 </script>
 
 </body>
