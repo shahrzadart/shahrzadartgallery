@@ -603,7 +603,12 @@ div.imgstylenow img {
       <input type="text" id="artMedium" placeholder="Medium (e.g., Oil on canvas)" class="art-input">
       <input type="text" id="artYear" placeholder="Year (e.g., 2026)" class="art-input">
       <input type="text" id="artPrice" placeholder="Price (e.g., $500)" class="art-input">
+      <input type="text" id="artID" placeholder="Artwork ID (e.g., SM-2026-01)" class="art-input">
       
+
+<!-- ______________________________________________________________________________________________________  -->
+
+
       <!-- Boyutlar (Dimensions) Alanı -->
       <div class="dimensions-container">
         <label style="display:block; text-align:left; font-size: 0.85rem; font-weight:bold; margin-bottom:4px; color:#555;">Dimensions (Inches):</label>
@@ -795,6 +800,10 @@ const firebaseConfig = {
     const medium = document.getElementById("artMedium").value.trim();
     const year = document.getElementById("artYear").value.trim();
     const price = document.getElementById("artPrice").value.trim();
+    
+    // YENİ EKLENEN ID DEĞİŞKENİ
+    const artID = document.getElementById("artID").value.trim(); 
+    
     const w = widthInches.value.trim();
     const h = heightInches.value.trim();
 
@@ -820,6 +829,7 @@ const firebaseConfig = {
       .then(downloadURL => {
         // Resim başarıyla yüklendiyse, URL'i alıp Firestore veritabanına yaz
         return db.collection("artworks").add({
+          artID: artID, // YENİ EKLENEN VERİTABANI ALANI
           title: title,
           medium: medium,
           year: year,
@@ -842,6 +852,10 @@ const firebaseConfig = {
         document.getElementById("artMedium").value = "";
         document.getElementById("artYear").value = "";
         document.getElementById("artPrice").value = "";
+        
+        // YENİ EKLENEN TEMİZLEME KODU
+        document.getElementById("artID").value = ""; 
+        
         widthInches.value = "";
         heightInches.value = "";
         widthCm.textContent = "(0.0 cm)";
@@ -870,13 +884,13 @@ window.addEventListener('DOMContentLoaded', () => {
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         const art = doc.data();
-        console.log("Veritabanından çekilen eser:", art.title, art.image);
+        console.log("DATABASE HAVE AN PROBLEM:", art.title, art.image);
         
         // Buraya istersen verileri ekrandaki özel bir galeri div'ine dinamik olarak yazdırabiliriz.
       });
     })
     .catch((error) => {
-      console.log("Veriler çekilirken hata oluştu: ", error);
+      console.log("ERROR DUARING WHEN FETCHING ARTWORKS: ", error);
     });
 });
 

@@ -691,8 +691,10 @@
               card.className = "art-card";
               const removeButtonHTML = auth.currentUser ? `<button class="remove-art-btn" data-id="${docId}"><i class='bx bx-trash'></i> Remove</button>` : '';
 
+              const resolvedId = art.artID || art.id || art.ID || art.Id || art.artworkId || art.artId || '-';
+
               card.innerHTML = `
-                <a href="#" class="dynamic-art-link" data-title="${art.title}" data-image="${art.image}" data-image2="${art.image2 || ''}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}" data-id="${art.id || ''}">
+                <a href="#" class="dynamic-art-link" data-title="${art.title}" data-image="${art.image}" data-image2="${art.image2 || ''}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}" data-id="${resolvedId}">
                   <img src="${art.image}" alt="${art.title}">
                 </a>
                 <div class="art-details" style="padding:10px; text-align:left;">
@@ -749,7 +751,50 @@
         });
     }
 
-    renderGalleryFromFirestore();
+        // Oturum durumunu dinleyerek butonları ve verileri güvenli şekilde yönet
+    auth.onAuthStateChanged((user) => {
+      // 1. Statik kartlara oturum açılmışsa Remove butonu ekle
+      document.querySelectorAll(".art-card").forEach(card => {
+        const staticLink = card.querySelector(".static-art-link");
+        if (staticLink) {
+          let existingBtn = card.querySelector(".remove-art-btn");
+          if (user) {
+            if (!existingBtn) {
+              const artId = staticLink.getAttribute("data-id");
+              const btnContainer = document.createElement("div");
+              btnContainer.style.cssText = "display: flex; justify-content: flex-end; padding: 0 10px 10px;";
+              btnContainer.innerHTML = `<button class="remove-art-btn" data-id="${artId}"><i class='bx bx-trash'></i> Remove</button>`;
+              card.appendChild(btnContainer);
+            }
+          } else {
+            if (existingBtn) existingBtn.parentElement.remove();
+          }
+        }
+      });
+
+
+          // Silme butonlarını bağlama
+    function attachRemoveListeners() {
+      document.querySelectorAll(".remove-art-btn").forEach(btn => {
+        btn.replaceWith(btn.cloneNode(true));
+      });
+
+      document.querySelectorAll(".remove-art-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation(); 
+          docIdToDelete = btn.getAttribute("data-id");
+          deleteModal.style.display = "flex"; 
+        });
+      });
+    }
+
+
+        function attachLinkListeners() {
+      document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
+        link.replaceWith(link.cloneNode(true)); // Çift tetiklenmeyi önle
+      });
+
+        }
 
     if(confirmDeleteBtn) {
       confirmDeleteBtn.addEventListener("click", () => {
@@ -772,6 +817,7 @@
         docIdToDelete = null;
       });
     }
+  });
   });
 
   const hamBtn = document.getElementById("hamburgerBtn");

@@ -284,7 +284,7 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  margin-right: 10px;
+  margin: 8px 10px 10px auto;
 }
 .remove-art-btn:hover { background: #cc0000; }
 
@@ -482,7 +482,7 @@
   </div>
 </div>
 
-<!-- Fancy Delete Confirmation Modal -->
+<!-- Delete Confirmation Modal -->
 <div id="deleteModal" class="delete-modal-overlay">
   <div class="delete-modal-content">
     <div class="delete-icon">⚠️</div>
@@ -561,9 +561,65 @@
       modal.style.display = "flex";
     }
 
-    function renderGalleryFromFirestore() {
-      if (!gallery) return;
+    // Modal link bağlama yardımcı fonksiyonu
+    function attachLinkListeners() {
+      document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
+        link.replaceWith(link.cloneNode(true)); // Çift tetiklenmeyi önle
+      });
 
+      document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          openArtModal(
+            link.getAttribute("data-id"),
+            link.getAttribute("data-title"),
+            link.getAttribute("data-image"),
+            link.getAttribute("data-image2"),
+            link.getAttribute("data-medium"),
+            link.getAttribute("data-size"),
+            link.getAttribute("data-year")
+          );
+        });
+      });
+    }
+
+    // Silme butonlarını bağlama
+    function attachRemoveListeners() {
+      document.querySelectorAll(".remove-art-btn").forEach(btn => {
+        btn.replaceWith(btn.cloneNode(true));
+      });
+
+      document.querySelectorAll(".remove-art-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation(); 
+          docIdToDelete = btn.getAttribute("data-id");
+          deleteModal.style.display = "flex"; 
+        });
+      });
+    }
+
+    // Oturum durumunu dinleyerek butonları ve verileri güvenli şekilde yönet
+    auth.onAuthStateChanged((user) => {
+      // 1. Statik kartlara oturum açılmışsa Remove butonu ekle
+      document.querySelectorAll(".art-card").forEach(card => {
+        const staticLink = card.querySelector(".static-art-link");
+        if (staticLink) {
+          let existingBtn = card.querySelector(".remove-art-btn");
+          if (user) {
+            if (!existingBtn) {
+              const artId = staticLink.getAttribute("data-id");
+              const btnContainer = document.createElement("div");
+              btnContainer.style.cssText = "display: flex; justify-content: flex-end; padding: 0 10px 10px;";
+              btnContainer.innerHTML = `<button class="remove-art-btn" data-id="${artId}"><i class='bx bx-trash'></i> Remove</button>`;
+              card.appendChild(btnContainer);
+            }
+          } else {
+            if (existingBtn) existingBtn.parentElement.remove();
+          }
+        }
+      });
+
+      // 2. Firestore'dan dinamik eserleri çek
       db.collection("artworks")
         .orderBy("createdAt", "desc")
         .get()
@@ -573,69 +629,37 @@
             const docId = doc.id;
 
             if (art.showMiniature) {
-              const card = document.createElement("div");
-              card.className = "art-card";
-              const removeButtonHTML = auth.currentUser ? `<button class="remove-art-btn" data-id="${docId}"><i class='bx bx-trash'></i> Remove</button>` : '';
+              // Zaten eklenmişse mükerrer olmasın
+              if (!gallery.querySelector(`[data-firestore-id="${docId}"]`)) {
+                const card = document.createElement("div");
+                card.className = "art-card";
+                card.setAttribute("data-firestore-id", docId);
+                
+                const removeButtonHTML = user ? `<div style="display: flex; justify-content: flex-end; padding: 0 10px 10px;"><button class="remove-art-btn" data-id="${docId}"><i class='bx bx-trash'></i> Remove</button></div>` : '';
+                const resolvedId = art.artID || art.id || art.ID || art.Id || art.artworkId || art.artId || '-';
 
-              card.innerHTML = `
-                <a href="#" class="dynamic-art-link" data-title="${art.title}" data-image="${art.image}" data-image2="${art.image2 || ''}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}" data-id="${art.id || ''}">
-                  <img src="${art.image}" alt="${art.title}">
-                </a>
-                <div class="art-details" style="padding:10px; text-align:left;">
-                  <h3 style="margin:0 0 8px; text-align:center;">${art.title}</h3>
-                  <div style="display: flex; align-items: center; justify-content: flex-end; margin-top: 10px;">
-                    ${removeButtonHTML}
-                  </div>
-                </div>
-              `;
-              gallery.appendChild(card);
+                card.innerHTML = `
+                  <a href="#" class="dynamic-art-link" data-title="${art.title}" data-image="${art.image}" data-image2="${art.image2 || ''}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}" data-id="${resolvedId}">
+                    <img src="${art.image}" alt="${art.title}">
+                  </a>
+                  <p>${art.title}</p>
+                  ${removeButtonHTML}
+                `;
+                gallery.appendChild(card);
+              }
             }
           });
 
-          document.querySelectorAll(".dynamic-art-link").forEach(link => {
-            link.addEventListener("click", (e) => {
-              e.preventDefault();
-              openArtModal(
-                link.getAttribute("data-id"),
-                link.getAttribute("data-title"),
-                link.getAttribute("data-image"),
-                link.getAttribute("data-image2"),
-                link.getAttribute("data-medium"),
-                link.getAttribute("data-size"),
-                link.getAttribute("data-year")
-              );
-            });
-          });
-
-          document.querySelectorAll(".static-art-link").forEach(link => {
-            link.addEventListener("click", (e) => {
-              e.preventDefault();
-              openArtModal(
-                link.getAttribute("data-id"),
-                link.getAttribute("data-title"),
-                link.getAttribute("data-image"),
-                link.getAttribute("data-image2"),
-                link.getAttribute("data-medium"),
-                link.getAttribute("data-size"),
-                link.getAttribute("data-year")
-              );
-            });
-          });
-
-          document.querySelectorAll(".remove-art-btn").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-              e.stopPropagation(); 
-              docIdToDelete = btn.getAttribute("data-id");
-              deleteModal.style.display = "flex"; 
-            });
-          });
+          attachLinkListeners();
+          attachRemoveListeners();
         })
         .catch(error => {
           console.error("Minyatür eserleri yüklenirken hata oluştu:", error);
         });
-    }
 
-    renderGalleryFromFirestore();
+      attachLinkListeners();
+      attachRemoveListeners();
+    });
 
     if(confirmDeleteBtn) {
       confirmDeleteBtn.addEventListener("click", () => {
