@@ -919,10 +919,18 @@
             artMap[doc.id] = doc.data();
           });
 
+          // 1. Statik eserleri güncelle veya gizle
           document.querySelectorAll(".static-art-link").forEach(staticLink => {
             const docId = staticLink.getAttribute("data-original-id");
             const art = artMap[docId];
             if (art) {
+              if (art.showMiniature === false) {
+                staticLink.closest(".art-card").style.display = "none";
+                return;
+              } else {
+                staticLink.closest(".art-card").style.display = "block";
+              }
+
               if (art.title) {
                 staticLink.setAttribute("data-title", art.title);
                 const pTag = staticLink.parentElement.querySelector("p");
@@ -940,11 +948,12 @@
             }
           });
 
+          // 2. Dinamik eserleri ekle (SADECE resmi olan ve showMiniature: true olanlar)
           Object.keys(artMap).forEach(docId => {
             const art = artMap[docId];
             const staticLink = document.querySelector(`.static-art-link[data-original-id="${docId}"]`);
 
-            if (!staticLink && art.showMiniature !== false) {
+            if (!staticLink && art.showMiniature === true && art.image && art.image.trim() !== "") {
               if (!gallery.querySelector(`[data-firestore-id="${docId}"]`)) {
                 const card = document.createElement("div");
                 card.className = "art-card";
@@ -972,7 +981,8 @@
             }
           });
 
-          const allCards = Array.from(gallery.children);
+          // 3. Sıralama (Gizli kartlar elenerek sıralanır)
+          const allCards = Array.from(gallery.children).filter(card => card.style.display !== "none");
           allCards.sort((a, b) => {
             const linkA = a.querySelector(".static-art-link, .dynamic-art-link");
             const linkB = b.querySelector(".static-art-link, .dynamic-art-link");
