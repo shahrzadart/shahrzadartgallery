@@ -8,6 +8,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
 <link rel="stylesheet" href="styles.css">
 
+<!-- SortableJS (Sürükle & Bırak Kütüphanesi) -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
 <style>
 /* ===== NAVBAR ===== */
 .navbar {
@@ -140,6 +143,7 @@
 }
 
 .art-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -149,6 +153,7 @@
   overflow: hidden;
   text-align: center;
   padding-bottom: 10px;
+  user-select: none;
 }
 
 .art-card img {
@@ -158,11 +163,13 @@
   background: #fff;
   border-radius: 10px;
   padding: 10px;
+  pointer-events: none;
 }
 
 .art-card p {
   font-size: 1.05rem;
   margin-top: 6px;
+  pointer-events: none;
 }
 
 @media (max-width: 768px) {
@@ -179,6 +186,40 @@
     margin-top: 4px;
     margin-bottom: 0;
   }
+}
+
+/* ===== TEMİZ VE YUMUŞAK SÜRÜKLE-BIRAK STİLLERİ ===== */
+.sortable-ghost {
+  opacity: 0.2 !important;
+  background: #dedede !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.sortable-drag {
+  opacity: 0.95 !important;
+  transform: scale(1.03) !important;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.2) !important;
+  cursor: grabbing !important;
+}
+
+/* ===== ADMIN TAŞIMA İKONU ===== */
+.drag-handle {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #444;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  z-index: 20;
+  pointer-events: none;
 }
 
 .text {
@@ -312,6 +353,8 @@
   gap: 8px;
   padding: 10px;
   margin-top: auto;
+  position: relative;
+  z-index: 30;
 }
 
 /* Form Group Styles for Edit Modal */
@@ -513,6 +556,8 @@
   const auth = firebase.auth();
   const db = firebase.firestore();
 
+  let sortableInstance = null; // SortableJS Örneği
+
   window.addEventListener("DOMContentLoaded", () => {
     const gallery = document.querySelector(".gallery");
     const modal = document.getElementById("artModal");
@@ -709,10 +754,39 @@
       });
     }
 
+    // Sıralamayı Firestore'a Kaydetme
+    function saveGalleryOrder() {
+      const cards = gallery.querySelectorAll(".art-card");
+      const batch = db.batch();
+
+      cards.forEach((card, index) => {
+        const link = card.querySelector(".static-art-link, .dynamic-art-link");
+        const docKey = link ? (card.getAttribute("data-doc-id") || link.getAttribute("data-id")) : null;
+
+        if (docKey) {
+          const docRef = db.collection("artworks").doc(docKey);
+          batch.set(docRef, { order: index }, { merge: true });
+        }
+      });
+
+      batch.commit().catch(err => console.error("Sıralama kaydetme hatası:", err));
+    }
+
     auth.onAuthStateChanged((user) => {
       document.querySelectorAll(".art-card").forEach(card => {
         let existingAdminDiv = card.querySelector(".admin-buttons");
+        let existingDragHandle = card.querySelector(".drag-handle");
+
         if (user) {
+          // Taşıma İkonu Ekle
+          if (!existingDragHandle) {
+            const dragHandle = document.createElement("div");
+            dragHandle.className = "drag-handle";
+            dragHandle.innerHTML = "<i class='bx bx-move'></i>";
+            card.appendChild(dragHandle);
+          }
+
+          // Butonları Ekle
           if (!existingAdminDiv) {
             const adminDiv = document.createElement("div");
             adminDiv.className = "admin-buttons";
@@ -724,8 +798,29 @@
           }
         } else {
           if (existingAdminDiv) existingAdminDiv.remove();
+          if (existingDragHandle) existingDragHandle.remove();
         }
       });
+
+      // Sürükle-Bırak Özelliğini (SortableJS) Aktifleştir/Devre Dışı Bırak
+      if (user && !sortableInstance) {
+        sortableInstance = new Sortable(gallery, {
+          animation: 250,
+          forceFallback: true,
+          fallbackTolerance: 3,
+          ghostClass: 'sortable-ghost',
+          dragClass: 'sortable-drag',
+          filter: '.admin-buttons button', 
+          preventOnFilter: false,
+          onEnd: function () {
+            saveGalleryOrder();
+          }
+        });
+      } else if (!user && sortableInstance) {
+        sortableInstance.destroy();
+        sortableInstance = null;
+      }
+
       attachAdminListeners();
     });
 
@@ -733,15 +828,19 @@
       if (!gallery) return;
 
       db.collection("artworks")
-        .orderBy("createdAt", "desc")
         .get()
         .then((querySnapshot) => {
+          const artMap = {};
           querySnapshot.forEach((doc) => {
-            const art = doc.data();
-            const docId = doc.id;
+            artMap[doc.id] = doc.data();
+          });
 
+          // Dinamik kartları oluştur
+          Object.keys(artMap).forEach((docId) => {
+            const art = artMap[docId];
+            
             if (art.showMotive) {
-              if (!gallery.querySelector(`[data-doc-id="${docId}"]`)) {
+              if (!gallery.querySelector(`[data-doc-id="${docId}"]`) && !gallery.querySelector(`.static-art-link[data-id="${docId}"]`)) {
                 const card = document.createElement("div");
                 card.className = "art-card";
                 card.setAttribute("data-doc-id", docId);
@@ -754,7 +853,10 @@
                     <button class="edit-art-btn" type="button"><i class='bx bx-edit'></i> Edit</button>
                   </div>` : '';
 
+                const dragHandleHTML = auth.currentUser ? `<div class="drag-handle"><i class='bx bx-move'></i></div>` : '';
+
                 card.innerHTML = `
+                  ${dragHandleHTML}
                   <a href="#" class="dynamic-art-link" data-id="${resolvedId}" data-title="${art.title || ''}" data-image="${art.image || ''}" data-image2="${art.image2 || ''}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}">
                     <img src="${art.image}" alt="${art.title}">
                   </a>
@@ -765,6 +867,23 @@
               }
             }
           });
+
+          // Kartları Kaydedilmiş "order" Değerine Göre Sırala
+          const allCards = Array.from(gallery.children);
+          allCards.sort((a, b) => {
+            const linkA = a.querySelector(".static-art-link, .dynamic-art-link");
+            const linkB = b.querySelector(".static-art-link, .dynamic-art-link");
+
+            const idA = linkA ? (a.getAttribute("data-doc-id") || linkA.getAttribute("data-id")) : '';
+            const idB = linkB ? (b.getAttribute("data-doc-id") || linkB.getAttribute("data-id")) : '';
+
+            const orderA = (artMap[idA] && artMap[idA].order !== undefined) ? artMap[idA].order : 999;
+            const orderB = (artMap[idB] && artMap[idB].order !== undefined) ? artMap[idB].order : 999;
+
+            return orderA - orderB;
+          });
+
+          allCards.forEach(card => gallery.appendChild(card));
 
           attachLinkListeners();
           attachAdminListeners();

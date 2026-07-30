@@ -8,6 +8,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
 <link rel="stylesheet" href="styles.css">
 
+<!-- SortableJS (Sürükle & Bırak Kütüphanesi) -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
 <style>
   /* ===== NAVBAR ===== */
   .navbar { position: sticky; top: 0; background: #ffdfdfc7; padding: 12px 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
@@ -35,16 +38,51 @@
   
   /* ===== GALLERY & CARDS ===== */
   .gallery { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 20px; row-gap: 40px; padding: 20px; margin-top: 20px;}
-  .art-card { display: flex; flex-direction: column; background: #fff9f9; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); overflow: hidden; padding-bottom: 10px; }
-  .art-card img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 10px; padding: 10px; background: #fff; }
-  .art-card p { margin-top: 6px; text-align: center; font-size: 1.05rem; }
+  .art-card { position: relative; display: flex; flex-direction: column; background: #fff9f9; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); overflow: hidden; padding-bottom: 10px; user-select: none; cursor: grab; }
+  .art-card img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 10px; padding: 10px; background: #fff; pointer-events: none; }
+  .art-card p { margin-top: 6px; text-align: center; font-size: 1.05rem; pointer-events: none; }
 
   @media (max-width: 768px) {
     .gallery { grid-template-columns: 1fr; row-gap: 30px; padding: 16px; }
+    .art-card { margin-bottom: 6px; }
     .art-card img { aspect-ratio: 3 / 4; padding: 0 !important; }
     .art-card p { font-size: 0.95rem; }
   }
   .sold { color: red; font-weight: bold; display: block; text-align: center; margin-top: 5px; }
+
+  /* ===== TEMİZ VE YUMUŞAK SÜRÜKLE-BIRAK STİLLERİ ===== */
+  .sortable-ghost {
+    opacity: 0.2 !important;
+    background: #dedede !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .sortable-drag {
+    opacity: 0.95 !important;
+    transform: scale(1.03) !important;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.2) !important;
+    cursor: grabbing !important;
+  }
+
+  /* ===== ADMIN TAŞIMA İKONU ===== */
+  .drag-handle {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #444;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    z-index: 20;
+    pointer-events: none;
+  }
 
   /* ===== MODALS ===== */
   .art-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px); z-index: 3000; justify-content: center; align-items: center; padding: 20px; animation: overlayFadeIn 0.3s ease forwards; }
@@ -67,7 +105,7 @@
   .edit-art-btn { background: #1976d2; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: bold; display: inline-flex; align-items: center; gap: 5px; transition: .25s; }
   .edit-art-btn:hover { background: #1258a8; }
 
-  .admin-buttons { display: flex; justify-content: center; gap: 8px; padding: 10px; margin-top: auto; }
+  .admin-buttons { display: flex; justify-content: center; gap: 8px; padding: 10px; margin-top: auto; position: relative; z-index: 30; }
 
   /* Form Group Styles for Edit Modal */
   .edit-form-group { margin-bottom: 14px; text-align: left; }
@@ -144,91 +182,91 @@
 <div class="gallery">
   <!-- Statik Eserler -->
   <div class="art-card" data-static-id="static-1">
-    <a href="#" class="static-art-link" data-title="Untitled - Miniature 3" data-image="Untitled-miniature-3.webp" data-medium="Gouache & Watercolor + Gold Leaf" data-size="15.7 x 12.2 in (40 x 31 cm)" data-year="2026" data-price="800">
+    <a href="#" class="static-art-link" data-original-id="static-1" data-title="Untitled - Miniature 3" data-image="Untitled-miniature-3.webp" data-medium="Gouache & Watercolor + Gold Leaf" data-size="15.7 x 12.2 in (40 x 31 cm)" data-year="2026" data-price="800">
       <img src="Untitled-miniature-3.webp" alt="Painting titled Untitled - Miniature 3 by Shahrzad">
     </a>
     <p>Price: $800 USD</p>
   </div>
 
   <div class="art-card" data-static-id="static-2">
-    <a href="#" class="static-art-link" data-title="Untitled 8" data-image="untitle 8.jpeg" data-medium="Watercolor & Gouache" data-size="5.5 x 8.2 in (14 x 21 cm)" data-year="2026" data-price="150" data-id="SM-2026-WC&GC-01">
+    <a href="#" class="static-art-link" data-original-id="static-2" data-title="Untitled 8" data-image="untitle 8.jpeg" data-medium="Watercolor & Gouache" data-size="5.5 x 8.2 in (14 x 21 cm)" data-year="2026" data-price="150" data-id="SM-2026-WC&GC-01">
       <img src="untitle 8.jpeg" alt="Painting titled Untitled 8 by Shahrzad">
     </a>
     <p>Price: $150 USD</p>
   </div>
 
   <div class="art-card" data-static-id="static-3">
-    <a href="#" class="static-art-link" data-title="Untitled - Miniature 2" data-image="untitled2.webp" data-medium="Watercolor & Gouache" data-size="15.7 x 12.2 in (40 x 31 cm)" data-year="2025" data-price="800">
+    <a href="#" class="static-art-link" data-original-id="static-3" data-title="Untitled - Miniature 2" data-image="untitled2.webp" data-medium="Watercolor & Gouache" data-size="15.7 x 12.2 in (40 x 31 cm)" data-year="2025" data-price="800">
       <img src="untitled2.webp" alt="Painting titled Untitled - Miniature 2 by Shahrzad">
     </a>
     <p>Price: $800 USD</p>
   </div>
 
   <div class="art-card" data-static-id="static-4">
-    <a href="#" class="static-art-link" data-title="Untitled - Portrait 10" data-image="green-1.webp" data-medium="Mixed Media" data-size="21.2 x 15.3 in (54 x 39 cm)" data-year="2019" data-price="300">
+    <a href="#" class="static-art-link" data-original-id="static-4" data-title="Untitled - Portrait 10" data-image="green-1.webp" data-medium="Mixed Media" data-size="21.2 x 15.3 in (54 x 39 cm)" data-year="2019" data-price="300">
       <img src="green-1.webp" alt="Painting titled Untitled - Portrait 10 by Shahrzad">
     </a>
     <p>Price: $300 USD</p>
   </div>
 
   <div class="art-card" data-static-id="static-5">
-    <a href="#" class="static-art-link" data-title="Summer" data-image="summer.webp" data-medium="Acrylic on Canvas" data-size="19.7 x 19.7 in (50 x 50 cm)" data-year="2018" data-price="1,100">
+    <a href="#" class="static-art-link" data-original-id="static-5" data-title="Summer" data-image="summer.webp" data-medium="Acrylic on Canvas" data-size="19.7 x 19.7 in (50 x 50 cm)" data-year="2018" data-price="1,100">
       <img src="summer.webp" alt="Painting titled Summer by Shahrzad">
     </a>
     <p>Price: $1,100 USD</p>
   </div>
 
   <div class="art-card" data-static-id="static-6">
-    <a href="#" class="static-art-link" data-title="Four Seasons" data-image="four-seasons.webp" data-medium="Mixed Media" data-size="19.7 x 19.7 in (50 x 50 cm)" data-year="2023" data-price="1,500">
+    <a href="#" class="static-art-link" data-original-id="static-6" data-title="Four Seasons" data-image="four-seasons.webp" data-medium="Mixed Media" data-size="19.7 x 19.7 in (50 x 50 cm)" data-year="2023" data-price="1,500">
       <img src="four-seasons.webp" alt="Painting titled Four Seasons by Shahrzad">
     </a>
     <p>Price: $1,500 USD</p>
   </div>
 
   <div class="art-card" data-static-id="static-7">
-    <a href="#" class="static-art-link" data-title="Autumn" data-image="autumn.webp" data-medium="Mixed Media" data-size="21.2 x 15.3 in (54 x 39 cm)" data-year="2018" data-price="1,100">
+    <a href="#" class="static-art-link" data-original-id="static-7" data-title="Autumn" data-image="autumn.webp" data-medium="Mixed Media" data-size="21.2 x 15.3 in (54 x 39 cm)" data-year="2018" data-price="1,100">
       <img src="autumn.webp" alt="Painting titled Autumn by Shahrzad">
     </a>
     <p>Price: $1,100 USD - <span class="sold">Sold</span></p>
   </div>
 
   <div class="art-card" data-static-id="static-8">
-    <a href="#" class="static-art-link" data-title="Untitled - Tazhib 5" data-image="calligraphy.webp" data-medium="Watercolor & Gouache + Ink" data-size="21.2 x 25.2 in (54 x 64 cm)" data-year="2012" data-price="1,200">
+    <a href="#" class="static-art-link" data-original-id="static-8" data-title="Untitled - Tazhib 5" data-image="calligraphy.webp" data-medium="Watercolor & Gouache + Ink" data-size="21.2 x 25.2 in (54 x 64 cm)" data-year="2012" data-price="1,200">
       <img src="calligraphy.webp" alt="Painting titled Untitled - Tazhib 5 by Shahrzad">
     </a>
     <p>Price: $1,200 USD</p>
   </div>
 
   <div class="art-card" data-static-id="static-9">
-    <a href="#" class="static-art-link" data-title="Untitled 6" data-image="un-sc-4.webp" data-medium="Acrylic" data-size="20.9 x 15.3 in (53 x 39 cm)" data-year="2008" data-price="300">
+    <a href="#" class="static-art-link" data-original-id="static-9" data-title="Untitled 6" data-image="un-sc-4.webp" data-medium="Acrylic" data-size="20.9 x 15.3 in (53 x 39 cm)" data-year="2008" data-price="300">
       <img src="un-sc-4.webp" alt="Painting titled Untitled 6 by Shahrzad">
     </a>
     <p>Price: $300 USD</p>
   </div>
 
   <div class="art-card" data-static-id="static-10">
-    <a href="#" class="static-art-link" data-title="Untitled 5" data-image="russian-girl.webp" data-medium="Oil Painting" data-size="42.9 x 23.6 in (109 x 60 cm)" data-year="2020" data-price="1,400">
+    <a href="#" class="static-art-link" data-original-id="static-10" data-title="Untitled 5" data-image="russian-girl.webp" data-medium="Oil Painting" data-size="42.9 x 23.6 in (109 x 60 cm)" data-year="2020" data-price="1,400">
       <img src="russian-girl.webp" alt="Painting titled Untitled 5 by Shahrzad">
     </a>
     <p>Price: $1,400 USD</p>
   </div>
 
   <div class="art-card" data-static-id="static-11">
-    <a href="#" class="static-art-link" data-title="Untitled 4" data-image="deer.webp" data-medium="Watercolor" data-size="20.5 x 12.6 in (52 x 32 cm)" data-year="2006" data-price="500">
+    <a href="#" class="static-art-link" data-original-id="static-11" data-title="Untitled 4" data-image="deer.webp" data-medium="Watercolor" data-size="20.5 x 12.6 in (52 x 32 cm)" data-year="2006" data-price="500">
       <img src="deer.webp" alt="Painting titled Untitled 4 by Shahrzad">
     </a>
     <p>Price: $500 USD</p>
   </div>
 
   <div class="art-card" data-static-id="static-12">
-    <a href="#" class="static-art-link" data-title="Untitled 3" data-image="untitled3.webp" data-medium="Watercolor" data-size="17 x 11 in (43 x 28 cm)" data-year="2006" data-price="500">
+    <a href="#" class="static-art-link" data-original-id="static-12" data-title="Untitled 3" data-image="untitled3.webp" data-medium="Watercolor" data-size="17 x 11 in (43 x 28 cm)" data-year="2006" data-price="500">
       <img src="untitled3.webp" alt="Painting titled Untitled 3 by Shahrzad">
     </a>
     <p>Price: $500 USD</p>
   </div>
 
   <div class="art-card" data-static-id="static-13">
-    <a href="#" class="static-art-link" data-title="Untitled - Scratchboard 2" data-image="horse-dragon(2).webp" data-medium="Scratchboard" data-size="18.9 x 15 in (48 x 38 cm)" data-year="2007" data-price="500">
+    <a href="#" class="static-art-link" data-original-id="static-13" data-title="Untitled - Scratchboard 2" data-image="horse-dragon(2).webp" data-medium="Scratchboard" data-size="18.9 x 15 in (48 x 38 cm)" data-year="2007" data-price="500">
       <img src="horse-dragon(2).webp" alt="Painting titled Untitled - Scratchboard 2 by Shahrzad">
     </a>
     <p>Price: $500 USD</p>
@@ -339,6 +377,8 @@
   const auth = firebase.auth();
   const db = firebase.firestore();
 
+  let sortableInstance = null;
+
   window.addEventListener("DOMContentLoaded", () => {
     const gallery = document.querySelector(".gallery");
     const modal = document.getElementById("artModal");
@@ -401,12 +441,12 @@
       modal.style.display = "flex";
     }
 
-    function openEditModal(artData, docId, isStaticCard, staticElement) {
-      activeEditingContext = { artData, docId, isStaticCard, staticElement };
+    function openEditModal(artData, link) {
+      activeEditingContext = link;
 
       editModalImg.src = artData.image || '';
       document.getElementById("inputEditTitle").value = artData.title || '';
-      document.getElementById("inputEditArtId").value = artData.id || '';
+      document.getElementById("inputEditArtId").value = artData.artID || artData.id || '';
       document.getElementById("inputEditMedium").value = artData.medium || '';
       document.getElementById("inputEditSize").value = artData.size || '';
       document.getElementById("inputEditYear").value = artData.year || '';
@@ -420,7 +460,10 @@
         e.preventDefault();
         if (!activeEditingContext) return;
 
-        const { artData, docId, isStaticCard, staticElement } = activeEditingContext;
+        const link = activeEditingContext;
+        const originalId = link.getAttribute("data-original-id");
+        const card = link.closest(".art-card");
+        const docKey = originalId || card.getAttribute("data-doc-id");
 
         const newTitle = document.getElementById("inputEditTitle").value;
         const newArtId = document.getElementById("inputEditArtId").value;
@@ -428,6 +471,7 @@
         const newSize = document.getElementById("inputEditSize").value;
         const newYear = document.getElementById("inputEditYear").value;
         const newPrice = document.getElementById("inputEditPrice").value;
+        const currentImage = link.getAttribute("data-image");
 
         const updatePayload = {
           artID: newArtId,
@@ -436,32 +480,18 @@
           size: newSize,
           year: newYear,
           price: newPrice,
-          image: artData.image || '',
+          image: currentImage,
           showAvailable: true
         };
 
-        const saveUpdate = (targetDocId) => {
-          db.collection("artworks").doc(targetDocId).set(updatePayload, { merge: true })
-            .then(() => {
-              editModal.style.display = "none";
-              location.reload();
-            })
-            .catch(err => {
-              alert("Update error: " + err.message);
-            });
-        };
-
-        if (docId) {
-          saveUpdate(docId);
-        } else {
-          db.collection("artworks").add({
-            ...updatePayload,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-          }).then(newDoc => {
+        db.collection("artworks").doc(docKey).set(updatePayload, { merge: true })
+          .then(() => {
             editModal.style.display = "none";
             location.reload();
-          }).catch(err => alert("Error: " + err.message));
-        }
+          })
+          .catch(err => {
+            alert("Update error: " + err.message);
+          });
       });
     }
 
@@ -521,11 +551,9 @@
           e.stopPropagation();
           const card = btn.closest(".art-card");
           const link = card.querySelector(".static-art-link, .dynamic-art-link");
-          const docId = card.getAttribute("data-doc-id");
-          const staticId = card.getAttribute("data-static-id");
           
           const artData = {
-            id: link.getAttribute("data-id"),
+            artID: link.getAttribute("data-id"),
             title: link.getAttribute("data-title"),
             image: link.getAttribute("data-image"),
             image2: link.getAttribute("data-image2"),
@@ -535,22 +563,41 @@
             price: link.getAttribute("data-price") || 'Contact for price'
           };
 
-          if (docId) {
-            openEditModal(artData, docId, false, link);
-          } else if (staticId) {
-            db.collection("artworks").where("title", "==", artData.title).get().then(snapshot => {
-              let foundDocId = !snapshot.empty ? snapshot.docs[0].id : null;
-              openEditModal(artData, foundDocId, true, link);
-            });
-          }
+          openEditModal(artData, link);
         });
       });
+    }
+
+    function saveGalleryOrder() {
+      const cards = gallery.querySelectorAll(".art-card");
+      const batch = db.batch();
+
+      cards.forEach((card, index) => {
+        const link = card.querySelector(".static-art-link, .dynamic-art-link");
+        const docKey = link ? (link.getAttribute("data-original-id") || card.getAttribute("data-doc-id") || card.getAttribute("data-static-id") || link.getAttribute("data-id")) : (card.getAttribute("data-doc-id") || card.getAttribute("data-static-id"));
+
+        if (docKey) {
+          const docRef = db.collection("artworks").doc(docKey);
+          batch.set(docRef, { order: index }, { merge: true });
+        }
+      });
+
+      batch.commit().catch(err => console.error("Sıralama kaydetme hatası:", err));
     }
 
     auth.onAuthStateChanged((user) => {
       document.querySelectorAll(".art-card").forEach(card => {
         let existingAdminDiv = card.querySelector(".admin-buttons");
+        let existingDragHandle = card.querySelector(".drag-handle");
+
         if (user) {
+          if (!existingDragHandle) {
+            const dragHandle = document.createElement("div");
+            dragHandle.className = "drag-handle";
+            dragHandle.innerHTML = "<i class='bx bx-move'></i>";
+            card.appendChild(dragHandle);
+          }
+
           if (!existingAdminDiv) {
             const adminDiv = document.createElement("div");
             adminDiv.className = "admin-buttons";
@@ -562,43 +609,89 @@
           }
         } else {
           if (existingAdminDiv) existingAdminDiv.remove();
+          if (existingDragHandle) existingDragHandle.remove();
         }
       });
-      attachAdminListeners();
-    });
 
-    function renderGalleryFromFirestore() {
-      if (!gallery) return;
+      if (user && !sortableInstance) {
+        sortableInstance = new Sortable(gallery, {
+          animation: 250,
+          forceFallback: true,
+          fallbackTolerance: 3,
+          ghostClass: 'sortable-ghost',
+          dragClass: 'sortable-drag',
+          filter: '.admin-buttons button, .admin-buttons',
+          preventOnFilter: false,
+          onEnd: function () {
+            saveGalleryOrder();
+          }
+        });
+      } else if (!user && sortableInstance) {
+        sortableInstance.destroy();
+        sortableInstance = null;
+      }
 
       db.collection("artworks")
-        .orderBy("createdAt", "desc")
         .get()
         .then((querySnapshot) => {
+          const artMap = {};
           querySnapshot.forEach((doc) => {
-            const art = doc.data();
-            const docId = doc.id;
+            artMap[doc.id] = doc.data();
+          });
 
-            if (art.showAvailable) {
+          document.querySelectorAll(".static-art-link").forEach(staticLink => {
+            const docId = staticLink.getAttribute("data-original-id");
+            const art = artMap[docId];
+            if (art) {
+              if (art.title) staticLink.setAttribute("data-title", art.title);
+              if (art.artID || art.id) staticLink.setAttribute("data-id", art.artID || art.id);
+              if (art.medium) staticLink.setAttribute("data-medium", art.medium);
+              if (art.size) staticLink.setAttribute("data-size", art.size);
+              if (art.year) staticLink.setAttribute("data-year", art.year);
+              if (art.price) {
+                staticLink.setAttribute("data-price", art.price);
+                const pTag = staticLink.parentElement.querySelector("p");
+                if (pTag) {
+                  const isSold = art.price.toLowerCase().includes('sold') ? ' - <span class="sold">Sold</span>' : '';
+                  pTag.innerHTML = `Price: ${art.price} USD${isSold}`;
+                }
+              }
+              if (art.image) {
+                staticLink.setAttribute("data-image", art.image);
+                const img = staticLink.querySelector("img");
+                if (img) img.src = art.image;
+              }
+            }
+          });
+
+          Object.keys(artMap).forEach(docId => {
+            const art = artMap[docId];
+            const staticLink = document.querySelector(`.static-art-link[data-original-id="${docId}"]`);
+
+            if (!staticLink && art.showAvailable) {
               if (!gallery.querySelector(`[data-doc-id="${docId}"]`)) {
                 const card = document.createElement("div");
                 card.className = "art-card";
                 card.setAttribute("data-doc-id", docId);
 
-                const resolvedId = art.artID || art.id || art.ID || art.Id || art.artworkId || art.artId || '-';
+                const resolvedId = art.artID || art.id || '-';
                 const artPrice = art.price || 'Contact for price';
                 const isSold = artPrice.toLowerCase().includes('sold') ? '<span class="sold">SOLD</span>' : '';
 
-                const adminButtonsHTML = auth.currentUser ? `
+                const adminButtonsHTML = user ? `
                   <div class="admin-buttons">
                     <button class="remove-art-btn" type="button"><i class='bx bx-trash'></i> Remove</button>
                     <button class="edit-art-btn" type="button"><i class='bx bx-edit'></i> Edit</button>
                   </div>` : '';
 
+                const dragHandleHTML = user ? `<div class="drag-handle"><i class='bx bx-move'></i></div>` : '';
+
                 card.innerHTML = `
+                  ${dragHandleHTML}
                   <a href="#" class="dynamic-art-link" data-id="${resolvedId}" data-title="${art.title}" data-image="${art.image}" data-image2="${art.image2 || ''}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}" data-price="${artPrice}">
                     <img src="${art.image}" alt="${art.title}">
                   </a>
-                  <p>${art.title}</p>
+                  <p>Price: ${artPrice} USD</p>
                   ${isSold}
                   ${adminButtonsHTML}
                 `;
@@ -607,16 +700,34 @@
             }
           });
 
+          const allCards = Array.from(gallery.children);
+          allCards.sort((a, b) => {
+            const linkA = a.querySelector(".static-art-link, .dynamic-art-link");
+            const linkB = b.querySelector(".static-art-link, .dynamic-art-link");
+
+            const idA = linkA ? (linkA.getAttribute("data-original-id") || a.getAttribute("data-doc-id") || a.getAttribute("data-static-id") || linkA.getAttribute("data-id")) : '';
+            const idB = linkB ? (linkB.getAttribute("data-original-id") || b.getAttribute("data-doc-id") || b.getAttribute("data-static-id") || linkB.getAttribute("data-id")) : '';
+
+            const orderA = (artMap[idA] && artMap[idA].order !== undefined) ? artMap[idA].order : 999;
+            const orderB = (artMap[idB] && artMap[idB].order !== undefined) ? artMap[idB].order : 999;
+
+            return orderA - orderB;
+          });
+
+          allCards.forEach(card => gallery.appendChild(card));
+
           attachLinkListeners();
           attachAdminListeners();
         })
         .catch(error => {
           console.error("Available Works yüklenirken hata oluştu:", error);
         });
-    }
+
+      attachLinkListeners();
+      attachAdminListeners();
+    });
 
     filterDeletedStaticWorks();
-    renderGalleryFromFirestore();
     attachLinkListeners();
     attachAdminListeners();
 
@@ -670,176 +781,6 @@
   document.addEventListener("keydown", e => {
     if (e.key === "Escape") closeMenuFn();
   });
-
-
-  // Edit butonuna tıklandığında çalışan fonksiyon
-function openEditModal(artData, link) {
-  activeEditingContext = link; // Kart bağlantısını referans alıyoruz
-
-  editModalImg.src = artData.image || '';
-  document.getElementById("inputEditTitle").value = artData.title || '';
-  document.getElementById("inputEditArtId").value = artData.artID || artData.id || '';
-  document.getElementById("inputEditMedium").value = artData.medium || '';
-  document.getElementById("inputEditSize").value = artData.size || '';
-  document.getElementById("inputEditYear").value = artData.year || '';
-  document.getElementById("inputEditPrice").value = artData.price || '';
-
-  editModal.style.display = "flex";
-}
-
-// Edit butonlarının tıklama dinleyicisi
-function attachAdminListeners() {
-  document.querySelectorAll(".remove-art-btn").forEach(btn => {
-    btn.replaceWith(btn.cloneNode(true));
-  });
-  document.querySelectorAll(".remove-art-btn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const card = btn.closest(".art-card");
-      docIdToDelete = card.getAttribute("data-doc-id");
-      staticIdToDelete = card.getAttribute("data-static-id");
-      deleteModal.style.display = "flex";
-    });
-  });
-
-  document.querySelectorAll(".edit-art-btn").forEach(btn => {
-    btn.replaceWith(btn.cloneNode(true));
-  });
-  document.querySelectorAll(".edit-art-btn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const card = btn.closest(".art-card");
-      const link = card.querySelector(".static-art-link, .dynamic-art-link");
-      
-      const artData = {
-        artID: link.getAttribute("data-id"),
-        title: link.getAttribute("data-title"),
-        image: link.getAttribute("data-image"),
-        image2: link.getAttribute("data-image2"),
-        medium: link.getAttribute("data-medium"),
-        size: link.getAttribute("data-size"),
-        year: link.getAttribute("data-year"),
-        price: link.getAttribute("data-price") || 'Contact for price'
-      };
-
-      openEditModal(artData, link);
-    });
-  });
-}
-
-// Edit Formu Kaydedildiğinde Firestore'a Kalıcı Olarak Yazma
-if (editArtworkForm) {
-  editArtworkForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (!activeEditingContext) return;
-
-    const link = activeEditingContext;
-    const originalId = link.getAttribute("data-original-id");
-    const card = link.closest(".art-card");
-    const docKey = originalId || card.getAttribute("data-doc-id");
-
-    const newTitle = document.getElementById("inputEditTitle").value;
-    const newArtId = document.getElementById("inputEditArtId").value;
-    const newMedium = document.getElementById("inputEditMedium").value;
-    const newSize = document.getElementById("inputEditSize").value;
-    const newYear = document.getElementById("inputEditYear").value;
-    const newPrice = document.getElementById("inputEditPrice").value;
-    const currentImage = link.getAttribute("data-image");
-
-    const updatePayload = {
-      artID: newArtId,
-      title: newTitle,
-      medium: newMedium,
-      size: newSize,
-      year: newYear,
-      price: newPrice,
-      image: currentImage,
-      showAvailable: true
-    };
-
-    // Firestore'da ilgili docKey (original-id) üzerine kaydeder
-    db.collection("artworks").doc(docKey).set(updatePayload, { merge: true })
-      .then(() => {
-        editModal.style.display = "none";
-        location.reload(); // Sayfa yenilendiğinde veriler Firestore'dan çekilir
-      })
-      .catch(err => {
-        alert("Update error: " + err.message);
-      });
-  });
-}
-
-// Sayfa Yüklendiğinde Firestore'daki Kalıcı Değişiklikleri Statik Kartlara Yansıtma
-function renderGalleryFromFirestore() {
-  if (!gallery) return;
-
-  db.collection("artworks")
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const art = doc.data();
-        const docId = doc.id;
-
-        // Statik kart eşleşmesi kontrol ediliyor
-        const staticLink = document.querySelector(`.static-art-link[data-original-id="${docId}"]`);
-
-        if (staticLink) {
-          // Güncellenmiş Firestore verilerini statik HTML elemanına yansıt
-          if (art.title) staticLink.setAttribute("data-title", art.title);
-          if (art.artID) staticLink.setAttribute("data-id", art.artID);
-          if (art.medium) staticLink.setAttribute("data-medium", art.medium);
-          if (art.size) staticLink.setAttribute("data-size", art.size);
-          if (art.year) staticLink.setAttribute("data-year", art.year);
-          if (art.price) {
-            staticLink.setAttribute("data-price", art.price);
-            const pTag = staticLink.parentElement.querySelector("p");
-            if (pTag) {
-              const isSold = art.price.toLowerCase().includes('sold') ? ' - <span class="sold">Sold</span>' : '';
-              pTag.innerHTML = `Price: ${art.price} USD${isSold}`;
-            }
-          }
-          if (art.image) {
-            staticLink.setAttribute("data-image", art.image);
-            const img = staticLink.querySelector("img");
-            if (img) img.src = art.image;
-          }
-        } else if (art.showAvailable) {
-          // Sonradan panel üzerinden eklenen dinamik eserler
-          if (!gallery.querySelector(`[data-doc-id="${docId}"]`)) {
-            const card = document.createElement("div");
-            card.className = "art-card";
-            card.setAttribute("data-doc-id", docId);
-
-            const resolvedId = art.artID || art.id || '-';
-            const artPrice = art.price || 'Contact for price';
-            const isSold = artPrice.toLowerCase().includes('sold') ? '<span class="sold">SOLD</span>' : '';
-
-            const adminButtonsHTML = auth.currentUser ? `
-              <div class="admin-buttons">
-                <button class="remove-art-btn" type="button"><i class='bx bx-trash'></i> Remove</button>
-                <button class="edit-art-btn" type="button"><i class='bx bx-edit'></i> Edit</button>
-              </div>` : '';
-
-            card.innerHTML = `
-              <a href="#" class="dynamic-art-link" data-id="${resolvedId}" data-title="${art.title}" data-image="${art.image}" data-image2="${art.image2 || ''}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}" data-price="${artPrice}">
-                <img src="${art.image}" alt="${art.title}">
-              </a>
-              <p>Price: ${artPrice} USD</p>
-              ${isSold}
-              ${adminButtonsHTML}
-            `;
-            gallery.appendChild(card);
-          }
-        }
-      });
-
-      attachLinkListeners();
-      attachAdminListeners();
-    })
-    .catch(error => {
-      console.error("Available Works yüklenirken hata oluştu:", error);
-    });
-}
 </script>
 
 </body>

@@ -8,6 +8,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
 <link rel="stylesheet" href="styles.css">
 
+<!-- SortableJS (Sürükle & Bırak Kütüphanesi) -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
 <style>
 /* ===== NAVBAR ===== */
 .navbar {
@@ -139,12 +142,15 @@
 }
 
 .art-card {
+  position: relative;
   width: 100%;
-  background: #fff9f9;
+  background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
   overflow: hidden;
   text-align: center;
+  user-select: none;
+  cursor: grab;
 }
 
 .art-card img {
@@ -154,11 +160,13 @@
   background: #fff;
   border-radius: 10px;
   padding: 10px;
+  pointer-events: none;
 }
 
 .art-card p {
   font-size: 1.05rem;
   margin-top: 6px;
+  pointer-events: none;
 }
 
 @media (max-width: 768px) {
@@ -177,6 +185,21 @@
   }
 }
 
+/* ===== TEMİZ VE YUMUŞAK SÜRÜKLE-BIRAK STİLLERİ (MAVİ RENK YOK) ===== */
+.sortable-ghost {
+  opacity: 0.2 !important;
+  background: #dedede !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.sortable-drag {
+  opacity: 0.95 !important;
+  transform: scale(1.03) !important;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.2) !important;
+  cursor: grabbing !important;
+}
+
 .text {
   text-align: center;
   font-family: Arial, sans-serif;
@@ -191,6 +214,25 @@
   padding: 10px;
   margin-top: 30%;
   font-size: 0.85rem;
+}
+
+/* ===== ADMIN TAŞIMA İKONU ===== */
+.drag-handle {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #444;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  z-index: 20;
+  pointer-events: none;
 }
 
 /* ===== MODAL STYLES ===== */
@@ -271,7 +313,7 @@
   font-size: 0.95rem;
 }
 
-/* ===== ADMIN BUTTONS & PROFESSIONAL EDIT FORM UI ===== */
+/* ===== ADMIN BUTTONS & EDIT FORM UI ===== */
 .remove-art-btn {
   background: #ff4d4d;
   color: white;
@@ -308,9 +350,10 @@
   justify-content: flex-end;
   gap: 8px;
   padding: 0 10px 10px;
+  position: relative;
+  z-index: 30;
 }
 
-/* Form Group Styles for Edit Modal */
 .edit-form-group {
   margin-bottom: 14px;
   text-align: left;
@@ -425,7 +468,7 @@
 </div>
 
 <div class="gallery">
-  <!-- Statik Eserler (data-original-id eklendi) -->
+  <!-- Statik Eserler -->
   <div class="art-card">
     <a href="#" class="static-art-link" data-original-id="SM-2015-AC-02" data-id="SM-2015-AC-02" data-title="A Fairy Being" data-image="fairy-Being.webp" data-medium="Acrylic" data-size="30x50 cm (11.8x19.7 in)" data-year="2015">
       <img src="fairy-Being.webp" alt="Painting titled A Fairy Being by Shahrzad">
@@ -555,7 +598,7 @@
   </div>
 </div>
 
-<!-- Professional Edit Modal with Form Inputs -->
+<!-- Edit Modal -->
 <div id="editModal" class="art-modal-overlay">
   <div class="art-modal-content">
     <button id="closeEditModal" class="art-modal-close">&times;</button>
@@ -623,6 +666,8 @@
   const auth = firebase.auth();
   const db = firebase.firestore();
 
+  let sortableInstance = null;
+
   window.addEventListener("DOMContentLoaded", () => {
     const gallery = document.querySelector(".gallery");
     const modal = document.getElementById("artModal");
@@ -643,12 +688,8 @@
     let docIdToDelete = null;
     let activeEditingLink = null;
 
-    if(closeModal) {
-      closeModal.addEventListener("click", () => { modal.style.display = "none"; });
-    }
-    if(closeEditModal) {
-      closeEditModal.addEventListener("click", () => { editModal.style.display = "none"; });
-    }
+    if(closeModal) closeModal.addEventListener("click", () => { modal.style.display = "none"; });
+    if(closeEditModal) closeEditModal.addEventListener("click", () => { editModal.style.display = "none"; });
 
     window.addEventListener("click", (e) => {
       if (e.target === modal) modal.style.display = "none";
@@ -693,7 +734,6 @@
       editModal.style.display = "flex";
     }
 
-    // Handle form submit for saving all edits permanently using original-id as reference
     if(editArtworkForm) {
       editArtworkForm.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -719,10 +759,8 @@
           showMiniature: true
         };
 
-        // Firestore'da kalıcı olarak docKey (orijinal ID) üzerinden saklanır
         db.collection("artworks").doc(docKey).set(updatePayload, { merge: true })
           .then(() => {
-            // Update DOM attributes instantly
             activeEditingLink.setAttribute("data-id", newArtId);
             activeEditingLink.setAttribute("data-title", newTitle);
             activeEditingLink.setAttribute("data-medium", newMedium);
@@ -732,7 +770,6 @@
             const pTag = activeEditingLink.parentElement.querySelector("p");
             if (pTag) pTag.textContent = newTitle;
 
-            // Update admin buttons inside card if present
             const card = activeEditingLink.closest(".art-card");
             const removeBtn = card.querySelector(".remove-art-btn");
             const editBtn = card.querySelector(".edit-art-btn");
@@ -803,43 +840,89 @@
       });
     }
 
-    auth.onAuthStateChanged((user) => {
-      document.querySelectorAll(".art-card").forEach(card => {
-        const staticLink = card.querySelector(".static-art-link");
-        if (staticLink) {
-          let existingAdminDiv = card.querySelector(".admin-buttons");
-          if (user) {
-            if (!existingAdminDiv) {
-              const docKey = staticLink.getAttribute("data-original-id");
-              const adminDiv = document.createElement("div");
-              adminDiv.className = "admin-buttons";
+    function saveGalleryOrder() {
+      const cards = gallery.querySelectorAll(".art-card");
+      const batch = db.batch();
 
-              adminDiv.innerHTML = `
-                <button class="remove-art-btn" data-id="${docKey}">
-                  <i class='bx bx-trash'></i> Remove
-                </button>
-                <button class="edit-art-btn" data-id="${docKey}">
-                  <i class='bx bx-edit'></i> Edit
-                </button>
-              `;
-              card.appendChild(adminDiv);
-            }
-          } else {
-            if (existingAdminDiv) existingAdminDiv.remove();
-          }
+      cards.forEach((card, index) => {
+        const link = card.querySelector(".static-art-link, .dynamic-art-link");
+        const docKey = link ? (link.getAttribute("data-original-id") || card.getAttribute("data-firestore-id") || link.getAttribute("data-id")) : null;
+
+        if (docKey) {
+          const docRef = db.collection("artworks").doc(docKey);
+          batch.set(docRef, { order: index }, { merge: true });
         }
       });
 
-      // Load Firestore overrides using data-original-id mapping for static cards
+      batch.commit().catch(err => console.error("Sıralama kaydetme hatası:", err));
+    }
+
+    auth.onAuthStateChanged((user) => {
+      document.querySelectorAll(".art-card").forEach(card => {
+        const staticLink = card.querySelector(".static-art-link");
+        let existingAdminDiv = card.querySelector(".admin-buttons");
+        let existingDragHandle = card.querySelector(".drag-handle");
+
+        if (user) {
+          if (!existingDragHandle) {
+            const dragHandle = document.createElement("div");
+            dragHandle.className = "drag-handle";
+            dragHandle.innerHTML = "<i class='bx bx-move'></i>";
+            card.appendChild(dragHandle);
+          }
+
+          if (staticLink && !existingAdminDiv) {
+            const docKey = staticLink.getAttribute("data-original-id");
+            const adminDiv = document.createElement("div");
+            adminDiv.className = "admin-buttons";
+
+            adminDiv.innerHTML = `
+              <button class="remove-art-btn" data-id="${docKey}">
+                <i class='bx bx-trash'></i> Remove
+              </button>
+              <button class="edit-art-btn" data-id="${docKey}">
+                <i class='bx bx-edit'></i> Edit
+              </button>
+            `;
+            card.appendChild(adminDiv);
+          }
+        } else {
+          if (existingAdminDiv) existingAdminDiv.remove();
+          if (existingDragHandle) existingDragHandle.remove();
+        }
+      });
+
+      // AKICI GRID SÜRÜKLE-BIRAK AYARLARI
+      if (user && !sortableInstance) {
+        sortableInstance = new Sortable(gallery, {
+          animation: 250,              // Akıcı kayma süresi
+          forceFallback: true,         // Grid sisteminde düzgün çalışması için zorunlu
+          fallbackTolerance: 3,        // Tıklama ile sürüklemeyi birbirinden ayırır
+          ghostClass: 'sortable-ghost',// Arkada kalan silik boşluk
+          dragClass: 'sortable-drag',  // Elde taşınan kart
+          filter: '.admin-buttons button', // Butonlara tıklayınca taşımayı tetikleme
+          preventOnFilter: false,
+          onEnd: function () {
+            saveGalleryOrder();
+          }
+        });
+      } else if (!user && sortableInstance) {
+        sortableInstance.destroy();
+        sortableInstance = null;
+      }
+
       db.collection("artworks")
         .get()
         .then((querySnapshot) => {
+          const artMap = {};
           querySnapshot.forEach((doc) => {
-            const art = doc.data();
-            const docId = doc.id;
+            artMap[doc.id] = doc.data();
+          });
 
-            const staticLink = document.querySelector(`.static-art-link[data-original-id="${docId}"]`);
-            if (staticLink) {
+          document.querySelectorAll(".static-art-link").forEach(staticLink => {
+            const docId = staticLink.getAttribute("data-original-id");
+            const art = artMap[docId];
+            if (art) {
               if (art.title) {
                 staticLink.setAttribute("data-title", art.title);
                 const pTag = staticLink.parentElement.querySelector("p");
@@ -854,45 +937,62 @@
                 const img = staticLink.querySelector("img");
                 if (img) img.src = art.image;
               }
-            } else {
-              // Dinamik eklenen kartlar
-              if (art.showMiniature !== false) {
-                if (!gallery.querySelector(`[data-firestore-id="${docId}"]`)) {
-                  const card = document.createElement("div");
-                  card.className = "art-card";
-                  card.setAttribute("data-firestore-id", docId);
-                  
-                  const adminButtonsHTML = user ? 
-                  `
+            }
+          });
+
+          Object.keys(artMap).forEach(docId => {
+            const art = artMap[docId];
+            const staticLink = document.querySelector(`.static-art-link[data-original-id="${docId}"]`);
+
+            if (!staticLink && art.showMiniature !== false) {
+              if (!gallery.querySelector(`[data-firestore-id="${docId}"]`)) {
+                const card = document.createElement("div");
+                card.className = "art-card";
+                card.setAttribute("data-firestore-id", docId);
+                
+                const adminButtonsHTML = user ? `
                   <div class="admin-buttons">
-                    <button class="remove-art-btn" data-id="${docId}">
-                      <i class='bx bx-trash'></i> Remove
-                    </button>
-                    <button class="edit-art-btn" data-id="${docId}">
-                      <i class='bx bx-edit'></i> Edit
-                    </button>
+                    <button class="remove-art-btn" data-id="${docId}"><i class='bx bx-trash'></i> Remove</button>
+                    <button class="edit-art-btn" data-id="${docId}"><i class='bx bx-edit'></i> Edit</button>
                   </div>` : '';
 
-                  const resolvedId = art.artID || docId;
+                const dragHandleHTML = user ? `<div class="drag-handle"><i class='bx bx-move'></i></div>` : '';
+                const resolvedId = art.artID || docId;
 
-                  card.innerHTML = `
-                    <a href="#" class="dynamic-art-link" data-title="${art.title || ''}" data-image="${art.image || ''}" data-image2="${art.image2 || ''}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}" data-id="${resolvedId}">
-                      <img src="${art.image || ''}" alt="${art.title || ''}">
-                    </a>
-                    <p>${art.title || ''}</p>
-                    ${adminButtonsHTML}
-                  `;
-                  gallery.appendChild(card);
-                }
+                card.innerHTML = `
+                  ${dragHandleHTML}
+                  <a href="#" class="dynamic-art-link" data-title="${art.title || ''}" data-image="${art.image || ''}" data-image2="${art.image2 || ''}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}" data-id="${resolvedId}">
+                    <img src="${art.image || ''}" alt="${art.title || ''}">
+                  </a>
+                  <p>${art.title || ''}</p>
+                  ${adminButtonsHTML}
+                `;
+                gallery.appendChild(card);
               }
             }
           });
+
+          const allCards = Array.from(gallery.children);
+          allCards.sort((a, b) => {
+            const linkA = a.querySelector(".static-art-link, .dynamic-art-link");
+            const linkB = b.querySelector(".static-art-link, .dynamic-art-link");
+
+            const idA = linkA ? (linkA.getAttribute("data-original-id") || a.getAttribute("data-firestore-id") || linkA.getAttribute("data-id")) : '';
+            const idB = linkB ? (linkB.getAttribute("data-original-id") || b.getAttribute("data-firestore-id") || linkB.getAttribute("data-id")) : '';
+
+            const orderA = (artMap[idA] && artMap[idA].order !== undefined) ? artMap[idA].order : 999;
+            const orderB = (artMap[idB] && artMap[idB].order !== undefined) ? artMap[idB].order : 999;
+
+            return orderA - orderB;
+          });
+
+          allCards.forEach(card => gallery.appendChild(card));
 
           attachLinkListeners();
           attachAdminListeners();
         })
         .catch(error => {
-          console.error("Error loading artworks:", error);
+          console.error("Artworks yüklenirken hata oluştu:", error);
         });
 
       attachLinkListeners();
