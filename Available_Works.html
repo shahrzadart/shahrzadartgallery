@@ -379,6 +379,17 @@
 
   let sortableInstance = null;
 
+  // Fiyat metninin başında $ yoksa otomatik ekleyen yardımcı fonksiyon
+  function formatPriceText(rawPrice) {
+    if (!rawPrice) return 'Contact for price';
+    let priceStr = rawPrice.toString().trim();
+    if (priceStr.toLowerCase().includes('contact')) return priceStr;
+    if (!priceStr.startsWith('$')) {
+      priceStr = '$' + priceStr;
+    }
+    return priceStr;
+  }
+
   window.addEventListener("DOMContentLoaded", () => {
     const gallery = document.querySelector(".gallery");
     const modal = document.getElementById("artModal");
@@ -427,12 +438,17 @@
         modalImg2.style.display = "block";
       }
 
+      let displayPrice = formatPriceText(price);
+      if (displayPrice !== 'Contact for price' && !displayPrice.toLowerCase().includes('usd')) {
+        displayPrice = displayPrice + ' USD';
+      }
+
       document.getElementById("modalArtTitle").textContent = title || '';
       document.getElementById("modalArtId").textContent = id || '-';
       document.getElementById("modalArtMedium").textContent = medium || '-';
       document.getElementById("modalArtSize").textContent = size || '-';
       document.getElementById("modalArtYear").textContent = year || '-';
-      document.getElementById("modalArtPrice").textContent = price || 'Contact for price';
+      document.getElementById("modalArtPrice").textContent = displayPrice;
       
       const emailSubject = encodeURIComponent(`Inquiry about Artwork: ${title || 'Untitled'}`);
       const emailBody = encodeURIComponent(`Hello,\n\nI am interested in acquiring the artwork titled "${title || 'Untitled'}" (ID: ${id || 'N/A'}). Could you please provide more information regarding its availability and pricing?\n\nThank you.`);
@@ -649,11 +665,12 @@
               if (art.size) staticLink.setAttribute("data-size", art.size);
               if (art.year) staticLink.setAttribute("data-year", art.year);
               if (art.price) {
-                staticLink.setAttribute("data-price", art.price);
+                const formattedPrice = formatPriceText(art.price);
+                staticLink.setAttribute("data-price", formattedPrice);
                 const pTag = staticLink.parentElement.querySelector("p");
                 if (pTag) {
-                  const isSold = art.price.toLowerCase().includes('sold') ? ' - <span class="sold">Sold</span>' : '';
-                  pTag.innerHTML = `Price: ${art.price} USD${isSold}`;
+                  const isSold = formattedPrice.toLowerCase().includes('sold') ? ' - <span class="sold">Sold</span>' : '';
+                  pTag.innerHTML = `Price: ${formattedPrice} USD${isSold}`;
                 }
               }
               if (art.image) {
@@ -675,8 +692,8 @@
                 card.setAttribute("data-doc-id", docId);
 
                 const resolvedId = art.artID || art.id || '-';
-                const artPrice = art.price || 'Contact for price';
-                const isSold = artPrice.toLowerCase().includes('sold') ? '<span class="sold">SOLD</span>' : '';
+                const formattedPrice = formatPriceText(art.price);
+                const isSold = formattedPrice.toLowerCase().includes('sold') ? ' - <span class="sold">Sold</span>' : '';
 
                 const adminButtonsHTML = user ? `
                   <div class="admin-buttons">
@@ -688,11 +705,10 @@
 
                 card.innerHTML = `
                   ${dragHandleHTML}
-                  <a href="#" class="dynamic-art-link" data-id="${resolvedId}" data-title="${art.title}" data-image="${art.image}" data-image2="${art.image2 || ''}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}" data-price="${artPrice}">
+                  <a href="#" class="dynamic-art-link" data-id="${resolvedId}" data-title="${art.title}" data-image="${art.image}" data-image2="${art.image2 || ''}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}" data-price="${formattedPrice}">
                     <img src="${art.image}" alt="${art.title}">
                   </a>
-                  <p>Price: ${artPrice} USD</p>
-                  ${isSold}
+                  <p>Price: ${formattedPrice} USD${isSold}</p>
                   ${adminButtonsHTML}
                 `;
                 gallery.appendChild(card);
