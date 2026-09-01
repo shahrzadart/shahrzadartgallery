@@ -653,23 +653,422 @@ div.imgstylenow img {
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
 
 <script>
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBbPEgL7OF_O0RVxPnHoNAb5vozTDrOFyc",
-  authDomain: "shahrzad-art-studio.firebaseapp.com",
-  projectId: "shahrzad-art-studio",
-  storageBucket: "shahrzad-art-studio.firebasestorage.app",
-  messagingSenderId: "1008937118209",
-  appId: "1:1008937118209:web:883ba33be2bb3c5e09ee00",
-  measurementId: "G-59WZ224YKK"
-};
-  // Firebase'i Başlat
+  const firebaseConfig = {
+    apiKey: "AIzaSyBbPEgL7OF_O0RVxPnHoNAb5vozTDrOFyc",
+    authDomain: "shahrzad-art-studio.firebaseapp.com",
+    projectId: "shahrzad-art-studio",
+    storageBucket: "shahrzad-art-studio.firebasestorage.app",
+    messagingSenderId: "1008937118209",
+    appId: "1:1008937118209:web:883ba33be2bb3c5e09ee00",
+    measurementId: "G-59WZ224YKK"
+  };
+
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
   const db = firebase.firestore();
-  const storage = firebase.storage();
 
-  // 1. Mobil Menü Mantığı
+  let sortableInstance = null;
+
+  // Fiyat metninin başında $ yoksa otomatik ekleyen yardımcı fonksiyon
+  function formatPriceText(rawPrice) {
+    if (!rawPrice) return 'Contact for price';
+    let priceStr = rawPrice.toString().trim();
+    if (priceStr.toLowerCase().includes('contact')) return priceStr;
+    if (!priceStr.startsWith('$')) {
+      priceStr = '$' + priceStr;
+    }
+    return priceStr;
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const gallery = document.querySelector(".gallery");
+    const modal = document.getElementById("artModal");
+    const closeModal = document.getElementById("closeArtModal");
+    const closeArtModalBtn = document.getElementById("closeArtModalBtn");
+    
+    const editModal = document.getElementById("editModal");
+    const closeEditModal = document.getElementById("closeEditModal");
+    const editModalImg = document.getElementById("editModalImg");
+    const editArtworkForm = document.getElementById("editArtworkForm");
+
+    const deleteModal = document.getElementById("deleteModal");
+    const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+    const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+    
+    const modalImg1 = document.getElementById("modalArtImage");
+    const modalImg2 = document.getElementById("modalArtImage2");
+    const modalInquireBtn = document.getElementById("modalInquireBtn");
+
+    let docIdToDelete = null;
+    let staticIdToDelete = null;
+    let activeEditingContext = null;
+
+    if(closeModal) closeModal.addEventListener("click", () => { modal.style.display = "none"; });
+    if(closeArtModalBtn) closeArtModalBtn.addEventListener("click", () => { modal.style.display = "none"; });
+    if(closeEditModal) closeEditModal.addEventListener("click", () => { editModal.style.display = "none"; });
+
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) modal.style.display = "none";
+      if (e.target === editModal) editModal.style.display = "none";
+      if (e.target === deleteModal) deleteModal.style.display = "none";
+    });
+
+    function resetModal() {
+      modalImg1.src = "";
+      modalImg2.src = "";
+      if(modalImg2) modalImg2.style.display = "none";
+    }
+
+    function openArtModal(id, title, image, image2, medium, size, year, price) {
+      resetModal();
+      modalImg1.src = image;
+
+      if (image2 && modalImg2) {
+        modalImg2.src = image2;
+        modalImg2.style.display = "block";
+      }
+
+      let displayPrice = formatPriceText(price);
+      if (displayPrice !== 'Contact for price' && !displayPrice.toLowerCase().includes('usd')) {
+        displayPrice = displayPrice + ' USD';
+      }
+
+      document.getElementById("modalArtTitle").textContent = title || '';
+      document.getElementById("modalArtId").textContent = id || '-';
+      document.getElementById("modalArtMedium").textContent = medium || '-';
+      document.getElementById("modalArtSize").textContent = size || '-';
+      document.getElementById("modalArtYear").textContent = year || '-';
+      document.getElementById("modalArtPrice").textContent = displayPrice;
+      
+      const emailSubject = encodeURIComponent(`Inquiry about Artwork: ${title || 'Untitled'}`);
+      const emailBody = encodeURIComponent(`Hello,\n\nI am interested in acquiring the artwork titled "${title || 'Untitled'}" (ID: ${id || 'N/A'}). Could you please provide more information regarding its availability and pricing?\n\nThank you.`);
+      modalInquireBtn.href = `mailto:info@shahrzadartstudio.com?subject=${emailSubject}&body=${emailBody}`;
+
+      modal.style.display = "flex";
+    }
+
+    function openEditModal(artData, link) {
+      activeEditingContext = link;
+
+      editModalImg.src = artData.image || '';
+      document.getElementById("inputEditTitle").value = artData.title || '';
+      document.getElementById("inputEditArtId").value = artData.artID || artData.id || '';
+      document.getElementById("inputEditMedium").value = artData.medium || '';
+      document.getElementById("inputEditSize").value = artData.size || '';
+      document.getElementById("inputEditYear").value = artData.year || '';
+      document.getElementById("inputEditPrice").value = artData.price || '';
+
+      editModal.style.display = "flex";
+    }
+
+    if (editArtworkForm) {
+      editArtworkForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (!activeEditingContext) return;
+
+        const link = activeEditingContext;
+        const originalId = link.getAttribute("data-original-id");
+        const card = link.closest(".art-card");
+        const docKey = originalId || card.getAttribute("data-doc-id");
+
+        const newTitle = document.getElementById("inputEditTitle").value;
+        const newArtId = document.getElementById("inputEditArtId").value;
+        const newMedium = document.getElementById("inputEditMedium").value;
+        const newSize = document.getElementById("inputEditSize").value;
+        const newYear = document.getElementById("inputEditYear").value;
+        const newPrice = document.getElementById("inputEditPrice").value;
+        const currentImage = link.getAttribute("data-image");
+
+        const updatePayload = {
+          artID: newArtId,
+          title: newTitle,
+          medium: newMedium,
+          size: newSize,
+          year: newYear,
+          price: newPrice,
+          image: currentImage,
+          showAvailable: true
+        };
+
+        db.collection("artworks").doc(docKey).set(updatePayload, { merge: true })
+          .then(() => {
+            editModal.style.display = "none";
+            location.reload();
+          })
+          .catch(err => {
+            alert("Update error: " + err.message);
+          });
+      });
+    }
+
+    function filterDeletedStaticWorks() {
+      db.collection("deleted_static_available").get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          const deletedStaticId = doc.id;
+          const cardToRemove = document.querySelector(`.art-card[data-static-id="${deletedStaticId}"]`);
+          if (cardToRemove) {
+            cardToRemove.remove();
+          }
+        });
+      }).catch(err => console.error("Silinmiş statik available eser kontrol hatası:", err));
+    }
+
+    function attachLinkListeners() {
+      document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
+        link.replaceWith(link.cloneNode(true));
+      });
+
+      document.querySelectorAll(".dynamic-art-link, .static-art-link").forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          openArtModal(
+            link.getAttribute("data-id"),
+            link.getAttribute("data-title"),
+            link.getAttribute("data-image"),
+            link.getAttribute("data-image2"),
+            link.getAttribute("data-medium"),
+            link.getAttribute("data-size"),
+            link.getAttribute("data-year"),
+            link.getAttribute("data-price")
+          );
+        });
+      });
+    }
+
+    function attachAdminListeners() {
+      document.querySelectorAll(".remove-art-btn").forEach(btn => {
+        btn.replaceWith(btn.cloneNode(true));
+      });
+      document.querySelectorAll(".remove-art-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const card = btn.closest(".art-card");
+          docIdToDelete = card.getAttribute("data-doc-id");
+          staticIdToDelete = card.getAttribute("data-static-id");
+          deleteModal.style.display = "flex";
+        });
+      });
+
+      document.querySelectorAll(".edit-art-btn").forEach(btn => {
+        btn.replaceWith(btn.cloneNode(true));
+      });
+      document.querySelectorAll(".edit-art-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const card = btn.closest(".art-card");
+          const link = card.querySelector(".static-art-link, .dynamic-art-link");
+          
+          const artData = {
+            artID: link.getAttribute("data-id"),
+            title: link.getAttribute("data-title"),
+            image: link.getAttribute("data-image"),
+            image2: link.getAttribute("data-image2"),
+            medium: link.getAttribute("data-medium"),
+            size: link.getAttribute("data-size"),
+            year: link.getAttribute("data-year"),
+            price: link.getAttribute("data-price") || 'Contact for price'
+          };
+
+          openEditModal(artData, link);
+        });
+      });
+    }
+
+    function saveGalleryOrder() {
+      const cards = gallery.querySelectorAll(".art-card");
+      const batch = db.batch();
+
+      cards.forEach((card, index) => {
+        const link = card.querySelector(".static-art-link, .dynamic-art-link");
+        const docKey = link ? (link.getAttribute("data-original-id") || card.getAttribute("data-doc-id") || card.getAttribute("data-static-id") || link.getAttribute("data-id")) : (card.getAttribute("data-doc-id") || card.getAttribute("data-static-id"));
+
+        if (docKey) {
+          const docRef = db.collection("artworks").doc(docKey);
+          batch.set(docRef, { order: index }, { merge: true });
+        }
+      });
+
+      batch.commit().catch(err => console.error("Sıralama kaydetme hatası:", err));
+    }
+
+    auth.onAuthStateChanged((user) => {
+      document.querySelectorAll(".art-card").forEach(card => {
+        let existingAdminDiv = card.querySelector(".admin-buttons");
+        let existingDragHandle = card.querySelector(".drag-handle");
+
+        if (user) {
+          if (!existingDragHandle) {
+            const dragHandle = document.createElement("div");
+            dragHandle.className = "drag-handle";
+            dragHandle.innerHTML = "<i class='bx bx-move'></i>";
+            card.appendChild(dragHandle);
+          }
+
+          if (!existingAdminDiv) {
+            const adminDiv = document.createElement("div");
+            adminDiv.className = "admin-buttons";
+            adminDiv.innerHTML = `
+              <button class="remove-art-btn" type="button"><i class='bx bx-trash'></i> Remove</button>
+              <button class="edit-art-btn" type="button"><i class='bx bx-edit'></i> Edit</button>
+            `;
+            card.appendChild(adminDiv);
+          }
+        } else {
+          if (existingAdminDiv) existingAdminDiv.remove();
+          if (existingDragHandle) existingDragHandle.remove();
+        }
+      });
+
+      if (user && !sortableInstance) {
+        sortableInstance = new Sortable(gallery, {
+          animation: 250,
+          forceFallback: true,
+          fallbackTolerance: 3,
+          ghostClass: 'sortable-ghost',
+          dragClass: 'sortable-drag',
+          filter: '.admin-buttons button, .admin-buttons',
+          preventOnFilter: false,
+          onEnd: function () {
+            saveGalleryOrder();
+          }
+        });
+      } else if (!user && sortableInstance) {
+        sortableInstance.destroy();
+        sortableInstance = null;
+      }
+
+      db.collection("artworks")
+        .get()
+        .then((querySnapshot) => {
+          const artMap = {};
+          querySnapshot.forEach((doc) => {
+            artMap[doc.id] = doc.data();
+          });
+
+          document.querySelectorAll(".static-art-link").forEach(staticLink => {
+            const docId = staticLink.getAttribute("data-original-id");
+            const art = artMap[docId];
+            if (art) {
+              if (art.title) staticLink.setAttribute("data-title", art.title);
+              if (art.artID || art.id) staticLink.setAttribute("data-id", art.artID || art.id);
+              if (art.medium) staticLink.setAttribute("data-medium", art.medium);
+              if (art.size) staticLink.setAttribute("data-size", art.size);
+              if (art.year) staticLink.setAttribute("data-year", art.year);
+              if (art.price) {
+                const formattedPrice = formatPriceText(art.price);
+                staticLink.setAttribute("data-price", formattedPrice);
+                const pTag = staticLink.parentElement.querySelector("p");
+                if (pTag) {
+                  const isSold = formattedPrice.toLowerCase().includes('sold') ? ' - <span class="sold">Sold</span>' : '';
+                  pTag.innerHTML = `Price: ${formattedPrice} USD${isSold}`;
+                }
+              }
+              if (art.image) {
+                staticLink.setAttribute("data-image", art.image);
+                const img = staticLink.querySelector("img");
+                if (img) img.src = art.image;
+              }
+            }
+          });
+
+          Object.keys(artMap).forEach(docId => {
+            const art = artMap[docId];
+            const staticLink = document.querySelector(`.static-art-link[data-original-id="${docId}"]`);
+
+            if (!staticLink && art.showAvailable) {
+              if (!gallery.querySelector(`[data-doc-id="${docId}"]`)) {
+                const card = document.createElement("div");
+                card.className = "art-card";
+                card.setAttribute("data-doc-id", docId);
+
+                const resolvedId = art.artID || art.id || '-';
+                const formattedPrice = formatPriceText(art.price);
+                const isSold = formattedPrice.toLowerCase().includes('sold') ? ' - <span class="sold">Sold</span>' : '';
+
+                const adminButtonsHTML = user ? `
+                  <div class="admin-buttons">
+                    <button class="remove-art-btn" type="button"><i class='bx bx-trash'></i> Remove</button>
+                    <button class="edit-art-btn" type="button"><i class='bx bx-edit'></i> Edit</button>
+                  </div>` : '';
+
+                const dragHandleHTML = user ? `<div class="drag-handle"><i class='bx bx-move'></i></div>` : '';
+
+                card.innerHTML = `
+                  ${dragHandleHTML}
+                  <a href="#" class="dynamic-art-link" data-id="${resolvedId}" data-title="${art.title}" data-image="${art.image}" data-image2="${art.image2 || ''}" data-medium="${art.medium || ''}" data-size="${art.size || ''}" data-year="${art.year || ''}" data-price="${formattedPrice}">
+                    <img src="${art.image}" alt="${art.title}">
+                  </a>
+                  <p>Price: ${formattedPrice} USD${isSold}</p>
+                  ${adminButtonsHTML}
+                `;
+                gallery.appendChild(card);
+              }
+            }
+          });
+
+          const allCards = Array.from(gallery.children);
+          allCards.sort((a, b) => {
+            const linkA = a.querySelector(".static-art-link, .dynamic-art-link");
+            const linkB = b.querySelector(".static-art-link, .dynamic-art-link");
+
+            const idA = linkA ? (linkA.getAttribute("data-original-id") || a.getAttribute("data-doc-id") || a.getAttribute("data-static-id") || linkA.getAttribute("data-id")) : '';
+            const idB = linkB ? (linkB.getAttribute("data-original-id") || b.getAttribute("data-doc-id") || b.getAttribute("data-static-id") || linkB.getAttribute("data-id")) : '';
+
+            const orderA = (artMap[idA] && artMap[idA].order !== undefined) ? artMap[idA].order : 999;
+            const orderB = (artMap[idB] && artMap[idB].order !== undefined) ? artMap[idB].order : 999;
+
+            return orderA - orderB;
+          });
+
+          allCards.forEach(card => gallery.appendChild(card));
+
+          attachLinkListeners();
+          attachAdminListeners();
+        })
+        .catch(error => {
+          console.error("Available Works yüklenirken hata oluştu:", error);
+        });
+
+      attachLinkListeners();
+      attachAdminListeners();
+    });
+
+    filterDeletedStaticWorks();
+    attachLinkListeners();
+    attachAdminListeners();
+
+    if(confirmDeleteBtn) {
+      confirmDeleteBtn.addEventListener("click", () => {
+        if (docIdToDelete) {
+          db.collection("artworks").doc(docIdToDelete).delete()
+            .then(() => {
+              deleteModal.style.display = "none";
+              location.reload();
+            })
+            .catch(error => alert("Silme hatası: " + error.message));
+        } 
+        else if (staticIdToDelete) {
+          db.collection("deleted_static_available").doc(staticIdToDelete).set({
+            deletedAt: firebase.firestore.FieldValue.serverTimestamp()
+          })
+          .then(() => {
+            deleteModal.style.display = "none";
+            location.reload();
+          })
+          .catch(error => alert("Statik eser silme hatası: " + error.message));
+        }
+      });
+    }
+
+    if(cancelDeleteBtn) {
+      cancelDeleteBtn.addEventListener("click", () => {
+        deleteModal.style.display = "none";
+        docIdToDelete = null;
+        staticIdToDelete = null;
+      });
+    }
+  });
+
   const hamBtn = document.getElementById("hamburgerBtn");
   const mobileMenu = document.getElementById("mobileMenu");
   const overlay = document.getElementById("overlay");
@@ -678,9 +1077,9 @@ const firebaseConfig = {
   function openMenu() { mobileMenu.classList.add("active"); overlay.classList.add("active"); }
   function closeMenuFn() { mobileMenu.classList.remove("active"); overlay.classList.remove("active"); }
 
-  hamBtn.addEventListener("click", openMenu);
-  closeMenu.addEventListener("click", closeMenuFn);
-  overlay.addEventListener("click", closeMenuFn);
+  if(hamBtn) hamBtn.addEventListener("click", openMenu);
+  if(closeMenu) closeMenu.addEventListener("click", closeMenuFn);
+  if(overlay) overlay.addEventListener("click", closeMenuFn);
 
   document.querySelectorAll(".mobile-menu a").forEach(link => {
     link.addEventListener("click", closeMenuFn);
@@ -688,213 +1087,6 @@ const firebaseConfig = {
   document.addEventListener("keydown", e => {
     if (e.key === "Escape") closeMenuFn();
   });
-
-  // 2. Boyut Hesaplayıcı Mantığı
-  const widthInches = document.getElementById("widthInches");
-  const heightInches = document.getElementById("heightInches");
-  const widthCm = document.getElementById("widthCm");
-  const heightCm = document.getElementById("heightCm");
-
-  function updateCmConversions() {
-    const wVal = parseFloat(widthInches.value) || 0;
-    const hVal = parseFloat(heightInches.value) || 0;
-    widthCm.textContent = `(${(wVal * 2.54).toFixed(1)} cm)`;
-    heightCm.textContent = `(${(hVal * 2.54).toFixed(1)} cm)`;
-  }
-
-  widthInches.addEventListener("input", updateCmConversions);
-  heightInches.addEventListener("input", updateCmConversions);
-  widthInches.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") { e.preventDefault(); heightInches.focus(); }
-  });
-
-  // 3. Sürükle Bırak ve Dosya Seçimi (Firebase İçin Düzenlendi)
-  const dropZone = document.getElementById("dropZone");
-  const artImageFile = document.getElementById("artImageFile");
-  const uploadText = document.getElementById("uploadText");
-  let selectedFileObj = null; // Base64 yerine direkt dosyayı tutuyoruz
-
-  dropZone.addEventListener("click", () => artImageFile.click());
-
-  artImageFile.addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    if (file) handleFile(file);
-  });
-
-  ["dragenter", "dragover"].forEach(eventName => {
-    dropZone.addEventListener(eventName, (e) => {
-      e.preventDefault(); dropZone.classList.add("dragover");
-    }, false);
-  });
-
-  ["dragleave", "drop"].forEach(eventName => {
-    dropZone.addEventListener(eventName, (e) => {
-      e.preventDefault(); dropZone.classList.remove("dragover");
-    }, false);
-  });
-
-  dropZone.addEventListener("drop", (e) => {
-    const file = e.dataTransfer.files[0];
-    if (file) {
-      artImageFile.files = e.dataTransfer.files;
-      handleFile(file);
-    }
-  });
-
-  function handleFile(file) {
-    uploadText.textContent = "Selected: " + file.name;
-    selectedFileObj = file; 
-  }
-
-  // 4. Host Modal Mantığı & Firebase Oturum Kontrolü
-  const hostModal = document.getElementById("hostModal");
-  const hostLoginBtn = document.getElementById("hostLoginBtn");
-  const closeHostModal = document.getElementById("closeHostModal");
-  const loginFormSection = document.getElementById("loginFormSection");
-  const addArtSection = document.getElementById("addArtSection");
-  const loginSubmitBtn = document.getElementById("loginSubmitBtn");
-
-  hostLoginBtn.addEventListener("click", () => {
-    hostModal.style.display = "flex";
-  });
-
-  closeHostModal.addEventListener("click", () => {
-    hostModal.style.display = "none";
-  });
-
-  // Oturum durumunu dinle
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      loginFormSection.style.display = "none";
-      addArtSection.style.display = "block";
-    } else {
-      loginFormSection.style.display = "block";
-      addArtSection.style.display = "none";
-    }
-  });
-
-  // Firebase ile Güvenli Giriş
-  loginSubmitBtn.addEventListener("click", () => {
-    const email = document.getElementById("hostEmail").value.trim();
-    const password = document.getElementById("hostPassword").value.trim();
-    
-    loginSubmitBtn.textContent = "Logging in...";
-    
-    auth.signInWithEmailAndPassword(email, password)
-      .then(() => {
-        document.getElementById("loginError").style.display = "none";
-        loginSubmitBtn.textContent = "Log In";
-      })
-      .catch((error) => {
-        document.getElementById("loginError").textContent = "Giriş başarısız: " + error.message;
-        document.getElementById("loginError").style.display = "block";
-        loginSubmitBtn.textContent = "Log In";
-      });
-  });
-
-  // 5. Firebase Storage ve Firestore'a Yükleme Mantığı
-  const uploadArtBtn = document.getElementById("uploadArtBtn");
-  
-  uploadArtBtn.addEventListener("click", () => {
-    const title = document.getElementById("artTitle").value.trim();
-    const medium = document.getElementById("artMedium").value.trim();
-    const year = document.getElementById("artYear").value.trim();
-    const price = document.getElementById("artPrice").value.trim();
-    
-    // YENİ EKLENEN ID DEĞİŞKENİ
-    const artID = document.getElementById("artID").value.trim(); 
-    
-    const w = widthInches.value.trim();
-    const h = heightInches.value.trim();
-
-    if (!title || !selectedFileObj) {
-      alert("Please fill in the artwork title and select an image!");
-      return;
-    }
-
-    // Butonu yükleniyor moduna al
-    uploadArtBtn.disabled = true;
-    uploadArtBtn.textContent = "Uploading to Server...";
-
-    let dimensionText = "";
-    if (w && h) {
-      dimensionText = `${w} × ${h} in (${(w * 2.54).toFixed(1)} × ${(h * 2.54).toFixed(1)} cm)`;
-    }
-
-    // Önce resmi Storage'a yükle
-    const storageRef = storage.ref(`artworks/${Date.now()}_${selectedFileObj.name}`);
-    
-    storageRef.put(selectedFileObj)
-      .then(snapshot => snapshot.ref.getDownloadURL())
-      .then(downloadURL => {
-        // Resim başarıyla yüklendiyse, URL'i alıp Firestore veritabanına yaz
-        return db.collection("artworks").add({
-          artID: artID, // YENİ EKLENEN VERİTABANI ALANI
-          title: title,
-          medium: medium,
-          year: year,
-          price: price,
-          size: dimensionText,
-          image: downloadURL, // Bulut üzerindeki resim linki
-          showAvailable: document.getElementById("showAvailable").checked,
-          showMiniature: document.getElementById("showMiniature").checked,
-          showContemporary: document.getElementById("showContemporary").checked,
-          showMotive: document.getElementById("showMotive").checked,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-      })
-      .then(() => {
-        alert("Artwork successfully added to the Cloud Server!");
-        hostModal.style.display = "none";
-        
-        // Formu temizle
-        document.getElementById("artTitle").value = "";
-        document.getElementById("artMedium").value = "";
-        document.getElementById("artYear").value = "";
-        document.getElementById("artPrice").value = "";
-        
-        // YENİ EKLENEN TEMİZLEME KODU
-        document.getElementById("artID").value = ""; 
-        
-        widthInches.value = "";
-        heightInches.value = "";
-        widthCm.textContent = "(0.0 cm)";
-        heightCm.textContent = "(0.0 cm)";
-        uploadText.textContent = "Drag or upload";
-        selectedFileObj = null;
-        document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-      })
-      .catch(err => {
-        alert("Upload error: " + err.message);
-      })
-      .finally(() => {
-        uploadArtBtn.disabled = false;
-        uploadArtBtn.textContent = "Upload Artwork";
-      });
-  });
-
-
-// 6. Firestore'dan Eserleri Çekip Ekranda Gösterme Fonksiyonu
-window.addEventListener('DOMContentLoaded', () => {
-  // Eğer ana sayfada eserleri listeleyeceğimiz bir alan varsa verileri çekelim
-  db.collection("artworks")
-    .orderBy("createdAt", "desc")
-    .limit(3) // Şimdilik en son eklenen 3 eseri göstersin
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const art = doc.data();
-        console.log("DATABASE HAVE AN PROBLEM:", art.title, art.image);
-        
-        // Buraya istersen verileri ekrandaki özel bir galeri div'ine dinamik olarak yazdırabiliriz.
-      });
-    })
-    .catch((error) => {
-      console.log("ERROR DUARING WHEN FETCHING ARTWORKS: ", error);
-    });
-});
-
-
 </script>
 </body>
 </html>
