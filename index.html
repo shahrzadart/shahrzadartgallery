@@ -891,6 +891,71 @@ div.imgstylenow img {
       batch.commit().catch(err => console.error("Sıralama kaydetme hatası:", err));
     }
 
+
+
+    // Host Login Modal Mantığı
+const hostLoginBtn = document.getElementById("hostLoginBtn");
+const hostModal = document.getElementById("hostModal");
+const closeHostModal = document.getElementById("closeHostModal");
+const loginSubmitBtn = document.getElementById("loginSubmitBtn");
+const loginFormSection = document.getElementById("loginFormSection");
+const addArtSection = document.getElementById("addArtSection");
+const loginError = document.getElementById("loginError");
+
+// Butona basınca modalı aç
+if (hostLoginBtn) {
+  hostLoginBtn.addEventListener("click", () => {
+    hostModal.style.display = "flex";
+  });
+}
+
+// X butonuna basınca modalı kapat
+if (closeHostModal) {
+  closeHostModal.addEventListener("click", () => {
+    hostModal.style.display = "none";
+  });
+}
+
+// Dışarıya tıklandığında kapat
+window.addEventListener("click", (e) => {
+  if (e.target === hostModal) {
+    hostModal.style.display = "none";
+  }
+});
+
+// Firebase ile Giriş Yapma İşlemi
+if (loginSubmitBtn) {
+  loginSubmitBtn.addEventListener("click", () => {
+    const email = document.getElementById("hostEmail").value;
+    const password = document.getElementById("hostPassword").value;
+
+    auth.signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        loginError.style.display = "none";
+        loginFormSection.style.display = "none";
+        addArtSection.style.display = "block"; // Giriş başarılıysa resim yükleme formunu göster
+      })
+      .catch((error) => {
+        loginError.style.display = "block";
+        loginError.textContent = "Giriş başarısız: " + error.message;
+      });
+  });
+}
+
+
+if (user) {
+  // Kullanıcı zaten giriş yapmışsa direkt eser ekleme formunu göster
+  if (loginFormSection) loginFormSection.style.display = "none";
+  if (addArtSection) addArtSection.style.display = "block";
+  if (hostLoginBtn) hostLoginBtn.textContent = "Admin Panel";
+} else {
+  if (loginFormSection) loginFormSection.style.display = "block";
+  if (addArtSection) addArtSection.style.display = "none";
+  if (hostLoginBtn) hostLoginBtn.textContent = "Host Login";
+}
+
+
+
     auth.onAuthStateChanged((user) => {
       document.querySelectorAll(".art-card").forEach(card => {
         let existingAdminDiv = card.querySelector(".admin-buttons");
@@ -1087,6 +1152,123 @@ div.imgstylenow img {
   document.addEventListener("keydown", e => {
     if (e.key === "Escape") closeMenuFn();
   });
+
+
+  // Drop Zone ve Dosya Seçimi Mantığı
+const dropZone = document.getElementById("dropZone");
+const artImageFile = document.getElementById("artImageFile");
+const uploadText = document.getElementById("uploadText");
+const uploadArtBtn = document.getElementById("uploadArtBtn");
+
+// Kutunun herhangi bir yerine tıklandığında gizli dosya input'unu tetikle
+if (dropZone && artImageFile) {
+  dropZone.addEventListener("click", () => {
+    artImageFile.click();
+  });
+
+  // Dosya seçildiğinde metni güncelle
+  artImageFile.addEventListener("change", () => {
+    if (artImageFile.files.length > 0) {
+      uploadText.textContent = artImageFile.files[0].name;
+    }
+  });
+
+  // Sürükle - Bırak (Drag & Drop) Efektleri
+  dropZone.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropZone.classList.add("dragover");
+  });
+
+  dropZone.addEventListener("dragleave", () => {
+    dropZone.classList.remove("dragover");
+  });
+
+  dropZone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dropZone.classList.remove("dragover");
+    if (e.dataTransfer.files.length > 0) {
+      artImageFile.files = e.dataTransfer.files;
+      uploadText.textContent = e.dataTransfer.files[0].name;
+    }
+  });
+}
+
+// Inches -> CM Otomatik Hesaplama
+const widthInches = document.getElementById("widthInches");
+const heightInches = document.getElementById("heightInches");
+const widthCm = document.getElementById("widthCm");
+const heightCm = document.getElementById("heightCm");
+
+function updateCm() {
+  if (widthInches && widthCm) {
+    const w = parseFloat(widthInches.value) || 0;
+    widthCm.textContent = `(${(w * 2.54).toFixed(1)} cm)`;
+  }
+  if (heightInches && heightCm) {
+    const h = parseFloat(heightInches.value) || 0;
+    heightCm.textContent = `(${(h * 2.54).toFixed(1)} cm)`;
+  }
+}
+
+if (widthInches) widthInches.addEventListener("input", updateCm);
+if (heightInches) heightInches.addEventListener("input", updateCm);
+
+// Eser Yükleme (Upload) İşlemi
+if (uploadArtBtn) {
+  uploadArtBtn.addEventListener("click", async () => {
+    const file = artImageFile.files[0];
+    const title = document.getElementById("artTitle").value.trim();
+    const medium = document.getElementById("artMedium").value.trim();
+    const year = document.getElementById("artYear").value.trim();
+    const price = document.getElementById("artPrice").value.trim();
+    const artID = document.getElementById("artID").value.trim();
+
+    const wIn = widthInches.value.trim();
+    const hIn = heightInches.value.trim();
+    const sizeStr = (wIn && hIn) ? `${wIn} × ${hIn} in (${(wIn * 2.54).toFixed(1)} × ${(hIn * 2.54).toFixed(1)} cm)` : '';
+
+    if (!file || !title) {
+      alert("Lütfen en azından bir görsel seçin ve eser başlığı girin!");
+      return;
+    }
+
+    uploadArtBtn.disabled = true;
+    uploadArtBtn.textContent = "Yükleniyor...";
+
+    try {
+      // 1. Firebase Storage'a Görsel Yükleme
+      const storageRef = firebase.storage().ref(`artworks/${Date.now()}_${file.name}`);
+      const snapshot = await storageRef.put(file);
+      const downloadURL = await snapshot.ref.getDownloadURL();
+
+      // 2. Firestore Veritabanına Eser Bilgilerini Kaydetme
+      await db.collection("artworks").add({
+        title: title,
+        medium: medium,
+        year: year,
+        price: price,
+        artID: artID,
+        size: sizeStr,
+        image: downloadURL,
+        showAvailable: document.getElementById("showAvailable").checked,
+        showMiniature: document.getElementById("showMiniature").checked,
+        showContemporary: document.getElementById("showContemporary").checked,
+        showMotive: document.getElementById("showMotive").checked,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      alert("Eser başarıyla yüklendi!");
+      location.reload(); // Sayfayı yenile ki yeni eser görünsün
+    } catch (error) {
+      console.error("Yükleme hatası:", error);
+      alert("Yükleme sırasında hata oluştu: " + error.message);
+      uploadArtBtn.disabled = false;
+      uploadArtBtn.textContent = "Upload Artwork";
+    }
+  });
+}
+
+
 </script>
 </body>
 </html>
